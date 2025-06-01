@@ -86,7 +86,10 @@ function love.update(dt)
             and ball.y + ball.radius > brick.y
             and ball.y - ball.radius < brick.y + brick.height
         then
-            brick.alive = false
+            brick.hits = brick.hits - 1
+            if brick.hits < 1 then
+                brick.alive = false
+            end
             ball.dy = -ball.dy
         end
     end

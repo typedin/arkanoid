@@ -1,39 +1,21 @@
-local paddle = {
-    x = 300,
-    y = 550,
-    width = 100,
-    height = 20,
-    speed = 400,
-}
-
-local ball = {
-    x = 350,
-    y = 300,
-    radius = 10,
-    dx = 200,
-    dy = -200,
-}
+local paddle = require("config/main").paddle
+local ball = require("config/main").ball
+local layout = require("config/main").layout
 
 local bricks = {}
-local brick_rows = 5
-local brick_cols = 10
-local brick_width = 60
-local brick_height = 20
-local brick_margin = 5
-
 local level = require("levels/" .. 1)
 function love.load()
     love.window.setTitle("Arkanoid Clone")
     love.window.setMode(800, 600)
 
     -- Initialize bricks
-    for row = 1, brick_rows do
-        for col = 1, brick_cols do
+    for row = 1, layout.bricks.rows do
+        for col = 1, layout.bricks.cols do
             table.insert(bricks, {
-                x = (col - 1) * (brick_width + brick_margin) + 60,
-                y = row * (brick_height + brick_margin),
-                width = brick_width,
-                height = brick_height,
+                x = (col - 1) * (layout.bricks.width + layout.bricks.margin) + 60,
+                y = row * (layout.bricks.height + layout.bricks.margin),
+                width = layout.bricks.width,
+                height = layout.bricks.height,
                 alive = true,
                 hits = level.bricks[row][col].hits,
             })

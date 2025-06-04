@@ -22,8 +22,8 @@ function love.load()
                 y = row * (layout.bricks.height + layout.bricks.margin),
                 width = layout.bricks.width,
                 height = layout.bricks.height,
-                alive = true,
-                hits = level.bricks[row][col].hits,
+                kind = level.bricks[row][col].kind,
+                hits = layout.bricks.kinds[level.bricks[row][col].kind].hits,
             })
         end
     end
@@ -51,7 +51,7 @@ function love.update(dt)
     if ball.x + ball.radius / 2 > layout.wall_right.x - layout.wall_right.thickness then
         ball.dx = -ball.dx
     end
-    if ball.x + ball.radius / 2 < layout.wall_left.x + layout.wall_left.thickness then
+    if ball.x - ball.radius / 2 < layout.wall_left.x + layout.wall_left.thickness then
         ball.dx = -ball.dx
     end
     if ball.y + ball.radius / 2 < layout.wall_up.y + layout.wall_up.thickness then
@@ -79,16 +79,13 @@ function love.update(dt)
     -- Ball-brick collisions
     for _, brick in ipairs(bricks) do
         if
-            brick.alive
+            brick.hits > 0
             and ball.x + ball.radius > brick.x
             and ball.x - ball.radius < brick.x + brick.width
             and ball.y + ball.radius > brick.y
             and ball.y - ball.radius < brick.y + brick.height
         then
             brick.hits = brick.hits - 1
-            if brick.hits < 1 then
-                brick.alive = false
-            end
             ball.dy = -ball.dy
         end
     end
@@ -101,10 +98,8 @@ function love.draw()
     love.graphics.rectangle("fill", layout.wall_right.x, layout.wall_right.y, layout.wall_right.width + layout.wall_left.thickness, layout.wall_right.height)
     -- Draw bricks
     for _, brick in ipairs(bricks) do
-        if brick.alive then
-            if brick.hits == 1 then
-                love.graphics.setColor(1, 0, 0)
-            end
+        if brick.hits == 1 then
+            love.graphics.setColor(love.math.colorFromBytes(layout.bricks.kinds[brick.kind].rgb))
             love.graphics.rectangle("fill", brick.x, brick.y, brick.width, brick.height)
         end
     end
@@ -127,7 +122,7 @@ function love.draw()
     -- Win condition
     local win = true
     for _, brick in ipairs(bricks) do
-        if brick.alive then
+        if brick.hits > 0 then
             win = false
             break
         end

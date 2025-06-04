@@ -48,6 +48,58 @@ local Config = {
             width = 60,
             height = 20,
             margin = 5,
+            kinds = {
+                gray = {
+                    hits = 1,
+                    points = 50,
+                    rgb = { 128, 128, 128 },
+                },
+                red = {
+                    hits = 1,
+                    points = 60,
+                    rgb = { 255, 8, 0 },
+                },
+                orange = {
+                    hits = 1,
+                    points = 70,
+                    rgb = { 255, 88, 0 },
+                },
+                yellow = {
+                    hits = 1,
+                    points = 80,
+                    rgb = { 255, 255, 51 },
+                },
+                green = {
+                    hits = 1,
+                    points = 90,
+                    rgb = { 102, 255, 0 },
+                },
+                blue = {
+                    hits = 1,
+                    points = 100,
+                    rgb = { 0, 72, 186 },
+                },
+                purple = {
+                    hits = 1,
+                    points = 110,
+                    rgb = { 191, 0, 255 },
+                },
+                white = {
+                    hits = 1,
+                    points = 120,
+                    rgb = { 255, 255, 255 },
+                },
+                silver = {
+                    hits = 2,
+                    points = 150, -- updated from 100
+                    rgb = { 117, 117, 117 },
+                },
+                gold = {
+                    hits = math.huge, -- indestructible
+                    points = 0,
+                    rgb = { 255, 215, 0 },
+                },
+            },
         },
     },
 }

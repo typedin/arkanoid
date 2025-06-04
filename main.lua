@@ -1,3 +1,4 @@
+local Score = require("entities/score")
 local Ball = require("entities/ball")
 local Paddle = require("entities/paddle")
 local layout = require("config/main").layout
@@ -6,6 +7,7 @@ local paddle
 local ball
 local bricks = {}
 local lives = 3
+local score = 0
 local level = require("levels/" .. 1)
 
 function love.load()
@@ -86,6 +88,9 @@ function love.update(dt)
             and ball.y - ball.radius < brick.y + brick.height
         then
             brick.hits = brick.hits - 1
+            if brick.hits < 1 then
+                score = score + layout.bricks.kinds[brick.kind].points
+            end
             ball.dy = -ball.dy
         end
     end
@@ -119,6 +124,10 @@ function love.draw()
         love.graphics.rectangle("fill", layout.live.pos_x + (i - 1) * layout.live.margin_right, layout.live.pos_y, layout.live.width, layout.live.height)
     end
 
+    local score_talbe = Score:toTable(score)
+    for i = 1, #score_talbe do
+        love.graphics.print(score_talbe[i], layout.area.hud.x + layout.area.hud.width / 2 + (10 * i), layout.area.hud.y + layout.area.hud.height / 2)
+    end
     -- Win condition
     local win = true
     for _, brick in ipairs(bricks) do

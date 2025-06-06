@@ -11,5 +11,6 @@
 - [ ] Add a game over screen
 - [ ] Add a pause screen
 - [ ] Add sound effects
+- [ ] create music
 - [ ] sprites for wall, paddle, ball
 - [ ] font for score

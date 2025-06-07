@@ -1,3 +1,4 @@
+---@type StateMachineStateMap
 local paddle_states = {
     idle = {
         enter = function() end,

@@ -18,7 +18,10 @@ function love.load()
     paddle = Paddle:new()
     ball = Ball:new()
 
+    -- WARNING:
     -- paddle.stateMachine.currentState will be {}
+    -- don't move this to the "constructor" function
+    -- keep it YAGNI
     paddle.stateMachine = StateMachine:new(paddle_states)
 
     -- Initialize bricks

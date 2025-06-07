@@ -9,12 +9,17 @@ local bricks = {}
 local lives = 3
 local score = 0
 local level = require("levels/" .. 1)
+local StateMachine = require("states/StateMachine")
+local paddle_states = require("states/paddle_states")
 
 function love.load()
     love.window.setTitle("Arkanoid Clone")
     love.window.setMode(layout.resolution.width, layout.resolution.height)
     paddle = Paddle:new()
     ball = Ball:new()
+
+    -- paddle.stateMachine.currentState will be {}
+    paddle.stateMachine = StateMachine:new(paddle_states)
 
     -- Initialize bricks
     for row = 1, layout.bricks.rows do
@@ -32,11 +37,16 @@ function love.load()
 end
 
 function love.update(dt)
+    -- first argument received by update is _self_
+    paddle.stateMachine:update(paddle, dt)
+
     -- Paddle movement
     if love.keyboard.isDown("left") then
-        paddle.x = paddle.x - paddle.speed * dt
+        paddle.stateMachine:change("moving_left")
     elseif love.keyboard.isDown("right") then
-        paddle.x = paddle.x + paddle.speed * dt
+        paddle.stateMachine:change("moving_right")
+    else
+        paddle.stateMachine:change("idle")
     end
 
     -- Clamp paddle

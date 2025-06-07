@@ -2,6 +2,9 @@ local Score = require("entities/score")
 local Ball = require("entities/ball")
 local Paddle = require("entities/paddle")
 local layout = require("config/main").layout
+local ball_states = require("states/ball_states")
+local StateMachine = require("states/StateMachine")
+local paddle_states = require("states/paddle_states")
 
 local paddle
 local ball
@@ -9,8 +12,6 @@ local bricks = {}
 local lives = 3
 local score = 0
 local level = require("levels/" .. 1)
-local StateMachine = require("states/StateMachine")
-local paddle_states = require("states/paddle_states")
 
 function love.load()
     love.window.setTitle("Arkanoid Clone")
@@ -23,7 +24,9 @@ function love.load()
     -- don't move this to the "constructor" function
     -- keep it YAGNI
     paddle.stateMachine = StateMachine:new(paddle_states)
-
+    ball.stateMachine = StateMachine:new(ball_states)
+    ball.stateMachine:change("moving")
+    ball.layout = layout
     -- Initialize bricks
     for row = 1, layout.bricks.rows do
         for col = 1, layout.bricks.cols do
@@ -41,7 +44,8 @@ end
 
 function love.update(dt)
     -- first argument received by update is _self_
-    paddle.stateMachine:update(paddle, dt)
+    paddle.stateMachine:update(paddle, { dt = dt, layout = layout })
+    ball.stateMachine:update(ball, { dt = dt, layout = layout })
 
     -- Paddle movement
     if love.keyboard.isDown("left") then
@@ -50,27 +54,6 @@ function love.update(dt)
         paddle.stateMachine:change("moving_right")
     else
         paddle.stateMachine:change("idle")
-    end
-
-    -- Clamp paddle
-    paddle.x = math.max( --
-        (layout.area.live.x + layout.wall.thickness),
-        -- Have to divide by 2 for some reason
-        math.min(paddle.x, layout.area.live.width - paddle.width - layout.wall.thickness / 2)
-    )
-
-    -- Ball movement
-    ball.x = ball.x + ball.dx * dt
-    ball.y = ball.y + ball.dy * dt
-
-    if ball.x + ball.radius / 2 > layout.wall_right.x - layout.wall_right.thickness then
-        ball.dx = -ball.dx
-    end
-    if ball.x - ball.radius / 2 < layout.wall_left.x + layout.wall_left.thickness then
-        ball.dx = -ball.dx
-    end
-    if ball.y + ball.radius / 2 < layout.wall_up.y + layout.wall_up.thickness then
-        ball.dy = -ball.dy
     end
 
     -- Ball collision with paddle

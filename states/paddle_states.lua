@@ -7,15 +7,19 @@ local paddle_states = {
     },
     moving_left = {
         enter = function() end,
-        update = function(_, paddle, dt)
-            paddle:move_left(dt)
+        ---@param paddle Paddle
+        ---@param context { dt: number, layout: Layout }
+        update = function(_, paddle, context)
+            paddle:move_left(context)
         end,
         exit = function() end,
     },
     moving_right = {
         enter = function() end,
-        update = function(_, paddle, dt)
-            paddle:move_right(dt)
+        ---@param paddle Paddle
+        ---@param context { dt: number, layout: Layout }
+        update = function(_, paddle, context)
+            paddle:move_right(context)
         end,
         exit = function() end,
     },

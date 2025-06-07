@@ -1,0 +1,11 @@
+---@class Ball
+---@field new fun(self: Ball): Ball
+---@field move fun(self: Ball, dt: number)
+---@field invert fun(self: Ball, axis: string)
+---@field x number
+---@field y number
+---@field dx number
+---@field dy number
+---@field speed number
+---@field radius number
+---@field stateMachine StateMachine

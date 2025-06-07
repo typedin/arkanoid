@@ -32,9 +32,9 @@ function StateMachine:change(state)
     end
 end
 
-function StateMachine:update(owner, dt)
+function StateMachine:update(owner, context)
     if self.currentState and self.currentState.update then
-        self.currentState:update(owner, dt)
+        self.currentState:update(owner, context)
     end
 end
 

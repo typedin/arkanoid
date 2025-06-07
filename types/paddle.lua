@@ -1,0 +1,13 @@
+---@class Paddle
+---@field x number
+---@field y number
+---@field width number
+---@field height number
+---@field speed number
+---@field stateMachine StateMachine
+---@field move_left fun(self: Paddle, context: PaddleContext)
+---@field move_right fun(self: Paddle, context: PaddleContext)
+
+---@class PaddleContext
+---@field dt number
+---@field layout Layout

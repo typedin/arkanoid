@@ -1,7 +1,16 @@
 local M = {}
 M.name = "Level 1"
-M.bricks = {
+-- Rows of bricks
+M.rows = {
     --[[ row 1 ]]
+    -- empty
+    {},
+    --[[ row 2 ]]
+    -- empty
+    {},
+    --[[ row 3 ]]
+    -- empty
+    {},
     {
         { kind = "gray" },
         { kind = "gray" },
@@ -16,55 +25,56 @@ M.bricks = {
     },
     --[[ row 2 ]]
     {
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
+        { kind = "red" },
+        { kind = "red" },
+        { kind = "red" },
+        { kind = "red" },
+        { kind = "red" },
+        { kind = "red" },
+        { kind = "red" },
+        { kind = "red" },
+        { kind = "red" },
+        { kind = "red" },
     },
     --[[ row 3 ]]
     {
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
+        { kind = "yellow" },
+        { kind = "yellow" },
+        { kind = "yellow" },
+        { kind = "yellow" },
+        { kind = "yellow" },
+        { kind = "yellow" },
+        { kind = "yellow" },
+        { kind = "yellow" },
+        { kind = "yellow" },
+        { kind = "yellow" },
     },
     --[[ row 4 ]]
     {
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
+        { kind = "blue" },
+        { kind = "blue" },
+        { kind = "blue" },
+        { kind = "blue" },
+        { kind = "blue" },
+        { kind = "blue" },
+        { kind = "blue" },
+        { kind = "blue" },
+        { kind = "blue" },
+        { kind = "blue" },
     },
     --[[ row 5 ]]
     {
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
-        { kind = "gray" },
+        { kind = "green" },
+        { kind = "green" },
+        { kind = "green" },
+        { kind = "green" },
+        { kind = "green" },
+        { kind = "green" },
+        { kind = "green" },
+        { kind = "green" },
+        { kind = "green" },
+        { kind = "green" },
     },
 }
+
 return M

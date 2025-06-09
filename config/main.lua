@@ -43,11 +43,9 @@ local Config = {
             height = 800,
         },
         bricks = {
-            rows = 5,
-            cols = 10,
             width = 60,
             height = 20,
-            margin = 5,
+            margin = 2,
             kinds = {
                 gray = {
                     hits = 1,
@@ -89,9 +87,14 @@ local Config = {
                     points = 120,
                     rgb = { 255, 255, 255 },
                 },
+                cyan = {
+                    hits = 1,
+                    points = 130,
+                    rgb = { 0, 255, 255 },
+                },
                 silver = {
                     hits = 2,
-                    points = 150, -- updated from 100
+                    points = 150,
                     rgb = { 117, 117, 117 },
                 },
                 gold = {

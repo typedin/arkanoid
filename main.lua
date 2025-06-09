@@ -11,13 +11,31 @@ local ball
 local bricks = {}
 local lives = 3
 local score = 0
-local level = require("levels/" .. 1)
+local level = require("levels/" .. 2)
 
+--- Calculates the width of a single brick based on the live area, spacing, and brick count.
+-- @param areaWidth number - total usable width for all bricks (no padding on sides)
+-- @param spacing number - space between adjacent bricks
+-- @param brickCount integer - max number of bricks per row
+-- @return number - width of a single brick
+local test = function(areaWidth, spacing, brickCount)
+    if brickCount < 1 then
+        return 0
+    end
+
+    local totalSpacing = (brickCount - 1) * spacing
+    local availableWidth = areaWidth - totalSpacing
+    return availableWidth / brickCount
+end
+
+local brickWidth = test(layout.area.live.width - layout.wall.thickness * 2, layout.bricks.margin, 13)
 function love.load()
     love.window.setTitle("Arkanoid Clone")
     love.window.setMode(layout.resolution.width, layout.resolution.height)
     paddle = Paddle:new()
     ball = Ball:new()
+
+    print(brickWidth)
 
     -- WARNING:
     -- paddle.stateMachine.currentState will be {}
@@ -28,15 +46,16 @@ function love.load()
     ball.stateMachine:change("moving")
     ball.layout = layout
     -- Initialize bricks
-    for row = 1, layout.bricks.rows do
-        for col = 1, layout.bricks.cols do
+    -- iterate over rows
+    for i, row in ipairs(level.rows) do
+        for j, brick in ipairs(row) do
             table.insert(bricks, {
-                x = (col - 1) * (layout.bricks.width + layout.bricks.margin) + layout.wall_left.x + layout.wall_left.thickness,
-                y = row * (layout.bricks.height + layout.bricks.margin),
-                width = layout.bricks.width,
+                x = (j - 1) * (brickWidth + layout.bricks.margin) + layout.wall_left.x + layout.wall_left.thickness,
+                y = i * (layout.bricks.height + layout.bricks.margin) + layout.wall_up.thickness,
+                width = brickWidth,
                 height = layout.bricks.height,
-                kind = level.bricks[row][col].kind,
-                hits = layout.bricks.kinds[level.bricks[row][col].kind].hits,
+                kind = brick.kind,
+                hits = layout.bricks.kinds[brick.kind].hits,
             })
         end
     end
@@ -99,7 +118,8 @@ function love.draw()
     love.graphics.rectangle("fill", layout.wall_right.x, layout.wall_right.y, layout.wall_right.width + layout.wall_left.thickness, layout.wall_right.height)
     -- Draw bricks
     for _, brick in ipairs(bricks) do
-        if brick.hits == 1 then
+        if brick.hits > 0 then
+            ---@diagnostic disable-next-line: missing-parameter
             love.graphics.setColor(love.math.colorFromBytes(layout.bricks.kinds[brick.kind].rgb))
             love.graphics.rectangle("fill", brick.x, brick.y, brick.width, brick.height)
         end

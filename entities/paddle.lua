@@ -1,3 +1,5 @@
+local StateMachine = require("states/StateMachine")
+local paddle_states = require("states/paddle_states")
 local shallowCopy = require("libraries/shallow_copy")
 local paddle = require("config/main").paddle
 
@@ -11,6 +13,7 @@ end
 
 function Paddle:new()
     local instance = shallowCopy(paddle)
+    instance.stateMachine = StateMachine:new(paddle_states)
 
     setmetatable(instance, Paddle)
 

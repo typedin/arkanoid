@@ -1,3 +1,5 @@
+local StateMachine = require("states/StateMachine")
+local ball_states = require("states/ball_states")
 local ball = require("config/main").ball
 
 local Ball = {}
@@ -12,6 +14,7 @@ function Ball:new()
         dx = ball.dx,
         dy = ball.dy,
         radius = ball.radius,
+        stateMachine = StateMachine:new(ball_states),
     }
 
     setmetatable(instance, Ball)

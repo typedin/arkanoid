@@ -29,4 +29,10 @@ function Ball:move(dt)
     self.y = self.y + self.dy * dt
 end
 
+function Ball:draw()
+    -- Draw ball
+    love.graphics.setColor(1, 1, 1)
+    love.graphics.circle("fill", self.x, self.y, self.radius)
+end
+
 return Ball

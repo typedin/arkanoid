@@ -29,4 +29,9 @@ function Paddle:move_right(context)
     self.x = _clamp(self.x + self.speed * context.dt, min_x, max_x)
 end
 
+function Paddle:draw()
+    -- Draw paddle
+    love.graphics.setColor(0, 0, 1)
+    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+end
 return Paddle

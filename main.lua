@@ -1,24 +1,26 @@
-local Score = require("entities/score")
 local Ball = require("entities/ball")
+local Brick = require("entities/brick")
+local Collision = require("collision/Collision")
+local Game = require("entities/game")
 local Paddle = require("entities/paddle")
-local layout = require("config/main").layout
-local ball_states = require("states/ball_states")
+local Score = require("entities/score")
 local StateMachine = require("states/StateMachine")
+local ball_states = require("states/ball_states")
+local game_states = require("states/game_states")
+local layout = require("config/main").layout
 local paddle_states = require("states/paddle_states")
 
-local paddle
-local ball
-local bricks = {}
-local lives = 3
-local score = 0
-local level = require("levels/" .. 2)
+local game
+
+-- don't load all levels at once for memory reasons
+local level = require("levels/" .. 1)
 
 --- Calculates the width of a single brick based on the live area, spacing, and brick count.
--- @param areaWidth number - total usable width for all bricks (no padding on sides)
--- @param spacing number - space between adjacent bricks
--- @param brickCount integer - max number of bricks per row
--- @return number - width of a single brick
-local test = function(areaWidth, spacing, brickCount)
+---@param areaWidth number - total usable width for all bricks (no padding on sides)
+---@param spacing number - space between adjacent bricks
+---@param brickCount integer - max number of bricks per row
+---@return number - width of a single brick
+local calculateBrickWidth = function(areaWidth, spacing, brickCount)
     if brickCount < 1 then
         return 0
     end
@@ -28,86 +30,69 @@ local test = function(areaWidth, spacing, brickCount)
     return availableWidth / brickCount
 end
 
-local brickWidth = test(layout.area.live.width - layout.wall.thickness * 2, layout.bricks.margin, 13)
+local brickWidth = calculateBrickWidth(layout.area.live.width - layout.wall.thickness * 2, layout.bricks.margin, 13)
+
 function love.load()
     love.window.setTitle("Arkanoid Clone")
     love.window.setMode(layout.resolution.width, layout.resolution.height)
-    paddle = Paddle:new()
-    ball = Ball:new()
-
-    print(brickWidth)
+    game = Game:new()
+    game.paddle = Paddle:new()
+    game.ball = Ball:new()
 
     -- WARNING:
     -- paddle.stateMachine.currentState will be {}
     -- don't move this to the "constructor" function
     -- keep it YAGNI
-    paddle.stateMachine = StateMachine:new(paddle_states)
-    ball.stateMachine = StateMachine:new(ball_states)
-    ball.stateMachine:change("moving")
-    ball.layout = layout
+    game.paddle.stateMachine = StateMachine:new(paddle_states)
+    game.ball.stateMachine = StateMachine:new(ball_states)
+    game.stateMachine = StateMachine:new(game_states)
+    game.ball.stateMachine:change("moving")
+    game.bricks = {}
+    game.lives = 3
+    game.score = 0
+
+    game.stateMachine:change("play")
+
     -- Initialize bricks
     -- iterate over rows
     for i, row in ipairs(level.rows) do
         for j, brick in ipairs(row) do
-            table.insert(bricks, {
-                x = (j - 1) * (brickWidth + layout.bricks.margin) + layout.wall_left.x + layout.wall_left.thickness,
-                y = i * (layout.bricks.height + layout.bricks.margin) + layout.wall_up.thickness,
-                width = brickWidth,
-                height = layout.bricks.height,
-                kind = brick.kind,
-                hits = layout.bricks.kinds[brick.kind].hits,
-            })
+            -- IMPORTANT:
+            -- Keep brickWidth out of Brick
+            local x = (j - 1) * (brickWidth + layout.bricks.margin) + layout.wall_left.x + layout.wall_left.thickness
+            local y = i * (layout.bricks.height + layout.bricks.margin) + layout.wall_up.thickness
+            table.insert(
+                game.bricks,
+                Brick:new({
+                    x = x,
+                    y = y,
+                    kind = brick.kind,
+                    width = brickWidth,
+                    height = layout.bricks.height,
+                })
+            )
         end
     end
 end
 
 function love.update(dt)
     -- first argument received by update is _self_
-    paddle.stateMachine:update(paddle, { dt = dt, layout = layout })
-    ball.stateMachine:update(ball, { dt = dt, layout = layout })
+    game.stateMachine:update(game, { dt = dt, layout = layout })
+    Collision.handle(game)
 
     -- Paddle movement
     if love.keyboard.isDown("left") then
-        paddle.stateMachine:change("moving_left")
+        game.paddle.stateMachine:change("moving_left")
     elseif love.keyboard.isDown("right") then
-        paddle.stateMachine:change("moving_right")
+        game.paddle.stateMachine:change("moving_right")
     else
-        paddle.stateMachine:change("idle")
+        game.paddle.stateMachine:change("idle")
     end
 
-    -- Ball collision with paddle
-    if ball.y + ball.radius > paddle.y and ball.x > paddle.x and ball.x < paddle.x + paddle.width then
-        ball.dy = -math.abs(ball.dy)
-        -- Add horizontal influence
-        local hit_pos = (ball.x - paddle.x) / paddle.width
-        ball.dx = (hit_pos - 0.5) * 400
-    end
-
-    -- Ball fall off bottom
-    if ball.y > paddle.y + paddle.height then
-        lives = lives - 1
-        paddle = Paddle:new()
-        ball = Ball:new()
-        if lives == 0 then
-            love.event.quit(0) -- restart
-        end
-    end
-
-    -- Ball-brick collisions
-    for _, brick in ipairs(bricks) do
-        if
-            brick.hits > 0
-            and ball.x + ball.radius > brick.x
-            and ball.x - ball.radius < brick.x + brick.width
-            and ball.y + ball.radius > brick.y
-            and ball.y - ball.radius < brick.y + brick.height
-        then
-            brick.hits = brick.hits - 1
-            if brick.hits < 1 then
-                score = score + layout.bricks.kinds[brick.kind].points
-            end
-            ball.dy = -ball.dy
-        end
+    if love.keyboard.isDown("p") then
+        game.stateMachine:change("pause")
+    elseif love.keyboard.isDown("r") then
+        game.stateMachine:change("resume")
     end
 end
 
@@ -116,43 +101,25 @@ function love.draw()
     love.graphics.rectangle("fill", layout.wall_left.x, layout.wall_left.y, layout.wall_left.width + layout.wall_left.thickness, layout.wall_left.height)
     love.graphics.rectangle("fill", layout.wall_up.x, layout.wall_up.y, layout.wall_up.width, layout.wall_up.height + layout.wall_left.thickness)
     love.graphics.rectangle("fill", layout.wall_right.x, layout.wall_right.y, layout.wall_right.width + layout.wall_left.thickness, layout.wall_right.height)
+
     -- Draw bricks
-    for _, brick in ipairs(bricks) do
+    for _, brick in ipairs(game.bricks) do
         if brick.hits > 0 then
-            ---@diagnostic disable-next-line: missing-parameter
-            love.graphics.setColor(love.math.colorFromBytes(layout.bricks.kinds[brick.kind].rgb))
-            love.graphics.rectangle("fill", brick.x, brick.y, brick.width, brick.height)
+            brick:draw()
         end
     end
 
-    -- Draw paddle
-    love.graphics.setColor(0, 0, 1)
-    love.graphics.rectangle("fill", paddle.x, paddle.y, paddle.width, paddle.height)
-
-    -- Draw ball
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.circle("fill", ball.x, ball.y, ball.radius)
-
+    game.paddle:draw()
+    game.ball:draw()
     -- Draw Lives
-    for i = 1, lives do
+    for i = 1, game.lives do
         love.graphics.setColor(0, 1, 0)
         -- pox_x, pox_y, width, height
         love.graphics.rectangle("fill", layout.live.pos_x + (i - 1) * layout.live.margin_right, layout.live.pos_y, layout.live.width, layout.live.height)
     end
 
-    local score_talbe = Score:toTable(score)
-    for i = 1, #score_talbe do
-        love.graphics.print(score_talbe[i], layout.area.hud.x + layout.area.hud.width / 2 + (10 * i), layout.area.hud.y + layout.area.hud.height / 2)
-    end
-    -- Win condition
-    local win = true
-    for _, brick in ipairs(bricks) do
-        if brick.hits > 0 then
-            win = false
-            break
-        end
-    end
-    if win then
-        love.graphics.printf("You Win!", 0, 250, love.graphics.getWidth(), "center")
+    local score_table = Score:toTable(game.score)
+    for i = 1, #score_table do
+        love.graphics.print(score_table[i], layout.area.hud.x + layout.area.hud.width / 2 + (10 * i), layout.area.hud.y + layout.area.hud.height / 2)
     end
 end

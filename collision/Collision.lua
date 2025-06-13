@@ -8,6 +8,20 @@ function Collision.handle(game)
     Collision.ball_paddle(game)
     Collision.ball_fell(game)
     Collision.ball_bricks(game)
+    Collision.ball_walls(game)
+end
+
+function Collision.ball_walls(game)
+    local ball = game.ball
+    if ball.x + ball.radius / 2 > game.layout.wall_right.x - game.layout.wall_right.thickness then
+        ball:invert("dx")
+    end
+    if ball.x - ball.radius / 2 < game.layout.wall_left.x + game.layout.wall_left.thickness then
+        ball:invert("dx")
+    end
+    if ball.y + ball.radius / 2 < game.layout.wall_up.y + game.layout.wall_up.thickness then
+        ball:invert("dy")
+    end
 end
 
 function Collision.ball_paddle(game)

@@ -23,6 +23,7 @@ function love.update(dt)
     end
 
     -- Paddle movement
+    -- Ball movement if it's glued
     if love.keyboard.isDown("left") then
         game.ball:move_left({ dt = dt, layout = layout, speed = game.paddle.speed })
         game.paddle.stateMachine:change("moving_left")

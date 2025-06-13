@@ -3,6 +3,7 @@ local Level = require("entities/level")
 local Paddle = require("entities/paddle")
 local StateMachine = require("states/StateMachine")
 local game_states = require("states/game_states")
+local layout = require("config/main").layout
 
 local Game = {}
 
@@ -13,6 +14,7 @@ function Game:new()
         bricks = {},
         lives = 3,
         score = 0,
+        layout = layout,
         stateMachine = StateMachine:new(game_states),
         paddle = Paddle:new(),
         ball = Ball:new(),

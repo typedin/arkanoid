@@ -33,15 +33,6 @@ function Ball:move(context)
     if self.glued then
         return
     end
-    if self.x + self.radius / 2 > context.layout.wall_right.x - context.layout.wall_right.thickness then
-        self:invert("dx")
-    end
-    if self.x - self.radius / 2 < context.layout.wall_left.x + context.layout.wall_left.thickness then
-        self:invert("dx")
-    end
-    if self.y + self.radius / 2 < context.layout.wall_up.y + context.layout.wall_up.thickness then
-        self:invert("dy")
-    end
     self.x = self.x + self.dx * context.dt
     self.y = self.y + self.dy * context.dt
 end

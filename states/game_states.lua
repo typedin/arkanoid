@@ -9,7 +9,7 @@ local game_states = {
         enter = function() end,
         update = function(_, game, context)
             game.paddle.stateMachine:update(game.paddle, context)
-            game.ball.stateMachine:update(game.ball, context)
+            game.ball:move(context)
         end,
         exit = function() end,
     },

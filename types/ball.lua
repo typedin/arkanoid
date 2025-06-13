@@ -1,6 +1,6 @@
 ---@class Ball
 ---@field new fun(self: Ball): Ball
----@field move fun(self: Ball, dt: number)
+---@field move fun(self: Ball, context: { dt: number, layout: Layout })
 ---@field invert fun(self: Ball, axis: string)
 ---@field x number
 ---@field y number

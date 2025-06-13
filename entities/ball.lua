@@ -16,7 +16,7 @@ function Ball:new()
         dx = ball.dx,
         dy = ball.dy,
         radius = ball.radius,
-        glued = false,
+        glued = true,
     }
 
     setmetatable(instance, Ball)
@@ -30,6 +30,9 @@ function Ball:invert(axis)
 end
 
 function Ball:move(context)
+    if self.glued then
+        return
+    end
     if self.x + self.radius / 2 > context.layout.wall_right.x - context.layout.wall_right.thickness then
         self:invert("dx")
     end
@@ -44,15 +47,21 @@ function Ball:move(context)
 end
 
 function Ball:move_left(context)
+    if not self.glued then
+        return
+    end
     local min_x = context.layout.area.live.x + context.layout.wall.thickness
-    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.width
-    self.x = _clamp(self.x - self.speed * context.dt, min_x, max_x)
+    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.radius
+    self.x = _clamp(self.x - context.speed * context.dt, min_x, max_x)
 end
 
 function Ball:move_right(context)
+    if not self.glued then
+        return
+    end
     local min_x = context.layout.area.live.x + context.layout.wall.thickness
-    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.width
-    self.x = _clamp(self.x + self.speed * context.dt, min_x, max_x)
+    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.radius
+    self.x = _clamp(self.x + context.speed * context.dt, min_x, max_x)
 end
 
 function Ball:draw()

@@ -24,15 +24,17 @@ function love.update(dt)
 
     -- Paddle movement
     if love.keyboard.isDown("left") then
+        game.ball:move_left({ dt = dt, layout = layout, speed = game.paddle.speed })
         game.paddle.stateMachine:change("moving_left")
     elseif love.keyboard.isDown("right") then
+        game.ball:move_right({ dt = dt, layout = layout, speed = game.paddle.speed })
         game.paddle.stateMachine:change("moving_right")
     else
         game.paddle.stateMachine:change("idle")
     end
 
     if love.keyboard.isDown("space") then
-        game.ball.stateMachine:change("moving")
+        game.ball.glued = false
     end
 
     if love.keyboard.isDown("p") then

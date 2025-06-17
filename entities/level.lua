@@ -25,8 +25,8 @@ local function buildBricks(target, source)
         for j, brick in ipairs(row) do
             -- IMPORTANT:
             -- Keep brickWidth out of Brick
-            local x = (j - 1) * (brickWidth + layout.bricks.margin) + layout.wall_left.x + layout.wall_left.thickness
-            local y = i * (layout.bricks.height + layout.bricks.margin) + layout.wall_up.thickness
+            local x = (j - 1) * (brickWidth + layout.bricks.margin) + layout.wall_left.x + layout.wall.thickness
+            local y = i * (layout.bricks.height + layout.bricks.margin) + layout.wall.thickness
             table.insert(
                 target.bricks,
                 Brick:new({

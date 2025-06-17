@@ -1,8 +1,11 @@
 # BUGS
 - [ ] collision with 2 bricks at the same time
 - [ ] ball sticks to walls
+- [ ] ball should not change place relative to the paddle when glued 
+- [ ] bricks layout is buggy: weird margin to the right most brick
 
 # TODO
+- [ ] on game load / new life / new level, put the paddle at the center
 - [ ] add rotation to ball ?
 - [ ] a level may have a fixed amount of bonuses and they are assigned randomly
 - [ ] (physics)[https://www.love2d.org/wiki/love.physics]

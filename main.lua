@@ -1,4 +1,4 @@
-local Collision = require("collision/Collision")
+local Collision = require("collision/collision")
 local Game = require("entities/game")
 local Score = require("entities/score")
 local layout = require("config/main").layout
@@ -19,16 +19,16 @@ function love.update(dt)
     Collision.handle(game)
 
     if game.level:cleared() then
-        game.level:next()
+        game.level:nextLevel()
     end
 
     -- Paddle movement
     -- Ball movement if it's glued
     if love.keyboard.isDown("left") then
-        game.ball:move_left({ dt = dt, layout = layout, speed = game.paddle.speed })
+        game.ball:moveLeft({ dt = dt, layout = layout, speed = game.paddle.speed })
         game.paddle.stateMachine:change("moving_left")
     elseif love.keyboard.isDown("right") then
-        game.ball:move_right({ dt = dt, layout = layout, speed = game.paddle.speed })
+        game.ball:moveRight({ dt = dt, layout = layout, speed = game.paddle.speed })
         game.paddle.stateMachine:change("moving_right")
     else
         game.paddle.stateMachine:change("idle")
@@ -47,9 +47,9 @@ end
 
 function love.draw()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.rectangle("fill", layout.wall_left.x, layout.wall_left.y, layout.wall_left.width + layout.wall_left.thickness, layout.wall_left.height)
-    love.graphics.rectangle("fill", layout.wall_up.x, layout.wall_up.y, layout.wall_up.width, layout.wall_up.height + layout.wall_left.thickness)
-    love.graphics.rectangle("fill", layout.wall_right.x, layout.wall_right.y, layout.wall_right.width + layout.wall_left.thickness, layout.wall_right.height)
+    love.graphics.rectangle("fill", layout.wall_left.x, layout.wall_left.y, layout.wall_left.width + layout.wall.thickness, layout.wall_left.height)
+    love.graphics.rectangle("fill", layout.wall_up.x, layout.wall_up.y, layout.wall_up.width, layout.wall_up.height + layout.wall.thickness)
+    love.graphics.rectangle("fill", layout.wall_right.x, layout.wall_right.y, layout.wall_right.width + layout.wall.thickness, layout.wall_right.height)
 
     -- Draw bricks
     for _, brick in ipairs(game.level.bricks) do

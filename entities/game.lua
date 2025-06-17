@@ -26,7 +26,7 @@ function Game:new()
     return instance
 end
 
-function Game:next_level()
+function Game:nextLevel()
     self.level = self.level:next()
 end
 

@@ -37,7 +37,7 @@ function Ball:move(context)
     self.y = self.y + self.dy * context.dt
 end
 
-function Ball:move_left(context)
+function Ball:moveLeft(context)
     if not self.glued then
         return
     end
@@ -46,7 +46,7 @@ function Ball:move_left(context)
     self.x = _clamp(self.x - context.speed * context.dt, min_x, max_x)
 end
 
-function Ball:move_right(context)
+function Ball:moveRight(context)
     if not self.glued then
         return
     end

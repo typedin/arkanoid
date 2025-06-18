@@ -8,14 +8,15 @@ local function _clamp(value, min_x, max_x)
     return math.max(min_x, math.min(value, max_x))
 end
 
+---@param params Config
 ---@return Ball
-function Ball:new()
+function Ball:new(params)
     local instance = {
-        x = ball.x,
-        y = ball.y,
-        dx = ball.dx,
-        dy = ball.dy,
-        radius = ball.radius,
+        diameter = params.layout.ball.diameter,
+        x = (params.layout.areas.live.width + params.layout.areas.live.x / 2) + (params.layout.paddle.width / 2), -- ball should be glued at the middle of the paddle
+        y = params.layout.areas.live.height - 10 - params.layout.paddle.height, -- WARNING agic number
+        dx = 200, --WARNING magic number
+        dy = -200, --WARNING magic number
         glued = true,
     }
 
@@ -42,7 +43,7 @@ function Ball:moveLeft(context)
         return
     end
     local min_x = context.layout.area.live.x + context.layout.wall.thickness
-    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.radius
+    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.diameter / 2
     self.x = _clamp(self.x - context.speed * context.dt, min_x, max_x)
 end
 
@@ -51,14 +52,14 @@ function Ball:moveRight(context)
         return
     end
     local min_x = context.layout.area.live.x + context.layout.wall.thickness
-    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.radius
+    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.diameter / 2
     self.x = _clamp(self.x + context.speed * context.dt, min_x, max_x)
 end
 
 function Ball:draw()
     -- Draw ball
     love.graphics.setColor(1, 1, 1)
-    love.graphics.circle("fill", self.x, self.y, self.radius)
+    love.graphics.circle("fill", self.x, self.y, self.diameter / 2)
 end
 
 return Ball

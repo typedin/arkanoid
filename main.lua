@@ -2,13 +2,17 @@ local Collision = require("collision/collision")
 local Game = require("entities/game")
 local Score = require("entities/score")
 local layout = require("config/main").layout
+local Config = require("config.config")
+local resolutions = require("config.resolutions")
 
 local game
 
 function love.load()
     love.window.setTitle("Arkanoid Clone")
-    love.window.setMode(layout.resolution.width, layout.resolution.height)
-    game = Game:new()
+    love.window.setMode(640, 480)
+
+    local config = Config:new({ resolution = resolutions["amiga"], screen = { width = 640, height = 480 } })
+    game = Game:new(config)
 
     game.stateMachine:change("play")
 end
@@ -24,7 +28,9 @@ function love.update(dt)
 
     -- Paddle movement
     -- Ball movement if it's glued
-    if love.keyboard.isDown("left") then
+    if
+        love.keyboard.isDown("left") --[[ ???? and not collison ?????]]
+    then
         game.ball:moveLeft({ dt = dt, layout = layout, speed = game.paddle.speed })
         game.paddle.stateMachine:change("moving_left")
     elseif love.keyboard.isDown("right") then
@@ -47,9 +53,27 @@ end
 
 function love.draw()
     love.graphics.setColor(1, 1, 1)
-    love.graphics.rectangle("fill", layout.wall_left.x, layout.wall_left.y, layout.wall_left.width + layout.wall.thickness, layout.wall_left.height)
-    love.graphics.rectangle("fill", layout.wall_up.x, layout.wall_up.y, layout.wall_up.width, layout.wall_up.height + layout.wall.thickness)
-    love.graphics.rectangle("fill", layout.wall_right.x, layout.wall_right.y, layout.wall_right.width + layout.wall.thickness, layout.wall_right.height)
+    love.graphics.rectangle(
+        "fill",
+        game.config.layout.areas.walls.left.x,
+        game.config.layout.areas.walls.left.y,
+        game.config.layout.areas.walls.left.width + game.config.layout.areas.walls.left.thickness,
+        game.config.layout.areas.walls.left.height
+    )
+    love.graphics.rectangle(
+        "fill",
+        game.config.layout.areas.walls.top.x,
+        game.config.layout.areas.walls.top.y,
+        game.config.layout.areas.walls.top.width,
+        game.config.layout.areas.walls.top.height + game.config.layout.areas.walls.top.thickness
+    )
+    love.graphics.rectangle(
+        "fill",
+        game.config.layout.areas.walls.right.x,
+        game.config.layout.areas.walls.right.y,
+        game.config.layout.areas.walls.right.width + game.config.layout.areas.walls.right.thickness,
+        game.config.layout.areas.walls.right.height
+    )
 
     -- Draw bricks
     for _, brick in ipairs(game.level.bricks) do

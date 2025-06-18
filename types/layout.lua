@@ -6,13 +6,6 @@
 ---@field area Area
 ---@field resolution Resolution
 
----@class Wall
----@field x number
----@field y number
----@field width number
----@field height number
----@field thickness number
-
 ---@class Bricks
 ---@field rows number
 ---@field cols number

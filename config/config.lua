@@ -24,6 +24,9 @@ local Config = {}
 
 Config.__index = Config
 
+---Creates a new Config instance with scaled entities based on screen and resolution
+---@param params ConfigParams
+---@return Config
 function Config:new(params)
     if not params.screen then
         error("Config:new requires a params table with a screen property")
@@ -52,6 +55,7 @@ function Config:new(params)
                 active = {},
                 live = {},
                 hud = {},
+                walls = {},
             },
             ball = apply_scale(params, entities.ball),
             paddle = apply_scale(params, entities.paddle),
@@ -69,6 +73,8 @@ function Config:new(params)
     return instance
 end
 
+---Applies resolution calculations to set up letterboxing and layout areas
+---@return Config
 function Config:_apply_resolution()
     local resolution_aspect = self.resolution.width / self.resolution.height
 
@@ -103,18 +109,21 @@ function Config:_apply_resolution()
             y = self.layout.areas.active.y,
             width = self.layout.wall.thickness,
             height = self.layout.areas.active.height,
+            thickness = self.layout.wall.thickness,
         },
         right = {
             x = self.layout.areas.live.x + self.layout.areas.live.width,
             y = self.layout.areas.active.y,
             width = self.layout.wall.thickness,
             height = self.layout.areas.active.height,
+            thickness = self.layout.wall.thickness,
         },
         top = {
             x = self.layout.areas.active.x,
             y = self.layout.areas.active.y,
             width = self.layout.areas.live.width + (self.layout.wall.thickness * 2),
             height = self.layout.wall.thickness,
+            thickness = self.layout.wall.thickness,
         },
     }
 

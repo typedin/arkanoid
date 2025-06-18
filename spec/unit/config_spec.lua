@@ -9,7 +9,7 @@ describe("Config", function()
 
     it("should define ball initial state", function()
         assert.are.equal(350, Config.ball.x)
-        assert.are.equal(10, Config.ball.radius)
+        assert.are.equal(10, Config.ball.diameter)
         assert.are.equal(-200, Config.ball.dy)
     end)
 

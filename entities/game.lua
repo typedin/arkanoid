@@ -3,21 +3,23 @@ local Level = require("entities/level")
 local Paddle = require("entities/paddle")
 local StateMachine = require("states/StateMachine")
 local game_states = require("states/game_states")
-local layout = require("config/main").layout
 
 local Game = {}
 
 Game.__index = Game
 
-function Game:new()
+function Game:new(config)
+    if not config then
+        error("Game:new requires a config")
+    end
     local instance = {
+        config = config,
         bricks = {},
         lives = 3,
         score = 0,
-        layout = layout,
         stateMachine = StateMachine:new(game_states),
-        paddle = Paddle:new(),
-        ball = Ball:new(),
+        paddle = Paddle:new(config),
+        ball = Ball:new(config),
         level = Level:load(1),
     }
 

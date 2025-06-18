@@ -13,23 +13,23 @@ function Collision.handle(game)
 end
 
 function Collision.paddle_walls(game)
-    if game.paddle.x < game.layout.area.live.x + game.layout.wall.thickness then
-        game.paddle.x = game.layout.area.live.x + game.layout.wall.thickness
+    if game.paddle.x < game.config.layout.areas.live.x + game.config.layout.wall.thickness then
+        game.paddle.x = game.config.layout.areas.live.x + game.config.layout.wall.thickness
     end
-    if game.paddle.x + game.paddle.width > game.layout.area.live.width - game.layout.wall.thickness then
-        game.paddle.x = game.layout.area.live.width - game.layout.wall.thickness - game.paddle.width
+    if game.paddle.x + game.paddle.width > game.config.layout.areas.live.width - game.config.layout.wall.thickness then
+        game.paddle.x = game.config.layout.areas.live.width - game.config.layout.wall.thickness - game.paddle.width
     end
 end
 
 function Collision.ball_walls(game)
     local ball = game.ball
-    if ball.x + ball.radius / 2 > game.layout.wall_right.x - game.layout.wall.thickness then
+    if ball.x + ball.diameter / 2 / 2 > game.config.layout.areas.walls.right.x - game.config.layout.wall.thickness then
         ball:invert("dx")
     end
-    if ball.x - ball.radius / 2 < game.layout.wall_left.x + game.layout.wall.thickness then
+    if ball.x - ball.diameter / 2 / 2 < game.config.layout.areas.walls.left.x + game.config.layout.wall.thickness then
         ball:invert("dx")
     end
-    if ball.y + ball.radius / 2 < game.layout.wall_up.y + game.layout.wall.thickness then
+    if ball.y + ball.diameter / 2 / 2 < game.config.layout.areas.walls.top.y + game.config.layout.wall.thickness then
         ball:invert("dy")
     end
 end
@@ -38,7 +38,7 @@ function Collision.ball_paddle(game)
     local ball = game.ball
     local paddle = game.paddle
 
-    if ball.y + ball.radius > paddle.y and ball.x > paddle.x and ball.x < paddle.x + paddle.width then
+    if ball.y + ball.diameter / 2 > paddle.y and ball.x > paddle.x and ball.x < paddle.x + paddle.width then
         ball.dy = -math.abs(ball.dy)
 
         local hit_pos = (ball.x - paddle.x) / paddle.width
@@ -52,7 +52,7 @@ function Collision.ball_fell(game)
 
     if ball.y > paddle.y + paddle.height then
         game.lives = game.lives - 1
-        game.paddle = Paddle:new()
+        game.paddle = Paddle:new(game.config)
         game.ball = Ball:new()
 
         if game.lives == 0 then
@@ -68,10 +68,10 @@ function Collision.ball_bricks(game)
     for _, brick in ipairs(bricks) do
         if
             brick.hits > 0
-            and ball.x + ball.radius > brick.x
-            and ball.x - ball.radius < brick.x + brick.width
-            and ball.y + ball.radius > brick.y
-            and ball.y - ball.radius < brick.y + brick.height
+            and ball.x + ball.diameter / 2 > brick.x
+            and ball.x - ball.diameter / 2 < brick.x + brick.width
+            and ball.y + ball.diameter / 2 > brick.y
+            and ball.y - ball.diameter / 2 < brick.y + brick.height
         then
             brick.hits = brick.hits - 1
             if brick.hits < 1 then

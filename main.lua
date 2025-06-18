@@ -57,7 +57,7 @@ function love.draw()
         "fill",
         game.config.layout.areas.walls.left.x,
         game.config.layout.areas.walls.left.y,
-        game.config.layout.areas.walls.left.width + game.config.layout.areas.walls.left.thickness,
+        game.config.layout.areas.walls.left.width,
         game.config.layout.areas.walls.left.height
     )
     love.graphics.rectangle(
@@ -65,13 +65,13 @@ function love.draw()
         game.config.layout.areas.walls.top.x,
         game.config.layout.areas.walls.top.y,
         game.config.layout.areas.walls.top.width,
-        game.config.layout.areas.walls.top.height + game.config.layout.areas.walls.top.thickness
+        game.config.layout.areas.walls.top.height
     )
     love.graphics.rectangle(
         "fill",
         game.config.layout.areas.walls.right.x,
         game.config.layout.areas.walls.right.y,
-        game.config.layout.areas.walls.right.width + game.config.layout.areas.walls.right.thickness,
+        game.config.layout.areas.walls.right.width,
         game.config.layout.areas.walls.right.height
     )
 
@@ -85,10 +85,8 @@ function love.draw()
     game.paddle:draw()
     game.ball:draw()
     -- Draw Lives
-    for i = 1, game.lives do
-        love.graphics.setColor(0, 1, 0)
-        -- pox_x, pox_y, width, height
-        love.graphics.rectangle("fill", layout.live.pos_x + (i - 1) * layout.live.margin_right, layout.live.pos_y, layout.live.width, layout.live.height)
+    for _, life in ipairs(game.lives) do
+        life:draw()
     end
 
     local score_table = Score:toTable(game.score)

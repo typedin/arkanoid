@@ -1,7 +1,4 @@
 local bricks = {
-    width = 60,
-    height = 20,
-    margin = 2,
     kinds = {
         gray = {
             hits = 1,

@@ -13,11 +13,11 @@ function Collision.handle(game)
 end
 
 function Collision.paddle_walls(game)
-    if game.paddle.x < game.config.layout.areas.live.x + game.config.layout.wall.thickness then
-        game.paddle.x = game.config.layout.areas.live.x + game.config.layout.wall.thickness
+    if game.paddle.x < game.config.layout.areas.live.x then
+        game.paddle.x = game.config.layout.areas.live.x
     end
-    if game.paddle.x + game.paddle.width > game.config.layout.areas.live.width - game.config.layout.wall.thickness then
-        game.paddle.x = game.config.layout.areas.live.width - game.config.layout.wall.thickness - game.paddle.width
+    if game.paddle.x + game.paddle.width > game.config.layout.areas.live.width + game.config.layout.areas.live.x then
+        game.paddle.x = game.config.layout.areas.live.width + game.config.layout.areas.live.x - game.paddle.width
     end
 end
 

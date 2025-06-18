@@ -5,6 +5,7 @@
 - [ ] bricks layout is buggy: weird margin to the right most brick
 
 # TODO
+- [ ] todo difficulties? -> ball speed
 - [ ] on game load / new life / new level, put the paddle at the center
 - [ ] add rotation to ball ?
 - [ ] a level may have a fixed amount of bonuses and they are assigned randomly

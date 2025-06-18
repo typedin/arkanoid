@@ -16,17 +16,16 @@ local calculateBrickWidth = function(areaWidth, spacing, brickCount)
     return availableWidth / brickCount
 end
 
-local brickWidth = calculateBrickWidth(layout.area.live.width - layout.wall.thickness * 2, layout.bricks.margin, 13)
-
-local function buildBricks(target, source)
+local function buildBricks(target, source, params)
+    local brickWidth = calculateBrickWidth(params.layout.areas.live.width, 0, 13)
     -- Initialize bricks
     -- iterate over rows
     for i, row in ipairs(source.rows) do
         for j, brick in ipairs(row) do
             -- IMPORTANT:
             -- Keep brickWidth out of Brick
-            local x = (j - 1) * (brickWidth + layout.bricks.margin) + layout.wall_left.x + layout.wall.thickness
-            local y = i * (layout.bricks.height + layout.bricks.margin) + layout.wall.thickness
+            local x = (j - 1) * brickWidth + params.layout.areas.live.x
+            local y = i * params.layout.brick.height + params.layout.areas.live.y
             table.insert(
                 target.bricks,
                 Brick:new({
@@ -34,7 +33,7 @@ local function buildBricks(target, source)
                     y = y,
                     kind = brick.kind,
                     width = brickWidth,
-                    height = layout.bricks.height,
+                    height = params.layout.brick.height,
                 })
             )
         end
@@ -45,7 +44,9 @@ local Level = {}
 
 Level.__index = Level
 
-function Level:load(level_name)
+---@param level_name number
+---@param params Config
+function Level:load(level_name, params)
     -- don't load all levels at once for memory reasons
     local level = require("levels/" .. level_name)
     assert(type(level) == "table", "count not load level")
@@ -60,15 +61,15 @@ function Level:load(level_name)
     -- this function assigns bricks to the level
     -- AND
     -- the number of bricks that are destroyable
-    buildBricks(instance, level)
+    buildBricks(instance, level, params)
 
     setmetatable(instance, Level)
 
     return instance
 end
 
-function Level:next()
-    return Level:load(self.id + 1)
+function Level:next(params)
+    return Level:load(self.id + 1, params)
 end
 
 function Level:cleared()

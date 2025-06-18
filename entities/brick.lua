@@ -1,4 +1,4 @@
-local brick_kind = require("config/main").layout.bricks.kinds
+local brick_kind = require("config/bricks").kinds
 local Brick = {}
 
 Brick.__index = Brick

@@ -12,9 +12,8 @@ function Paddle:new(params)
         width = params.layout.paddle.width,
         height = params.layout.paddle.height,
         speed = 400, --WARNING magic number
-        -- place the paddle at the center of the live area
-        x = (params.layout.areas.live.width + params.layout.areas.live.x / 2) - (params.layout.paddle.width / 2),
-        y = params.layout.areas.live.height - 10, -- WARNING agic number
+        x = (params.layout.areas.live.width + params.layout.areas.live.x) / 2 - (params.layout.paddle.width / 2), -- center the paddle at the center of the live area
+        y = params.layout.areas.live.height + 10, -- WARNING agic number
         stateMachine = StateMachine:new(paddle_states),
     }
 

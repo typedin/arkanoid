@@ -1,5 +1,3 @@
-local ball = require("config/main").ball
-
 local Ball = {}
 
 Ball.__index = Ball

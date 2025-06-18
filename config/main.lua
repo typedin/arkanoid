@@ -1,5 +1,4 @@
 local ball = require("config.ball")
-local bricks = require("config.bricks")
 local paddle = require("config.paddle")
 local resolutions = require("config.resolutions")
 
@@ -27,7 +26,6 @@ local Config = {
             y = 0,
         },
         resolution = resolutions["default"],
-        bricks = bricks,
     },
 }
 

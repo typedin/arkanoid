@@ -1,3 +1,4 @@
+local Life = require("entities/life")
 local Ball = require("entities/ball")
 local Level = require("entities/level")
 local Paddle = require("entities/paddle")
@@ -15,12 +16,16 @@ function Game:new(config)
     local instance = {
         config = config,
         bricks = {},
-        lives = 3,
         score = 0,
         stateMachine = StateMachine:new(game_states),
         paddle = Paddle:new(config),
         ball = Ball:new(config),
-        level = Level:load(1),
+        level = Level:load(1, config),
+        lives = {
+            Life:new(config, 1),
+            Life:new(config, 2),
+            Life:new(config, 3),
+        },
     }
 
     setmetatable(instance, Game)

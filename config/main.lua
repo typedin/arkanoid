@@ -26,7 +26,7 @@ local Config = {
             x = 655,
             y = 0,
         },
-        resolution = resolutions[1],
+        resolution = resolutions["default"],
         bricks = bricks,
     },
 }

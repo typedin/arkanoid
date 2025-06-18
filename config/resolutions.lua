@@ -1,7 +1,7 @@
 local resolutions = {
     default = {
-        width = 1280,
-        height = 800,
+        width = 320,
+        height = 200,
     },
     -- aspect ratio 8:5
     atari_st = {

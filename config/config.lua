@@ -4,6 +4,15 @@ local Config = {}
 Config.__index = Config
 
 function Config:new(params)
+    if not params.screen then
+        error("Config:new requires a params table with a screen property")
+    end
+    if type(params.screen.width) ~= "number" then
+        error("Config:new requires screen width")
+    end
+    if type(params.screen.height) ~= "number" then
+        error("Config:new requires screen height to be numbers")
+    end
     if not params or not params.resolution then
         error("Config:new requires a params table with a resolution property")
     end
@@ -58,13 +67,15 @@ function Config:_apply_resolution()
     }
 
     -- defining the outer bounds of the areas
-    local APPLESAUCE = 0.62
+    -- The live area is 62% of the avaible screen
+    local LIVE_RATIO = 0.62
     self.layout.areas.live = {
         x = self.layout.areas.active.x + entities.wall.thickness,
         y = self.layout.areas.active.y + entities.wall.thickness,
-        width = math.floor(APPLESAUCE * self.layout.areas.active.width) - (entities.wall.thickness * 2),
+        width = math.floor(LIVE_RATIO * self.layout.areas.active.width) - (entities.wall.thickness * 2),
         height = self.layout.areas.active.height - entities.wall.thickness,
     }
+
     self.layout.areas.walls = {
         left = {
             x = self.layout.areas.active.x,
@@ -89,7 +100,7 @@ function Config:_apply_resolution()
     -- just the rest of the available space
     self.layout.areas.hud = {
         x = self.layout.areas.live.width + entities.wall.thickness,
-        y = 0,
+        y = self.layout.areas.active.y,
         width = self.layout.areas.active.width - self.layout.areas.live.width - entities.wall.thickness * 2,
         height = self.layout.areas.active.height,
     }

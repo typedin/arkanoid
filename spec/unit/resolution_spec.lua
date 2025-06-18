@@ -113,7 +113,7 @@ describe("Resolution", function()
 
             -- add the wall thickness
             assert.are.equal(190, config.layout.areas.hud.x)
-            assert.are.equal(0, config.layout.areas.hud.y)
+            assert.are.equal(20, config.layout.areas.hud.y)
             assert.are.equal(200, config.layout.areas.hud.height) -- screen size minus 40 px
             assert.are.equal(320 - 198, config.layout.areas.hud.width)
         end)

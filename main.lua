@@ -1,7 +1,6 @@
 local Collision = require("collision/collision")
 local Game = require("entities/game")
 local Score = require("entities/score")
-local layout = require("config/main").layout
 local Config = require("config.config")
 local resolutions = require("config.resolutions")
 
@@ -19,7 +18,7 @@ end
 
 function love.update(dt)
     -- first argument received by update is _self_
-    game.stateMachine:update(game, { dt = dt, layout = layout })
+    game.stateMachine:update(game, { dt = dt, layout = game.config.layout })
     Collision.handle(game)
 
     if game.level:cleared() then
@@ -31,10 +30,10 @@ function love.update(dt)
     if
         love.keyboard.isDown("left") --[[ ???? and not collison ?????]]
     then
-        game.ball:moveLeft({ dt = dt, layout = layout, speed = game.paddle.speed })
+        game.ball:moveLeft({ dt = dt, layout = game.config.layout, speed = game.paddle.speed })
         game.paddle.stateMachine:change("moving_left")
     elseif love.keyboard.isDown("right") then
-        game.ball:moveRight({ dt = dt, layout = layout, speed = game.paddle.speed })
+        game.ball:moveRight({ dt = dt, layout = game.config.layout, speed = game.paddle.speed })
         game.paddle.stateMachine:change("moving_right")
     else
         game.paddle.stateMachine:change("idle")
@@ -91,6 +90,10 @@ function love.draw()
 
     local score_table = Score:toTable(game.score)
     for i = 1, #score_table do
-        love.graphics.print(score_table[i], layout.area.hud.x + layout.area.hud.width / 2 + (10 * i), layout.area.hud.y + layout.area.hud.height / 2)
+        love.graphics.print(
+            score_table[i],
+            game.config.layout.areas.hud.x + game.config.layout.areas.hud.width / 2 + (10 * i),
+            game.config.layout.areas.hud.y + game.config.layout.areas.hud.height / 2
+        )
     end
 end

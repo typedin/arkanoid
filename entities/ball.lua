@@ -2,10 +2,6 @@ local Ball = {}
 
 Ball.__index = Ball
 
-local function _clamp(value, min_x, max_x)
-    return math.max(min_x, math.min(value, max_x))
-end
-
 ---@param params Config
 ---@return Ball
 function Ball:new(params)
@@ -42,18 +38,14 @@ function Ball:moveLeft(context)
     if not self.glued then
         return
     end
-    local min_x = context.layout.area.live.x + context.layout.wall.thickness
-    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.diameter / 2
-    self.x = _clamp(self.x - context.speed * context.dt, min_x, max_x)
+    self.x = self.x - context.speed * context.dt
 end
 
 function Ball:moveRight(context)
     if not self.glued then
         return
     end
-    local min_x = context.layout.area.live.x + context.layout.wall.thickness
-    local max_x = context.layout.area.live.width - context.layout.wall.thickness / 2 - self.diameter / 2
-    self.x = _clamp(self.x + context.speed * context.dt, min_x, max_x)
+    self.x = self.x + context.speed * context.dt
 end
 
 function Ball:draw()

@@ -1,4 +1,3 @@
-local layout = require("config/main").layout
 local Ball = require("entities/ball")
 local Paddle = require("entities/paddle")
 
@@ -15,9 +14,13 @@ end
 function Collision.paddle_walls(game)
     if game.paddle.x < game.config.layout.areas.live.x then
         game.paddle.x = game.config.layout.areas.live.x
+        if game.ball.glued then
+            print("glued")
+        end
     end
     if game.paddle.x + game.paddle.width > game.config.layout.areas.live.width + game.config.layout.areas.live.x then
         game.paddle.x = game.config.layout.areas.live.width + game.config.layout.areas.live.x - game.paddle.width
+        print("glued")
     end
 end
 
@@ -51,11 +54,11 @@ function Collision.ball_fell(game)
     local paddle = game.paddle
 
     if ball.y > paddle.y + paddle.height then
-        game.lives = game.lives - 1
+        table.remove(game.lives)
         game.paddle = Paddle:new(game.config)
         game.ball = Ball:new(game.config)
 
-        if game.lives == 0 then
+        if #game.lives == 0 then
             love.event.quit(0)
         end
     end

@@ -35,6 +35,7 @@ function Brick:new(params)
 end
 
 function Brick:draw()
+    ---@diagnostic disable-next-line: param-type-mismatch
     ---@diagnostic disable-next-line: missing-parameter
     love.graphics.setColor(love.math.colorFromBytes(brick_kind[self.kind].rgb))
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)

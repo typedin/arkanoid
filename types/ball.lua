@@ -7,5 +7,5 @@
 ---@field dx number
 ---@field dy number
 ---@field speed number
----@field radius number
+---@field diameter number
 ---@field stateMachine StateMachine

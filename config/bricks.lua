@@ -1,3 +1,23 @@
+---@alias BrickKind
+---| '"gray"'
+---| '"red"'
+---| '"orange"'
+---| '"yellow"'
+---| '"green"'
+---| '"blue"'
+---| '"purple"'
+---| '"white"'
+---| '"cyan"'
+---| '"silver"'
+---| '"gold"'
+
+---@class BrickDef
+---@field hits integer
+---@field points integer
+---@field rgb integer[]  -- RGB color array: { r, g, b }
+
+---@class Bricks
+---@field kinds table<BrickKind, BrickDef>
 local bricks = {
     kinds = {
         gray = {

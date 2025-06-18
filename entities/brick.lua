@@ -3,6 +3,15 @@ local Brick = {}
 
 Brick.__index = Brick
 
+---@class BrickParams
+---@field x number
+---@field y number
+---@field width number
+---@field height number
+---@field kind BrickKind
+
+---@param params BrickParams
+---@return Brick
 function Brick:new(params)
     assert(type(params.x) == "number", "params.x must be a number")
     assert(type(params.y) == "number", "params.y must be a number")
@@ -17,6 +26,7 @@ function Brick:new(params)
         height = params.height,
         kind = params.kind,
         hits = brick_kind[params.kind].hits,
+        points = brick_kind[params.kind].points,
     }
 
     setmetatable(instance, Brick)

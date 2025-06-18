@@ -9,10 +9,12 @@ end
 ---@param params Config
 ---@return Ball
 function Ball:new(params)
+    local paddle_line = params.layout.areas.live.height + 10
     local instance = {
         diameter = params.layout.ball.diameter,
-        x = (params.layout.areas.live.width + params.layout.areas.live.x / 2) + (params.layout.paddle.width / 2), -- ball should be glued at the middle of the paddle
-        y = params.layout.areas.live.height - 10 - params.layout.paddle.height, -- WARNING agic number
+        radius = params.layout.ball.diameter / 2,
+        x = (params.layout.areas.live.width / 2) + params.layout.areas.live.x, -- center the paddle at the center of the live area
+        y = paddle_line - params.layout.ball.diameter / 2, -- WARNING agic number
         dx = 200, --WARNING magic number
         dy = -200, --WARNING magic number
         glued = true,

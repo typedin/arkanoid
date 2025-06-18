@@ -1,0 +1,9 @@
+---@class Brick
+---@field new fun(self: Brick): Brick
+---@field x number
+---@field y number
+---@field width number
+---@field height number
+---@field hits number
+---@field points number
+---@field kind BrickKind

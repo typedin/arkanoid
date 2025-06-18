@@ -1,5 +1,4 @@
 local Brick = require("entities/brick")
-local layout = require("config/main").layout
 
 --- Calculates the width of a single brick based on the live area, spacing, and brick count.
 ---@param areaWidth number - total usable width for all bricks (no padding on sides)

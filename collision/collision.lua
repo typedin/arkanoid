@@ -75,7 +75,7 @@ function Collision.ball_bricks(game)
         then
             brick.hits = brick.hits - 1
             if brick.hits < 1 then
-                game.score = game.score + layout.bricks.kinds[brick.kind].points
+                game.score = game.score + brick.points
             end
             ball.dy = -ball.dy
         end

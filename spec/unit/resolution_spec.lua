@@ -23,6 +23,30 @@ describe("Resolution", function()
         assert.are.equal(800, config.layout.areas.hud.height)
     end)
 
+    it("should define walls", function()
+        -- width = 1060,
+        -- height = 800,
+        local config = Config:new()
+        config:apply_resolution(resolutions[1])
+
+        assert(3, #config.layout.areas.live.walls)
+        -- left
+        assert.are.equal(0, config.layout.areas.live.walls.left.x)
+        assert.are.equal(0, config.layout.areas.live.walls.left.y)
+        assert.are.equal(10, config.layout.areas.live.walls.left.width)
+        assert.are.equal(800, config.layout.areas.live.walls.left.height)
+        -- right
+        assert.are.equal(660, config.layout.areas.live.walls.right.x)
+        assert.are.equal(0, config.layout.areas.live.walls.right.y)
+        assert.are.equal(10, config.layout.areas.live.walls.right.width)
+        assert.are.equal(800, config.layout.areas.live.walls.right.height)
+        -- top
+        assert.are.equal(0, config.layout.areas.live.walls.top.x)
+        assert.are.equal(0, config.layout.areas.live.walls.top.y)
+        assert.are.equal(660, config.layout.areas.live.walls.top.width)
+        assert.are.equal(10, config.layout.areas.live.walls.top.height)
+    end)
+
     it("should define paddle", function()
         -- width = 1060,
         -- height = 800,

@@ -33,10 +33,30 @@ function Config:apply_resolution(resolution)
         y = wall.thickness,
         width = outer_live_area_width - (wall.thickness * 2),
         height = self.layout.resolution.height - wall.thickness,
+        walls = {
+            left = {
+                x = 0,
+                y = 0,
+                width = wall.thickness,
+                height = self.layout.resolution.height,
+            },
+            right = {
+                x = outer_live_area_width,
+                y = 0,
+                width = wall.thickness,
+                height = self.layout.resolution.height,
+            },
+            top = {
+                x = 0,
+                y = 0,
+                width = outer_live_area_width,
+                height = wall.thickness,
+            },
+        },
     }
     -- just the rest of the avaible space
     self.layout.areas.hud = {
-        x = 660,
+        x = outer_live_area_width,
         y = 0,
         width = self.layout.resolution.width - outer_live_area_width,
         height = self.layout.resolution.height,

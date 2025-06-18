@@ -53,7 +53,7 @@ function Collision.ball_fell(game)
     if ball.y > paddle.y + paddle.height then
         game.lives = game.lives - 1
         game.paddle = Paddle:new(game.config)
-        game.ball = Ball:new()
+        game.ball = Ball:new(game.config)
 
         if game.lives == 0 then
             love.event.quit(0)

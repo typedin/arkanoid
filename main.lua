@@ -55,29 +55,9 @@ function love.update(dt)
 end
 
 function love.draw()
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.rectangle(
-        "fill",
-        game.config.layout.areas.walls.left.x,
-        game.config.layout.areas.walls.left.y,
-        game.config.layout.areas.walls.left.width,
-        game.config.layout.areas.walls.left.height
-    )
-    love.graphics.rectangle(
-        "fill",
-        game.config.layout.areas.walls.top.x,
-        game.config.layout.areas.walls.top.y,
-        game.config.layout.areas.walls.top.width,
-        game.config.layout.areas.walls.top.height
-    )
-    love.graphics.rectangle(
-        "fill",
-        game.config.layout.areas.walls.right.x,
-        game.config.layout.areas.walls.right.y,
-        game.config.layout.areas.walls.right.width,
-        game.config.layout.areas.walls.right.height
-    )
-
+    for _, wall in ipairs(game.walls) do
+        wall:draw()
+    end
     -- Draw bricks
     for _, brick in ipairs(game.level.bricks) do
         if brick.hits > 0 then

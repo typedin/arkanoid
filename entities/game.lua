@@ -4,6 +4,7 @@ local Level = require("entities/level")
 local Paddle = require("entities/paddle")
 local StateMachine = require("states/StateMachine")
 local game_states = require("states/game_states")
+local Wall = require("entities/wall")
 
 local Game = {}
 
@@ -22,6 +23,11 @@ function Game:new(config)
         paddle = Paddle:new(config),
         ball = Ball:new(config),
         level = Level:load(1, config),
+        walls = {
+            Wall:new(config.layout.areas.walls.left),
+            Wall:new(config.layout.areas.walls.top),
+            Wall:new(config.layout.areas.walls.right),
+        },
         lives = {
             Life:new(config, 1),
             Life:new(config, 2),

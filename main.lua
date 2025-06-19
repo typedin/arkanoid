@@ -1,7 +1,7 @@
 local Collision = require("collision/collision")
+local Config = require("config.config")
 local Game = require("entities/game")
 local Score = require("entities/score")
-local Config = require("config.config")
 local resolutions = require("config.resolutions")
 
 local game
@@ -22,21 +22,25 @@ function love.update(dt)
     Collision.handle(game)
 
     if game.level:cleared() then
-        game.level:nextLevel()
+        game:nextLevel()
     end
 
-    -- Paddle movement
-    -- Ball movement if it's glued
-    if
-        love.keyboard.isDown("left") --[[ ???? and not collison ?????]]
-    then
-        game.ball:moveLeft({ dt = dt, layout = game.config.layout, speed = game.paddle.speed })
-        game.paddle.stateMachine:change("moving_left")
-    elseif love.keyboard.isDown("right") then
-        game.ball:moveRight({ dt = dt, layout = game.config.layout, speed = game.paddle.speed })
-        game.paddle.stateMachine:change("moving_right")
-    else
-        game.paddle.stateMachine:change("idle")
+    if love.keyboard.isDown("left") then
+        if Collision.paddle_left_wall(game) then
+            game.paddle.x = game.config.layout.areas.live.x
+        else
+            game.paddle:moveLeft({ dt = dt })
+            game.ball:moveLeft({ dt = dt, layout = game.config.layout, paddle = game.paddle })
+        end
+    end
+
+    if love.keyboard.isDown("right") then
+        if Collision.paddle_right_wall(game) then
+            game.paddle.x = game.config.layout.areas.live.width + game.config.layout.areas.live.x - game.paddle.width
+        else
+            game.paddle:moveRight({ dt = dt })
+            game.ball:moveRight({ dt = dt, layout = game.config.layout, paddle = game.paddle })
+        end
     end
 
     if love.keyboard.isDown("space") then
@@ -83,6 +87,7 @@ function love.draw()
 
     game.paddle:draw()
     game.ball:draw()
+
     -- Draw Lives
     for _, life in ipairs(game.lives) do
         life:draw()

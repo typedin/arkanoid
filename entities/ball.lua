@@ -38,14 +38,14 @@ function Ball:moveLeft(context)
     if not self.glued then
         return
     end
-    self.x = self.x - context.speed * context.dt
+    self.x = self.x - context.paddle.speed * context.dt
 end
 
 function Ball:moveRight(context)
     if not self.glued then
         return
     end
-    self.x = self.x + context.speed * context.dt
+    self.x = self.x + context.paddle.speed * context.dt
 end
 
 function Ball:draw()

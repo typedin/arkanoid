@@ -1,6 +1,3 @@
-local StateMachine = require("states/StateMachine")
-local paddle_states = require("states/paddle_states")
-
 local Paddle = {}
 
 Paddle.__index = Paddle
@@ -15,7 +12,6 @@ function Paddle:new(params)
         speed = 400, --WARNING magic number
         x = ((params.layout.areas.live.width / 2) + params.layout.areas.live.x) - (params.layout.paddle.width / 2), -- center the paddle at the center of the live area
         y = paddle_line, -- WARNING agic number
-        stateMachine = StateMachine:new(paddle_states),
     }
 
     setmetatable(instance, Paddle)
@@ -23,11 +19,11 @@ function Paddle:new(params)
     return instance
 end
 
-function Paddle:move_left(context)
+function Paddle:moveLeft(context)
     self.x = self.x - self.speed * context.dt
 end
 
-function Paddle:move_right(context)
+function Paddle:moveRight(context)
     self.x = self.x + self.speed * context.dt
 end
 

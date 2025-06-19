@@ -13,6 +13,7 @@ function Game:new(config)
     if not config then
         error("Game:new requires a config")
     end
+
     local instance = {
         config = config,
         bricks = {},

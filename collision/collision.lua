@@ -8,20 +8,20 @@ function Collision.handle(game)
     Collision.ball_fell(game)
     Collision.ball_bricks(game)
     Collision.ball_walls(game)
-    Collision.paddle_walls(game)
 end
 
-function Collision.paddle_walls(game)
-    if game.paddle.x < game.config.layout.areas.live.x then
-        game.paddle.x = game.config.layout.areas.live.x
-        if game.ball.glued then
-            print("glued")
-        end
+function Collision.paddle_left_wall(game)
+    if game.paddle.x <= game.config.layout.areas.walls.left.x + game.config.layout.areas.walls.left.thickness then
+        return true
     end
-    if game.paddle.x + game.paddle.width > game.config.layout.areas.live.width + game.config.layout.areas.live.x then
-        game.paddle.x = game.config.layout.areas.live.width + game.config.layout.areas.live.x - game.paddle.width
-        print("glued")
+    return false
+end
+
+function Collision.paddle_right_wall(game)
+    if game.paddle.x + game.paddle.width >= game.config.layout.areas.live.width + game.config.layout.areas.live.x then
+        return true
     end
+    return false
 end
 
 function Collision.ball_walls(game)

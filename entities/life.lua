@@ -28,4 +28,5 @@ function Life:draw()
     love.graphics.setColor(0, 1, 0)
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
 end
+
 return Life

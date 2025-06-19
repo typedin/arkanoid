@@ -8,7 +8,6 @@ local game_states = {
     play = {
         enter = function() end,
         update = function(_, game, context)
-            game.paddle.stateMachine:update(game.paddle, context)
             game.ball:move(context)
         end,
         exit = function() end,

@@ -3,17 +3,22 @@ local EntityBase = require("entities/entity_base")
 local Ball = setmetatable({}, { __index = EntityBase })
 Ball.__index = Ball
 
----@param params Config
+---@class BallConfig
+---@field ball table
+---@field live_area table
+---@field physics table
+
+---@param params BallConfig
 ---@return Ball
 function Ball:new(params)
     local instance = {
-        diameter = params.layout.ball.diameter,
-        radius = params.layout.ball.diameter / 2,
-        x = (params.layout.areas.live.width / 2) + params.layout.areas.live.x, -- center the paddle at the center of the live area
-        y = params.layout.areas.live.paddle_line - params.layout.ball.diameter / 2,
-        dx = 200, --WARNING magic number
-        dy = -200, --WARNING magic number
         glued = true,
+        dx = params.physics.speed,
+        dy = -params.physics.speed,
+        diameter = params.ball.diameter,
+        radius = params.ball.diameter / 2,
+        x = (params.live_area.width / 2) + params.live_area.x, -- center the paddle at the center of the live area
+        y = params.live_area.paddle_line - params.ball.diameter / 2,
     }
 
     instance.last = {

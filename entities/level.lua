@@ -1,3 +1,4 @@
+local brick_kind = require("config/bricks").kinds
 local Brick = require("entities/brick")
 
 --- Calculates the width of a single brick based on the live area, spacing, and brick count.
@@ -15,24 +16,33 @@ local calculateBrickWidth = function(areaWidth, spacing, brickCount)
     return availableWidth / brickCount
 end
 
-local function buildBricks(target, source, params)
-    local brickWidth = calculateBrickWidth(params.layout.areas.live.width, 0, 13)
+-- this function assigns bricks to the level
+-- AND
+-- the number of bricks that are destroyable
+---@param instance table
+---@param level LevelFile
+---@param params LevelParams
+local function buildBricks(instance, level, params)
+    local brickWidth = calculateBrickWidth(params.live_area.width, 0, 13)
     -- Initialize bricks
     -- iterate over rows
-    for i, row in ipairs(source.rows) do
+    for i, row in ipairs(level.rows) do
         for j, brick in ipairs(row) do
             -- IMPORTANT:
             -- Keep brickWidth out of Brick
-            local x = (j - 1) * brickWidth + params.layout.areas.live.x
-            local y = i * params.layout.brick.height + params.layout.areas.live.y
+            local x = (j - 1) * brickWidth + params.live_area.x
+            local y = i * params.brick.height + params.live_area.y
             table.insert(
-                target.bricks,
+                instance.bricks,
                 Brick:new({
                     x = x,
                     y = y,
-                    kind = brick.kind,
                     width = brickWidth,
-                    height = params.layout.brick.height,
+                    height = params.brick.height,
+                    kind = brick.kind,
+                    hits = brick_kind[brick.kind].hits,
+                    points = brick_kind[brick.kind].points,
+                    rgb = brick_kind[brick.kind].rgb,
                 })
             )
         end
@@ -43,23 +53,25 @@ local Level = {}
 
 Level.__index = Level
 
----@param level_name number
----@param params Config
-function Level:load(level_name, params)
+---@class LevelParams
+---@field level_name string
+---@field live_area table
+---@field brick table
+
+---@param params LevelParams
+---@return Level
+function Level:load(params)
     -- don't load all levels at once for memory reasons
-    local level = require("levels/" .. level_name)
+    local level = require("levels/" .. params.level_name)
     assert(type(level) == "table", "count not load level")
     assert(type(level.name) == "string", "params.name must be a string")
     assert(type(level.rows) == "table", "params.rows must be a table")
 
     local instance = {
-        id = level_name,
+        id = params.level_name,
         name = level.name,
         bricks = {},
     }
-    -- this function assigns bricks to the level
-    -- AND
-    -- the number of bricks that are destroyable
     buildBricks(instance, level, params)
 
     setmetatable(instance, Level)
@@ -68,7 +80,8 @@ function Level:load(level_name, params)
 end
 
 function Level:next(params)
-    return Level:load(self.id + 1, params)
+    params.level_name = self.id + 1
+    return Level:load(params)
 end
 
 function Level:cleared()

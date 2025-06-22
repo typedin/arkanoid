@@ -3,15 +3,20 @@ local EntityBase = require("entities/entity_base")
 local Paddle = setmetatable({}, { __index = EntityBase })
 Paddle.__index = Paddle
 
----@param params Config
+---@class PaddleConfig
+---@field paddle table
+---@field live_area table
+---@field physics table
+
+---@param params PaddleConfig
 ---@return Paddle
 function Paddle:new(params)
     local instance = {
-        width = params.layout.paddle.width,
-        height = params.layout.paddle.height,
-        speed = 400, --WARNING magic number
-        x = ((params.layout.areas.live.width / 2) + params.layout.areas.live.x) - (params.layout.paddle.width / 2), -- center the paddle at the center of the live area
-        y = params.layout.areas.live.paddle_line,
+        width = params.paddle.width,
+        height = params.paddle.height,
+        speed = params.physics.speed,
+        y = params.live_area.paddle_line,
+        x = ((params.live_area.width / 2) + params.live_area.x) - (params.paddle.width / 2), -- center the paddle at the center of the live area
     }
 
     instance.last = {

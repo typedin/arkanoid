@@ -18,9 +18,9 @@ function Game:new(config)
     end
 
     local instance = {
-        config = config,
-        paddle = Paddle:new(config),
-        ball = Ball:new(config),
+        config = config, -- TODO remove config from the instance
+        paddle = Paddle:new({ paddle = config.layout.paddle, live_area = config.layout.areas.live, physics = require("config.physics.entities").paddle }),
+        ball = Ball:new({ ball = config.layout.ball, live_area = config.layout.areas.live, physics = require("config.physics.entities").ball }),
         walls = {
             left = Wall:new(config.layout.areas.walls.left),
             top = Wall:new(config.layout.areas.walls.top),
@@ -28,7 +28,7 @@ function Game:new(config)
         },
         stateMachine = StateMachine:new(game_states),
         score = 0,
-        level = Level:load(1, config),
+        level = Level:load({ level_name = "1", live_area = config.layout.areas.live, brick = config.layout.brick }),
         lives = {
             Life:new(config, 1),
             Life:new(config, 2),

@@ -1,15 +1,15 @@
 ---@alias BrickName
----| '"gray"'
----| '"red"'
----| '"orange"'
----| '"yellow"'
----| '"green"'
----| '"blue"'
----| '"purple"'
----| '"white"'
----| '"cyan"'
----| '"silver"'
----| '"gold"'
+---| "gray"
+---| "red"
+---| "orange"
+---| "yellow"
+---| "green"
+---| "blue"
+---| "purple"
+---| "white"
+---| "cyan"
+---| "silver"
+---| "gold"
 
 ---@class BrickDef
 ---@field hits integer

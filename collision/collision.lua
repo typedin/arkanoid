@@ -60,8 +60,8 @@ function Collision.ball_fell(game)
 
     if ball.y > paddle.y + paddle.height then
         table.remove(game.lives)
-        game.paddle = Paddle:new(game.config)
-        game.ball = Ball:new(game.config)
+        game.paddle = Paddle:new(game.config, require("config.physics.entities").paddle)
+        game.ball = Ball:new(game.config, require("config.physics.entities").ball)
 
         if #game.lives == 0 then
             love.event.quit(0)

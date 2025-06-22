@@ -1,4 +1,4 @@
-local entities = require("config.entities")
+local entities = require("config.geometry.entities")
 
 -- Scale entity dimensions based on screen size and resolution
 local function apply_scale(params, entity)

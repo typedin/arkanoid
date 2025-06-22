@@ -1,3 +1,4 @@
+---@class LevelFile
 local M = {}
 M.name = "Level 1"
 -- Rows of bricks

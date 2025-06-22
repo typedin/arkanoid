@@ -27,11 +27,11 @@ function Ball:new(params)
     return instance
 end
 
-function Ball:update(context)
+function Ball:update(dt)
     self.last.x = self.x
     self.last.y = self.y
     if not self.glued then
-        self:move(context)
+        self:move(dt)
     end
 end
 
@@ -55,11 +55,6 @@ function Ball:resolveCollision(context)
         self.x = self.last.x
         self.y = self.last.y
         self:invert("dy")
-        --[[
-			game.ball.dy = -math.abs(game.ball.dy)
-			local hit_pos = (game.ball.x - game.paddle.x) / game.paddle.width
-			game.ball.dx = (hit_pos - 0.5) * 400
-		--]]
     end
 end
 
@@ -88,20 +83,20 @@ function Ball:invert(axis)
     self[axis] = -self[axis]
 end
 
-function Ball:move(context)
+function Ball:move(dt)
     if self.glued then
         return
     end
-    self.x = self.x + self.dx * context.dt
-    self.y = self.y + self.dy * context.dt
+    self.x = self.x + self.dx * dt
+    self.y = self.y + self.dy * dt
 end
 
 function Ball:moveLeft(context)
-    self.x = self.x - context.paddle.speed * context.dt
+    self.x = self.x - context.speed * context.dt
 end
 
 function Ball:moveRight(context)
-    self.x = self.x + context.paddle.speed * context.dt
+    self.x = self.x + context.speed * context.dt
 end
 
 function Ball:draw()

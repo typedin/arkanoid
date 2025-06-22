@@ -18,7 +18,7 @@ end
 
 function love.update(dt)
     -- first argument received by update is _self_
-    game.stateMachine:update(game, { dt = dt, layout = game.config.layout })
+    game.stateMachine:update(game, dt)
     Collision.handle(game)
 
     if game.level:cleared() then

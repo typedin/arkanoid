@@ -25,7 +25,7 @@ function Paddle:new(params)
     return instance
 end
 
-function Paddle:update(context)
+function Paddle:update(dt, context)
     self.last.x = self.x
     self.last.y = self.y
 
@@ -35,24 +35,16 @@ function Paddle:update(context)
     if love.keyboard.isDown("left") then
         if context.ball.glued then
             context.paddle = self
-            context.ball:moveLeft(context)
+            context.ball:moveLeft({ dt = dt, speed = self.speed })
         end
-        self:moveLeft(context)
+        self:moveLeft(dt)
     elseif love.keyboard.isDown("right") then
         if context.ball.glued then
             context.paddle = self
-            context.ball:moveRight(context)
+            context.ball:moveRight({ dt = dt, speed = self.speed })
         end
-        self:moveRight(context)
+        self:moveRight(dt)
     end
-end
-
-function Paddle:moveLeft(context)
-    self.x = self.x - self.speed * context.dt
-end
-
-function Paddle:moveRight(context)
-    self.x = self.x + self.speed * context.dt
 end
 
 function Paddle:resolveCollision(context)
@@ -80,6 +72,14 @@ function Paddle:checkCollision(e)
         and self:getGeometry().left < e:getGeometry().right
         and self:getGeometry().bottom > e:getGeometry().top
         and self:getGeometry().top < e:getGeometry().bottom
+end
+
+function Paddle:moveLeft(dt)
+    self.x = self.x - self.speed * dt
+end
+
+function Paddle:moveRight(dt)
+    self.x = self.x + self.speed * dt
 end
 
 function Paddle:draw()

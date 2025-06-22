@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 local resolutions = require("config.resolutions")
 local Config = require("config.config")
 

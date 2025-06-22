@@ -1,0 +1,6 @@
+---@class Game
+---@field config Config
+---@field paddle Paddle
+---@field ball Ball
+---@field walls Wall
+---@field stateMachine StateMachine

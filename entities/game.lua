@@ -17,17 +17,17 @@ function Game:new(config)
 
     local instance = {
         config = config,
-        bricks = {},
-        score = 0,
-        stateMachine = StateMachine:new(game_states),
         paddle = Paddle:new(config),
         ball = Ball:new(config),
-        level = Level:load(1, config),
         walls = {
             left = Wall:new(config.layout.areas.walls.left),
             top = Wall:new(config.layout.areas.walls.top),
             right = Wall:new(config.layout.areas.walls.right),
         },
+        stateMachine = StateMachine:new(game_states),
+        -- bricks = {},
+        score = 0,
+        level = Level:load(1, config),
         lives = {
             Life:new(config, 1),
             Life:new(config, 2),

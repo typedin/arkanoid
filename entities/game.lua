@@ -1,6 +1,7 @@
+local Players = require("config.players")
+local Config = require("config.config")
 local Ball = require("entities/ball")
 local Level = require("entities/level")
-local Life = require("entities/life")
 local Paddle = require("entities/paddle")
 local StateMachine = require("states/StateMachine")
 local Wall = require("entities/wall")
@@ -10,30 +11,50 @@ local Game = {}
 
 Game.__index = Game
 
----@param config Config
+---@class GameParams
+---@field players PlayerConfig[]
+---@field screen Screen
+---@field resolution Resolution
+
+---@param params GameParams
 ---@return Game
-function Game:new(config)
-    if not config then
-        error("Game:new requires a config")
-    end
+function Game:new(params)
+    assert(type(params) == "table", "Game:new requires a params table")
+
+    local layout_config = Config:new({ resolution = params.resolution, screen = params.screen })
+
+    local players = Players:create({
+        players = params.players,
+        hud = layout_config.layout.areas.hud,
+        live_area = layout_config.layout.areas.live,
+        life = layout_config.layout.life,
+    })
 
     local instance = {
-        config = config, -- TODO remove config from the instance
-        paddle = Paddle:new({ paddle = config.layout.paddle, live_area = config.layout.areas.live, physics = require("config.physics.entities").paddle }),
-        ball = Ball:new({ ball = config.layout.ball, live_area = config.layout.areas.live, physics = require("config.physics.entities").ball }),
-        walls = {
-            left = Wall:new(config.layout.areas.walls.left),
-            top = Wall:new(config.layout.areas.walls.top),
-            right = Wall:new(config.layout.areas.walls.right),
-        },
+        layout = layout_config,
+        players = players,
         stateMachine = StateMachine:new(game_states),
-        score = 0,
-        level = Level:load({ level_name = "1", live_area = config.layout.areas.live, brick = config.layout.brick }),
-        lives = {
-            Life:new(config, 1),
-            Life:new(config, 2),
-            Life:new(config, 3),
+        ball = Ball:new({
+            ball = layout_config.layout.ball,
+            live_area = layout_config.layout.areas.live,
+            physics = require("config.physics.entities").ball,
+        }),
+        paddle = Paddle:new({
+            paddle = layout_config.layout.paddle,
+            live_area = layout_config.layout.areas.live,
+            physics = require("config.physics.entities").paddle,
+        }),
+        walls = {
+            left = Wall:new(layout_config.layout.areas.walls.left),
+            top = Wall:new(layout_config.layout.areas.walls.top),
+            right = Wall:new(layout_config.layout.areas.walls.right),
         },
+        -- live_area, layout_config.layout.bricks
+        level = Level:load({
+            level_name = "1",
+            brick = layout_config.layout.brick,
+            live_area = layout_config.layout.areas.live,
+        }),
     }
 
     setmetatable(instance, Game)

@@ -1,6 +1,9 @@
 ---@class Game
 ---@field ball Ball
 ---@field config Config
+---@field layout Layout
 ---@field paddle Paddle
 ---@field stateMachine StateMachine
 ---@field walls Wall
+---@field players Player[]
+---@field level Level

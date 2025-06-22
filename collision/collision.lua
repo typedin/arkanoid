@@ -4,49 +4,54 @@ local Paddle = require("entities/paddle")
 local Collision = {}
 
 function Collision.handle(game)
-    Collision.ball_paddle(game)
     Collision.ball_fell(game)
     Collision.ball_bricks(game)
-    Collision.ball_walls(game)
 end
 
 function Collision.paddle_left_wall(game)
-    if game.paddle.x <= game.config.layout.areas.walls.left.x + game.config.layout.areas.walls.left.thickness then
+    if game.paddle:getGeometry().left <= game.walls.left:getGeometry().right then
         return true
     end
     return false
 end
 
 function Collision.paddle_right_wall(game)
-    if game.paddle.x + game.paddle.width >= game.config.layout.areas.live.width + game.config.layout.areas.live.x then
+    if game.paddle:getGeometry().right >= game.walls.right:getGeometry().left then
         return true
     end
     return false
 end
 
-function Collision.ball_walls(game)
-    local ball = game.ball
-    if ball.x + ball.diameter / 2 / 2 > game.config.layout.areas.walls.right.x - game.config.layout.wall.thickness then
-        ball:invert("dx")
+function Collision.ball_left_wall(game)
+    if game.ball:getGeometry().left <= game.walls.left:getGeometry().right then
+        return true
     end
-    if ball.x - ball.diameter / 2 / 2 < game.config.layout.areas.walls.left.x + game.config.layout.wall.thickness then
-        ball:invert("dx")
+    return false
+end
+
+function Collision.ball_right_wall(game)
+    if game.ball:getGeometry().right >= game.walls.right:getGeometry().left then
+        return true
     end
-    if ball.y + ball.diameter / 2 / 2 < game.config.layout.areas.walls.top.y + game.config.layout.wall.thickness then
-        ball:invert("dy")
+    return false
+end
+
+function Collision.ball_top_wall(game, dt)
+    if game.ball:getGeometry().top + dt < game.walls.top:getGeometry().bottom then
+        return true
     end
+    return false
 end
 
 function Collision.ball_paddle(game)
-    local ball = game.ball
-    local paddle = game.paddle
-
-    if ball.y + ball.diameter / 2 > paddle.y and ball.x > paddle.x and ball.x < paddle.x + paddle.width then
-        ball.dy = -math.abs(ball.dy)
-
-        local hit_pos = (ball.x - paddle.x) / paddle.width
-        ball.dx = (hit_pos - 0.5) * 400
+    if
+        game.ball:getGeometry().bottom <= game.paddle:getGeometry().top
+        and game.ball:getGeometry().center >= game.paddle:getGeometry().left
+        and game.ball:getGeometry().center <= game.paddle:getGeometry().right
+    then
+        return true
     end
+    return false
 end
 
 function Collision.ball_fell(game)

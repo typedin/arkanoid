@@ -24,9 +24,9 @@ function Game:new(config)
         ball = Ball:new(config),
         level = Level:load(1, config),
         walls = {
-            Wall:new(config.layout.areas.walls.left),
-            Wall:new(config.layout.areas.walls.top),
-            Wall:new(config.layout.areas.walls.right),
+            left = Wall:new(config.layout.areas.walls.left),
+            top = Wall:new(config.layout.areas.walls.top),
+            right = Wall:new(config.layout.areas.walls.right),
         },
         lives = {
             Life:new(config, 1),

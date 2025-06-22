@@ -1,7 +1,10 @@
+local EntityBase = require("entities/entity_base")
 local brick_kind = require("config/bricks").kinds
+
 local Brick = {}
 
 Brick.__index = Brick
+setmetatable(Brick, { __index = EntityBase })
 
 ---@class BrickParams
 ---@field x number

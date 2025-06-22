@@ -8,7 +8,10 @@ local game_states = {
     play = {
         enter = function() end,
         update = function(_, game, context)
-            game.ball:move(context)
+            game.paddle:update({ dt = context.dt, walls = game.walls, ball = game.ball })
+            game.paddle:resolveCollision({ dt = context.dt, walls = game.walls, ball = game.ball })
+            game.ball:update({ dt = context.dt, walls = game.walls, paddle = game.paddle, bricks = game.level.bricks })
+            game.ball:resolveCollision({ dt = context.dt, walls = game.walls, paddle = game.paddle, bricks = game.level.bricks })
         end,
         exit = function() end,
     },

@@ -25,24 +25,6 @@ function love.update(dt)
         game:nextLevel()
     end
 
-    if love.keyboard.isDown("left") then
-        if Collision.paddle_left_wall(game) then
-            game.paddle.x = game.config.layout.areas.live.x
-        else
-            game.paddle:moveLeft({ dt = dt })
-            game.ball:moveLeft({ dt = dt, layout = game.config.layout, paddle = game.paddle })
-        end
-    end
-
-    if love.keyboard.isDown("right") then
-        if Collision.paddle_right_wall(game) then
-            game.paddle.x = game.config.layout.areas.live.width + game.config.layout.areas.live.x - game.paddle.width
-        else
-            game.paddle:moveRight({ dt = dt })
-            game.ball:moveRight({ dt = dt, layout = game.config.layout, paddle = game.paddle })
-        end
-    end
-
     if love.keyboard.isDown("space") then
         game.ball.glued = false
     end
@@ -55,7 +37,8 @@ function love.update(dt)
 end
 
 function love.draw()
-    for _, wall in ipairs(game.walls) do
+    -- key value pairs
+    for _, wall in pairs(game.walls) do
         wall:draw()
     end
     -- Draw bricks

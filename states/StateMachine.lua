@@ -1,14 +1,8 @@
----@class StateMachine
----@field states StateMachineStateMap
----@field currentState StateMachineState
----@field new fun(states: StateMachineStateMap)
----@field change fun(state: string)
----@field update fun(owner: table, dt: number)
-
 local StateMachine = {}
 
 StateMachine.__index = StateMachine
 
+---@param states StateMachineStateMap
 function StateMachine:new(states)
     local sm = {
         states = states,

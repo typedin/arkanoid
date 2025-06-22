@@ -4,7 +4,7 @@
 ---@field layout Layout
 ---@field new fun(params: ConfigParams): Config
 ---@field _apply_resolution fun(): Config
----
+
 ---@class ConfigParams
 ---@field screen Screen
 ---@field resolution Resolution

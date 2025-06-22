@@ -1,15 +1,17 @@
-local Life = require("entities/life")
 local Ball = require("entities/ball")
 local Level = require("entities/level")
+local Life = require("entities/life")
 local Paddle = require("entities/paddle")
 local StateMachine = require("states/StateMachine")
-local game_states = require("states/game_states")
 local Wall = require("entities/wall")
+local game_states = require("states/game_states")
 
 local Game = {}
 
 Game.__index = Game
 
+---@param config Config
+---@return Game
 function Game:new(config)
     if not config then
         error("Game:new requires a config")
@@ -25,7 +27,6 @@ function Game:new(config)
             right = Wall:new(config.layout.areas.walls.right),
         },
         stateMachine = StateMachine:new(game_states),
-        -- bricks = {},
         score = 0,
         level = Level:load(1, config),
         lives = {

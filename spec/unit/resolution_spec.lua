@@ -106,6 +106,7 @@ describe("Resolution", function()
             assert.are.equal(20 + 8, config.layout.areas.live.y)
             assert.are.equal(200 - 8, config.layout.areas.live.height) -- screen size minus 40 px
             assert.are.equal(182, config.layout.areas.live.width)
+            assert.are.equal(202, config.layout.areas.live.paddle_line)
         end)
 
         it("should define a hud area", function()

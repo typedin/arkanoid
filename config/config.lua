@@ -102,6 +102,7 @@ function Config:_apply_resolution()
         y = self.layout.areas.active.y + self.layout.wall.thickness,
         width = math.floor(LIVE_RATIO * self.layout.areas.active.width) - (self.layout.wall.thickness * 2),
         height = self.layout.areas.active.height - self.layout.wall.thickness,
+        paddle_line = self.layout.areas.active.height - self.layout.wall.thickness + 10,
     }
     self.layout.areas.walls = {
         left = {

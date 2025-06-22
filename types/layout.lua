@@ -34,6 +34,7 @@
 ---@field margin_right number
 ---@field pos_x number
 ---@field pos_y number
+---@field paddle_line number
 
 ---@class Hud
 ---@field x number

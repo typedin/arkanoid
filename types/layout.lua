@@ -1,32 +1,31 @@
 ---@class Layout
----@field wall_left Wall
----@field wall_up Wall
----@field wall_right Wall
----@field bricks Bricks
----@field area Area
----@field resolution Resolution
+---@field areas Areas
+---@field ball BallLayout
+---@field bonus BonusLayout
+---@field brick BrickLayout
+---@field life LifeLayout
+---@field paddle PaddleLayout
+---@field wall WallLayout
 
----@class Bricks
----@field rows number
----@field cols number
+---@class Areas
+---@field active ActiveArea
+---@field hud HudArea
+---@field live LiveArea
+---@field walls table<WallName, WallArea>
+
+---@class ActiveArea
+---@field x number
+---@field y number
 ---@field width number
 ---@field height number
----@field margin number
----@field kinds BricksKinds
 
----@class BricksKinds
----@field [string] BricksKind
+---@class HudArea
+---@field x number
+---@field y number
+---@field width number
+---@field height number
 
----@class BricksKind
----@field points number
----@field hits number
----@field rgb string
-
----@class Area
----@field live Live
----@field hud Hud
-
----@class Live
+---@class LiveArea
 ---@field x number
 ---@field y number
 ---@field width number
@@ -36,6 +35,14 @@
 ---@field pos_y number
 ---@field paddle_line number
 
----@class Hud
+---@alias WallName
+---| "left"
+---| "right"
+---| "top"
+
+---@class WallArea
 ---@field x number
 ---@field y number
+---@field width number
+---@field height number
+---@field thickness number

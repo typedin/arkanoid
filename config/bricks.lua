@@ -1,4 +1,4 @@
----@alias BrickKind
+---@alias BrickName
 ---| '"gray"'
 ---| '"red"'
 ---| '"orange"'
@@ -17,7 +17,7 @@
 ---@field rgb integer[]  -- RGB color array: { r, g, b }
 
 ---@class Bricks
----@field kinds table<BrickKind, BrickDef>
+---@field kinds table<BrickName, BrickDef>
 local bricks = {
     kinds = {
         gray = {

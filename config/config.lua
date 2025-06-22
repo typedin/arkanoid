@@ -58,10 +58,10 @@ function Config:new(params)
                 walls = {},
             },
             ball = apply_scale(params, entities.ball),
-            paddle = apply_scale(params, entities.paddle),
+            bonus = apply_scale(params, entities.bonus),
             brick = apply_scale(params, entities.brick),
             life = apply_scale(params, entities.life),
-            bonus = apply_scale(params, entities.bonus),
+            paddle = apply_scale(params, entities.paddle),
             wall = apply_scale(params, entities.wall),
         },
     }

@@ -7,3 +7,11 @@
 ---@field hits number
 ---@field points number
 ---@field kind BrickKind
+---
+---@class BricksKinds
+---@field [string] BrickKind
+
+---@class BrickKind
+---@field hits number
+---@field points number
+---@field rgb integer[]  -- RGB color array: { r, g, b }

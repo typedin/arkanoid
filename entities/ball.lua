@@ -64,6 +64,7 @@ function Ball:checkCollision(e)
         and self:getGeometry().top < e:getGeometry().bottom
 end
 
+---@diagnostic disable-next-line: duplicate-set-field
 function Ball:getGeometry()
     local geometry = {
         left = self.x - self.radius, -- left

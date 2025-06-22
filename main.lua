@@ -10,7 +10,7 @@ function love.load()
     love.window.setTitle("Arkanoid Clone")
     love.window.setMode(640, 480)
 
-    local config = Config:new({ resolution = resolutions["amiga"], screen = { width = 640, height = 480 } })
+    local config = Config:new({ players = {}, resolution = resolutions["amiga"], screen = { width = 640, height = 480 } })
     game = Game:new(config)
 
     game.stateMachine:change("play")

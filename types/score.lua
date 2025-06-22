@@ -1,0 +1,7 @@
+---@class Score
+---@field value number
+---@field x number
+---@field y number
+---@field add fun(self: Score, points: number)
+---@field toTable fun(self: Score): number[]
+---@field draw fun(self: Score)

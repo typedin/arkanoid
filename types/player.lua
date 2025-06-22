@@ -1,5 +1,5 @@
 ---@class Player
 ---@field name string
 ---@field lives number
----@field currentLevel number
+---@field current_level number
 ---@field score number

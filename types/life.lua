@@ -1,1 +1,5 @@
 ---@class Life
+---@field x number
+---@field y number
+---@field width number
+---@field height number

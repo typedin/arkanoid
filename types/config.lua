@@ -5,14 +5,6 @@
 ---@field new fun(params: ConfigParams): Config
 ---@field _apply_resolution fun(): Config
 
----@class ConfigParams
----@field players PlayerConfig[]
----@field screen Screen
----@field resolution Resolution
-
----@class PlayerConfig
----@field name string
-
 ---@class Screen
 ---@field width number
 ---@field height number

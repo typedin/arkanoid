@@ -1,4 +1,3 @@
-local Player = require("entities.player")
 local entities = require("config.geometry.entities")
 
 -- Scale entity dimensions based on screen size and resolution
@@ -26,14 +25,12 @@ local Config = {}
 Config.__index = Config
 
 ---Creates a new Config instance with scaled entities based on screen and resolution
----@param params ConfigParams
+---@class ConfigParams
+---@field screen Screen
+---@field resolution Resolution
+
 ---@return Config
 function Config:new(params)
-    assert(#params.players > 0, "Config:new requires at least 1 player")
-    assert(#params.players <= 2, "Config:new cannot build more than 2 players")
-    for index, player in ipairs(params.players) do
-        assert(type(player.name) == "string", "Config:new requires a name (error at " .. index .. ")")
-    end
     assert(params.screen, "Config:new requires a params table with a screen property")
     assert(type(params.screen.width) == "number", "Config:new requires screen width")
     assert(type(params.screen.height) == "number", "Config:new requires screen height to be numbers")
@@ -44,7 +41,6 @@ function Config:new(params)
     local instance = {
         screen = params.screen,
         resolution = params.resolution,
-        players = {},
         layout = {
             areas = {
                 active = {},
@@ -62,7 +58,6 @@ function Config:new(params)
     }
 
     setmetatable(instance, Config)
-    instance:_build_players(params)
     instance:_apply_resolution()
 
     return instance
@@ -130,15 +125,6 @@ function Config:_apply_resolution()
         width = self.layout.areas.active.width - self.layout.areas.live.width - self.layout.wall.thickness * 2,
         height = self.layout.areas.active.height,
     }
-    return self
-end
-
----@return Config
-function Config:_build_players(params)
-    for index, player in ipairs(params.players) do
-        table.insert(self.players, index, Player:new({ name = player.name }))
-    end
-
     return self
 end
 

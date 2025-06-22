@@ -1,9 +1,16 @@
 local Score = require("entities/score")
 local Life = require("entities/life")
+local merge_table = require("libraries.merge_table")
 
 local Player = {}
 
 Player.__index = Player
+
+---@class PlayerConfig
+---@field name string
+---@field score table
+---@field live_area LiveArea
+---@field life LifeLayout
 
 ---@param params PlayerConfig
 ---@return Player
@@ -18,9 +25,9 @@ function Player:new(params)
     local instance = {
         name = params.name,
         lives = {
-            Life:new(params, 1),
-            Life:new(params, 2),
-            Life:new(params, 3),
+            Life:new(merge_table.merge(params, { life_number = 1 })),
+            Life:new(merge_table.merge(params, { life_number = 2 })),
+            Life:new(merge_table.merge(params, { life_number = 3 })),
         },
         current_level = 1,
         score = Score:new(params.score),

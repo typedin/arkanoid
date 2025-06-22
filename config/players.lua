@@ -3,15 +3,23 @@ local Player = require("entities.player")
 
 local Players = {}
 
----@param params PlayersConfig
+---@class PlayersConfig
+---@field players PlayerConfig[]
+---@field hud HudArea
+---@field live_area LiveArea
+---@field life LifeLayout
+
 ---@return Player[]
 function Players:create(params)
     assert(#params.players > 0, "Config:new requires at least 1 player")
     assert(#params.players <= 2, "Config:new cannot build more than 2 players")
+
     for index, player in ipairs(params.players) do
         assert(type(player.name) == "string", "Config:new requires a name (error at " .. index .. ")")
     end
+
     local players = {}
+
     for index, player in ipairs(params.players) do
         local x = params.hud.x + params.hud.width / 2
         local y = params.hud.y + params.hud.height / 2

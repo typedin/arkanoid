@@ -10,6 +10,8 @@ describe("Player", function()
         assert.are.equal(1, #config.players)
         assert.are.equal("me", config.players[1].name)
         assert.are.equal(3, config.players[1].lives)
+        assert.are.equal(1, config.players[1].current_level)
+        assert.are.equal(0, config.players[1].score)
     end)
 
     it("can build 2 players", function()

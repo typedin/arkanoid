@@ -20,6 +20,7 @@ function StateMachine:new(states)
     return sm
 end
 
+---@param state string
 function StateMachine:change(state)
     if self.currentState and self.currentState.exit then
         self.currentState:exit()

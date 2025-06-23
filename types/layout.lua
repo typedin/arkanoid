@@ -19,12 +19,6 @@
 ---@field width number
 ---@field height number
 
----@class HudArea
----@field x number
----@field y number
----@field width number
----@field height number
-
 ---@class LiveArea
 ---@field x number
 ---@field y number
@@ -34,6 +28,18 @@
 ---@field pos_x number
 ---@field pos_y number
 ---@field paddle_line number
+
+---@class HudArea
+---@field x number
+---@field y number
+---@field width number
+---@field height number
+
+---@class ScoreArea
+---@field x number
+---@field y number
+---@field width number
+---@field height number
 
 ---@alias WallName
 ---| "left"

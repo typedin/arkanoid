@@ -16,6 +16,9 @@ function Players:create(params)
 
     for index, player in ipairs(params.players) do
         assert(type(player.name) == "string", "Config:new requires a name (error at " .. index .. ")")
+        assert(type(params.hud) == "table", "Config:new requires a hud table")
+        assert(type(params.hud.subsections["player_" .. index]) == "table", "Config:new requires a hud subsections for players_1")
+        assert(type(params.live_area) == "table", "Config:new requires a live area")
     end
 
     local players = {}
@@ -30,6 +33,7 @@ function Players:create(params)
                 name = player.name,
                 score = Score:new({ x = x, y = y * index }),
                 live_area = params.live_area,
+                score_area = params.hud.subsections["player_" .. index],
                 life = params.life,
             })
         )

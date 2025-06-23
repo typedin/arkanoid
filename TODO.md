@@ -7,6 +7,7 @@
 - [ ] bricks layout is buggy: weird margin to the right most brick
 
 # TODO
+- [ ] game over screen one per player
 - [ ] assign config to game is useless
 - [ ] todo difficulties? -> ball speed
 - [ ] on game load / new life / new level, put the paddle at the center

@@ -1,6 +1,6 @@
 ---@class Game
 ---@field ball Ball
----@field config Config
+---@field config Layout
 ---@field layout Layout
 ---@field paddle Paddle
 ---@field stateMachine StateMachine

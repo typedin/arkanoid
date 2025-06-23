@@ -20,34 +20,29 @@ local function apply_scale(params, entity)
     return scaled_entity
 end
 
-local Config = {}
+local Layout = {}
 
-Config.__index = Config
+Layout.__index = Layout
 
----Creates a new Config instance with scaled entities based on screen and resolution
----@class ConfigParams
+---Creates a new Layout instance with scaled entities based on screen and resolution
+---@class LayoutParams
 ---@field screen Screen
 ---@field resolution Resolution
 
----@return Config
-function Config:new(params)
-    assert(params.screen, "Config:new requires a params table with a screen property")
-    assert(type(params.screen.width) == "number", "Config:new requires screen width")
-    assert(type(params.screen.height) == "number", "Config:new requires screen height to be numbers")
-    assert(params.resolution, "Config:new requires a params table with a resolution property")
-    assert(type(params.resolution.width) == "number", "Config:new requires resolution width")
-    assert(type(params.resolution.height) == "number", "Config:new requires resolution height to be numbers")
+---@return Layout
+function Layout:new(params)
+    assert(params.screen, "Layout Layout:new requires a params table with a screen property")
+    assert(type(params.screen.width) == "number", "Layout:new requires screen width")
+    assert(type(params.screen.height) == "number", "Layout:new requires screen height to be numbers")
+    assert(params.resolution, "Layout:new requires a params table with a resolution property")
+    assert(type(params.resolution.width) == "number", "Layout:new requires resolution width")
+    assert(type(params.resolution.height) == "number", "Layout:new requires resolution height to be numbers")
 
     local instance = {
         screen = params.screen,
         resolution = params.resolution,
         layout = {
-            areas = {
-                active = {},
-                live = {},
-                hud = {},
-                walls = {},
-            },
+            areas = {},
             ball = apply_scale(params, entities.ball),
             bonus = apply_scale(params, entities.bonus),
             brick = apply_scale(params, entities.brick),
@@ -57,15 +52,18 @@ function Config:new(params)
         },
     }
 
-    setmetatable(instance, Config)
+    setmetatable(instance, Layout)
+
+    -- use methods to clean up the code
     instance:_apply_resolution()
+    instance:_build_hud()
 
     return instance
 end
 
 ---Applies resolution calculations to set up letterboxing and layout areas
----@return Config
-function Config:_apply_resolution()
+---@return Layout
+function Layout:_apply_resolution()
     local resolution_aspect = self.resolution.width / self.resolution.height
 
     -- Always use full screen width
@@ -94,6 +92,7 @@ function Config:_apply_resolution()
         height = self.layout.areas.active.height - self.layout.wall.thickness,
         paddle_line = self.layout.areas.active.height - self.layout.wall.thickness + 10,
     }
+
     self.layout.areas.walls = {
         left = {
             x = self.layout.areas.active.x,
@@ -125,7 +124,31 @@ function Config:_apply_resolution()
         width = self.layout.areas.active.width - self.layout.areas.live.width - self.layout.wall.thickness * 2,
         height = self.layout.areas.active.height,
     }
+
     return self
 end
 
-return Config
+function Layout:_build_hud()
+    self.layout.areas.hud.subsections = {
+        title = {},
+        player_1 = {},
+        player_2 = {},
+        high_score = {},
+        credits = {},
+    }
+
+    -- List of subsection names that use the same width/height logic
+    local simple_sections = { "title", "player_1", "player_2", "high_score" }
+    for _, name in ipairs(simple_sections) do
+        self.layout.areas.hud.subsections[name].width = self.layout.areas.hud.width
+        -- each subsection is 1/8 of the hud height
+        self.layout.areas.hud.subsections[name].height = self.layout.areas.hud.height / 8
+    end
+
+    -- Special case for credits
+    self.layout.areas.hud.subsections.credits.width = self.layout.areas.hud.width
+    self.layout.areas.hud.subsections.credits.height = self.layout.areas.hud.height / 2
+
+    return self
+end
+return Layout

@@ -1,9 +1,9 @@
----@class Config
+---@class Layout
 ---@field screen Screen
 ---@field resolution Resolution
 ---@field layout Layout
----@field new fun(params: ConfigParams): Config
----@field _apply_resolution fun(): Config
+---@field new fun(params: LayoutParams): Layout
+---@field _apply_resolution fun(): Layout
 
 ---@class Screen
 ---@field width number

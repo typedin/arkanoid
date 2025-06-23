@@ -8,7 +8,7 @@ function love.load()
     love.window.setTitle("Arkanoid Clone")
     love.window.setMode(640, 480)
 
-    local game_params = { players = { { name = "me" } }, resolution = resolutions["amiga"], screen = { width = 640, height = 480 } }
+    local game_params = { players = { { name = "me" }, { name = "you" } }, resolution = resolutions["amiga"], screen = { width = 640, height = 480 } }
 
     game = Game:new(game_params)
 
@@ -51,10 +51,6 @@ function love.draw()
     game.ball:draw()
 
     for _, player in ipairs(game.players) do
-        player.score:draw()
-        -- Draw Lives
-        for _, life in ipairs(player.lives) do
-            life:draw()
-        end
+        player:draw()
     end
 end

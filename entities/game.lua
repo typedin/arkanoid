@@ -1,5 +1,5 @@
 local Players = require("config.players")
-local Config = require("config.config")
+local Layout = require("config.layout")
 local Ball = require("entities/ball")
 local Level = require("entities/level")
 local Paddle = require("entities/paddle")
@@ -21,7 +21,7 @@ Game.__index = Game
 function Game:new(params)
     assert(type(params) == "table", "Game:new requires a params table")
 
-    local layout_config = Config:new({ resolution = params.resolution, screen = params.screen })
+    local layout_config = Layout:new({ resolution = params.resolution, screen = params.screen })
 
     local players = Players:create({
         players = params.players,
@@ -31,7 +31,7 @@ function Game:new(params)
     })
 
     local instance = {
-        layout = layout_config,
+        layout = layout_config.layout,
         players = players,
         stateMachine = StateMachine:new(game_states),
         ball = Ball:new({

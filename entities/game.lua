@@ -15,6 +15,7 @@ Game.__index = Game
 ---@field players PlayerConfig[]
 ---@field screen Screen
 ---@field resolution Resolution
+---@field level? number  -- Optional level id from CLI, must be a number
 
 ---@param params GameParams
 ---@return Game
@@ -32,6 +33,7 @@ function Game:new(params)
         live_area = layout_config.layout.areas.live,
         life = layout_config.layout.life,
         brick = layout_config.layout.brick,
+        level_id = tonumber(params.level),
     })
 
     local instance = {

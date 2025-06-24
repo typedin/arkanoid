@@ -1,6 +1,9 @@
 local Collision = require("collision/collision")
 local Game = require("entities/game")
 local resolutions = require("config.resolutions")
+local parse_args = require("libraries.parse_args")
+local merge_table = require("libraries.merge_table")
+local cli_args = parse_args()
 
 local game
 
@@ -8,11 +11,39 @@ function love.load()
     love.window.setTitle("Arkanoid Clone")
     love.window.setMode(640, 480)
 
-    local game_params = { players = { { name = "me" }, { name = "you" } }, resolution = resolutions["amiga"], screen = { width = 640, height = 480 } }
+    local game_params = {
+        players = { { name = "me" }, { name = "you" } },
+        resolution = resolutions["amiga"],
+        screen = { width = 640, height = 480 },
+    }
+
+    merge_table.merge(game_params, cli_args)
+
+    if type(game_params.players[1]) == "string" then
+        local names = game_params.players
+        game_params.players = {}
+        for _, n in ipairs(names) do
+            table.insert(game_params.players, { name = n })
+        end
+    end
 
     game = Game:new(game_params)
 
     game.stateMachine:change("play")
+
+    -- Use cli_args as needed
+    if cli_args.debug then
+        print("Debug mode enabled!")
+    end
+    if cli_args.level then
+        print("Start at level:", cli_args.level)
+    end
+    if cli_args.players then
+        print("Players:", table.concat(cli_args.players, ", "))
+    end
+    if cli_args.bonus then
+        print("Bonuses:", table.concat(cli_args.bonus, ", "))
+    end
 end
 
 function love.update(dt)

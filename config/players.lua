@@ -12,6 +12,7 @@ local Players = {}
 ---@field live_area LiveArea
 ---@field life LifeLayout
 ---@field brick BrickLayout
+---@field level_id? number  -- Optional level id from CLI, must be a number
 
 ---@return Player[]
 function Players:create(params)
@@ -24,6 +25,9 @@ function Players:create(params)
     assert(type(params.life.height) == "number", "params.life.height must be a number")
     assert(type(params.life.width) == "number", "params.life.width must be a number")
     assert(params.brick, "Players:create requires a level")
+    if params.level_id ~= nil then
+        assert(type(params.level_id) == "number", "level_id must be a number if provided")
+    end
 
     for index, player in ipairs(params.players) do
         assert(type(player.name) == "string", "Config:new requires a name (error at " .. index .. ")")
@@ -55,8 +59,9 @@ function Players:create(params)
         }
 
         local score = Score:new(score_params)
+        local level_id = params.level_id or 1
         local level = Level:load({
-            id = 1,
+            id = level_id,
             brick = params.brick,
             live_area = params.live_area,
         })

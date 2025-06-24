@@ -7,6 +7,7 @@ Player.__index = Player
 ---@field score Score
 ---@field lives Life[]
 ---@field level Level
+---@field level_id? string  -- Optional level id from CLI
 
 ---@param params PlayerConfig
 ---@return Player

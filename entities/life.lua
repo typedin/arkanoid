@@ -8,24 +8,30 @@ setmetatable(Life, { __index = EntityBase })
 local function calculateX(params)
     local margin_left = 5
 
-    local first_life_position = (params.live_area.x + (params.life.width / 2))
-    local right_offset = (params.life.width + margin_left) * (params.life_number - 1)
+    local first_life_position = (params.x + (params.width / 2))
+    local right_offset = (params.width + margin_left) * (params.life_number - 1)
 
     return first_life_position + right_offset
 end
 
 ---@class LifeParams
----@field live_area LiveArea
----@field life LifeLayout
----@field life_number number
+---@field x number
+---@field y number
+---@field width number
+---@field height number
 
 ---@return Life
 function Life:new(params)
+    assert(type(params.x) == "number", "Life:new requires params.x to be a number")
+    assert(type(params.y) == "number", "Life:new requires params.y to be a number")
+    assert(type(params.width) == "number", "Life:new requires params.width to be a number")
+    assert(type(params.height) == "number", "Life:new requires params.height to be a number")
+
     local instance = {
         x = calculateX(params),
-        y = params.live_area.height + 35, -- WARNING agic number
-        width = params.life.width,
-        height = params.life.height,
+        y = params.y + 35, -- WARNING agic number
+        width = params.width,
+        height = params.height,
     }
 
     setmetatable(instance, Life)

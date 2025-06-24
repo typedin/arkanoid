@@ -5,13 +5,26 @@ Score.__index = Score
 ---@class ScoreParams
 ---@field x number
 ---@field y number
+---@field width number
+---@field height number
+---@field player_name string
 
 ---@return Score
 function Score:new(params)
+    -- assert all fields are the right type
+    assert(type(params.x) == "number", "Score:new requires params.x to be a number")
+    assert(type(params.y) == "number", "Score:new requires params.y to be a number")
+    assert(type(params.width) == "number", "Score:new requires params.width to be a number")
+    assert(type(params.height) == "number", "Score:new requires params.height to be a number")
+    assert(type(params.player_name) == "string", "Score:new requires params.player_name to be a string")
+
     local instance = {
         value = 0,
         x = params.x,
         y = params.y,
+        width = params.width,
+        height = params.height,
+        player_name = params.player_name,
     }
 
     setmetatable(instance, Score)
@@ -36,6 +49,8 @@ function Score:toTable()
 end
 
 function Score:draw()
+    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    -- love.graphics.print(self.name, 200, 200)
     local score_table = self:toTable()
     for i = 1, #score_table do
         love.graphics.print(score_table[i], self.x + (10 * i), self.y)

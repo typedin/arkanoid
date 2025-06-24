@@ -30,9 +30,6 @@ function Players:create(params)
     local players = {}
 
     for index, player in ipairs(params.players) do
-        local x = params.hud.x + params.hud.width / 2
-        local y = params.hud.y + params.hud.height / 2
-
         local life_params = {
             x = params.live_area.x,
             y = params.live_area.height + 35,
@@ -46,7 +43,16 @@ function Players:create(params)
             Life:new(merge_table.merge(life_params, { life_number = 3 })),
         }
 
-        local score = Score:new({ x = x, y = y * index })
+        local score_params = {
+            x = params.hud.subsections["player_" .. index].x,
+            y = params.hud.subsections["player_" .. index].y,
+            width = params.hud.subsections["player_" .. index].width,
+            height = params.hud.subsections["player_" .. index].height,
+            player_name = player.name,
+        }
+
+        local score = Score:new(score_params)
+
         table.insert(players, index, Player:new({ name = player.name, lives = lives, score = score }))
     end
 

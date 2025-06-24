@@ -101,11 +101,10 @@ describe("Layout", function()
         it("should define a hud area", function()
             local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
 
-            -- add the wall thickness
-            assert.are.equal(190, layout.layout.areas.hud.x)
+            assert.are.equal(198, layout.layout.areas.hud.x)
             assert.are.equal(20, layout.layout.areas.hud.y)
-            assert.are.equal(200, layout.layout.areas.hud.height) -- screen size minus 40 px
-            assert.are.equal(320 - 198, layout.layout.areas.hud.width)
+            assert.are.equal(200, layout.layout.areas.hud.height)
+            assert.are.equal(122, layout.layout.areas.hud.width)
         end)
 
         it("should have 5 subsections", function()
@@ -134,6 +133,24 @@ describe("Layout", function()
                 hud.subsections.title.height + hud.subsections.player_1.height + hud.subsections.player_2.height + hud.subsections.high_score.height
             )
             assert.are.equal(hud.height / 2, hud.subsections.credits.height)
+        end)
+
+        it("shoudl define the same x for all the subsections", function()
+            local hud = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } }).layout.areas.hud
+
+            for _, subsection in pairs(hud.subsections) do
+                assert.are.equal(hud.x, subsection.x)
+            end
+        end)
+
+        it("should define a y value for all the subsections", function()
+            local hud = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } }).layout.areas.hud
+
+            assert.are.equal(hud.y, hud.subsections.title.y)
+            assert.are.equal(hud.y + hud.height / 8, hud.subsections.player_1.y)
+            assert.are.equal(hud.y + hud.height / 8 * 2, hud.subsections.player_2.y)
+            assert.are.equal(hud.y + hud.height / 8 * 3, hud.subsections.high_score.y)
+            assert.are.equal(hud.y + hud.height / 2, hud.subsections.credits.y)
         end)
     end)
 

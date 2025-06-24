@@ -91,6 +91,7 @@ function Layout:_apply_resolution()
         width = math.floor(LIVE_RATIO * self.layout.areas.active.width) - (self.layout.wall.thickness * 2),
         height = self.layout.areas.active.height - self.layout.wall.thickness,
         paddle_line = self.layout.areas.active.height - self.layout.wall.thickness + 10,
+        life_line = self.layout.areas.active.height - 35,
     }
 
     self.layout.areas.walls = {
@@ -119,7 +120,7 @@ function Layout:_apply_resolution()
 
     -- just the rest of the available space
     self.layout.areas.hud = {
-        x = self.layout.areas.live.width + self.layout.wall.thickness,
+        x = self.layout.areas.live.width + self.layout.wall.thickness + self.layout.wall.thickness,
         y = self.layout.areas.active.y,
         width = self.layout.areas.active.width - self.layout.areas.live.width - self.layout.wall.thickness * 2,
         height = self.layout.areas.active.height,
@@ -139,7 +140,9 @@ function Layout:_build_hud()
 
     -- List of subsection names that use the same width/height logic
     local simple_sections = { "title", "player_1", "player_2", "high_score" }
-    for _, name in ipairs(simple_sections) do
+    for index, name in ipairs(simple_sections) do
+        self.layout.areas.hud.subsections[name].x = self.layout.areas.hud.x
+        self.layout.areas.hud.subsections[name].y = self.layout.areas.hud.y + self.layout.areas.hud.height / 8 * (index - 1)
         self.layout.areas.hud.subsections[name].width = self.layout.areas.hud.width
         -- each subsection is 1/8 of the hud height
         self.layout.areas.hud.subsections[name].height = self.layout.areas.hud.height / 8
@@ -148,6 +151,8 @@ function Layout:_build_hud()
     -- Special case for credits
     self.layout.areas.hud.subsections.credits.width = self.layout.areas.hud.width
     self.layout.areas.hud.subsections.credits.height = self.layout.areas.hud.height / 2
+    self.layout.areas.hud.subsections.credits.y = self.layout.areas.hud.y + self.layout.areas.hud.height / 2
+    self.layout.areas.hud.subsections.credits.x = self.layout.areas.hud.x
 
     return self
 end

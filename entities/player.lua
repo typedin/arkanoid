@@ -29,7 +29,6 @@ function Player:new(params)
 end
 
 function Player:draw()
-    love.graphics.print(self.name, 200, 200)
     self.score:draw()
     for _, life in ipairs(self.lives) do
         life:draw()

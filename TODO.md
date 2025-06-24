@@ -2,13 +2,12 @@
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 # BUGS
 - [ ] collision with 2 bricks at the same time
-- [ ] ball sticks to walls
-- [ ] ball should not change place relative to the paddle when glued 
 - [ ] bricks layout is buggy: weird margin to the right most brick
 
 # TODO
+- [ ] title area 
+- [ ] credits area
 - [ ] game over screen one per player
-- [ ] assign config to game is useless
 - [ ] todo difficulties? -> ball speed
 - [ ] on game load / new life / new level, put the paddle at the center
 - [ ] add rotation to ball ?

@@ -1,8 +1,8 @@
-local Players = require("config.players")
-local Layout = require("config.layout")
 local Ball = require("entities/ball")
+local Layout = require("config.layout")
 local Level = require("entities/level")
 local Paddle = require("entities/paddle")
+local Players = require("config.players")
 local StateMachine = require("states/StateMachine")
 local Wall = require("entities/wall")
 local game_states = require("states/game_states")
@@ -20,6 +20,9 @@ Game.__index = Game
 ---@return Game
 function Game:new(params)
     assert(type(params) == "table", "Game:new requires a params table")
+    assert(type(params.players) == "table", "Game:new requires params.players to be a table")
+    assert(type(params.screen) == "table", "Game:new requires params.screen to be a table")
+    assert(type(params.resolution) == "table", "Game:new requires params.resolution to be a table")
 
     local layout_config = Layout:new({ resolution = params.resolution, screen = params.screen })
 
@@ -49,7 +52,6 @@ function Game:new(params)
             top = Wall:new(layout_config.layout.areas.walls.top),
             right = Wall:new(layout_config.layout.areas.walls.right),
         },
-        -- live_area, layout_config.layout.bricks
         level = Level:load({
             level_name = "1",
             brick = layout_config.layout.brick,

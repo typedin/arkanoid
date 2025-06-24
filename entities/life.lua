@@ -29,7 +29,7 @@ function Life:new(params)
 
     local instance = {
         x = calculateX(params),
-        y = params.y + 35, -- WARNING agic number
+        y = params.y, -- WARNING agic number
         width = params.width,
         height = params.height,
     }

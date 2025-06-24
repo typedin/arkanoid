@@ -32,7 +32,7 @@ function Players:create(params)
     for index, player in ipairs(params.players) do
         local life_params = {
             x = params.live_area.x,
-            y = params.live_area.height + 35,
+            y = params.live_area.life_line,
             width = params.life.width,
             height = params.life.height,
         }

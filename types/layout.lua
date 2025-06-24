@@ -28,6 +28,7 @@
 ---@field pos_x number
 ---@field pos_y number
 ---@field paddle_line number
+---@field life_line number
 
 ---@class HudArea
 ---@field x number

@@ -85,13 +85,14 @@ function Layout:_apply_resolution()
     -- defining the outer bounds of the areas
     -- The live area is 62% of the available screen
     local LIVE_RATIO = 0.62
+    local LIFE_OFFSET = 25
     self.layout.areas.live = {
         x = self.layout.areas.active.x + self.layout.wall.thickness,
         y = self.layout.areas.active.y + self.layout.wall.thickness,
         width = math.floor(LIVE_RATIO * self.layout.areas.active.width) - (self.layout.wall.thickness * 2),
         height = self.layout.areas.active.height - self.layout.wall.thickness,
         paddle_line = self.layout.areas.active.height - self.layout.wall.thickness + 10,
-        life_line = self.layout.areas.active.height - 35,
+        life_line = self.layout.areas.active.height + LIFE_OFFSET,
     }
 
     self.layout.areas.walls = {

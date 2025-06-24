@@ -49,11 +49,11 @@ function Score:toTable()
 end
 
 function Score:draw()
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
-    -- love.graphics.print(self.name, 200, 200)
+    love.graphics.rectangle("line", self.x, self.y, self.width, self.height)
+    love.graphics.print(self.player_name, self.x + 4, self.y)
     local score_table = self:toTable()
     for i = 1, #score_table do
-        love.graphics.print(score_table[i], self.x + (10 * i), self.y)
+        love.graphics.print(score_table[i], self.x + 4 + (10 * i), self.y + 16)
     end
 end
 

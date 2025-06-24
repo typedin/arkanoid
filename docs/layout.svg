@@ -1,31 +1,31 @@
 <svg width="320" height="240" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" font-family="monospace" font-size="7">
-  <!-- Active Area -->
-  <rect x="0" y="20" width="320" height="200" fill="#e0e0e0" stroke="#888" stroke-width="1"/>
-  <text x="5" y="30" fill="#888">active</text>
+    <!-- Active Area -->
+    <rect x="0" y="20" width="320" height="200" fill="#e0e0e0" stroke="#888" stroke-width="1"/>
+    <text x="5" y="30" fill="#888">active</text>
 
-  <!-- Live Area -->
-  <rect x="10" y="30" width="178" height="190" fill="#b3e5fc" stroke="#0288d1" stroke-width="1"/>
-  <text x="15" y="45" fill="#0288d1">live</text>
+    <!-- Live Area -->
+    <rect x="10" y="30" width="178" height="190" fill="#b3e5fc" stroke="#0288d1" stroke-width="1"/>
+    <text x="15" y="45" fill="#0288d1">live</text>
 
-  <!-- Walls -->
-  <rect x="0" y="20" width="10" height="200" fill="#bdbdbd" stroke="#616161" stroke-width="1"/>
-  <rect x="188" y="20" width="10" height="200" fill="#bdbdbd" stroke="#616161" stroke-width="1"/>
-  <rect x="0" y="20" width="198" height="10" fill="#bdbdbd" stroke="#616161" stroke-width="1"/>
-  <text x="2" y="35" fill="#616161">walls</text>
+    <!-- Walls -->
+    <rect x="0" y="20" width="10" height="200" fill="#bdbdbd" stroke="#616161" stroke-width="1"/>
+    <rect x="188" y="20" width="10" height="200" fill="#bdbdbd" stroke="#616161" stroke-width="1"/>
+    <rect x="0" y="20" width="198" height="10" fill="#bdbdbd" stroke="#616161" stroke-width="1"/>
+    <text x="2" y="35" fill="#616161">walls</text>
 
-  <!-- HUD Area -->
-  <rect x="198" y="20" width="122" height="200" fill="#ffe082" stroke="#ffb300" stroke-width="1"/>
-  <text x="200" y="35" fill="#ffb300">hud</text>
+    <!-- HUD Area -->
+    <rect x="198" y="20" width="122" height="200" fill="#ffe082" stroke="#ffb300" stroke-width="1"/>
+    <text x="200" y="35" fill="#ffb300">hud</text>
 
-  <!-- HUD Subsections -->
-  <rect x="198" y="20" width="122" height="25" fill="#fff9c4" stroke="#fbc02d" stroke-width="0.5"/>
-  <text x="200" y="35" fill="#fbc02d">title</text>
-  <rect x="198" y="45" width="122" height="25" fill="#fff9c4" stroke="#fbc02d" stroke-width="0.5"/>
-  <text x="200" y="60" fill="#fbc02d">player_1</text>
-  <rect x="198" y="70" width="122" height="25" fill="#fff9c4" stroke="#fbc02d" stroke-width="0.5"/>
-  <text x="200" y="85" fill="#fbc02d">player_2</text>
-  <rect x="198" y="95" width="122" height="25" fill="#fff9c4" stroke="#fbc02d" stroke-width="0.5"/>
-  <text x="200" y="110" fill="#fbc02d">high_score</text>
-  <rect x="198" y="120" width="122" height="100" fill="#ffe0b2" stroke="#f57c00" stroke-width="0.5"/>
-  <text x="200" y="135" fill="#f57c00">credits</text>
+    <!-- HUD Subsections -->
+    <rect x="198" y="20" width="122" height="25" fill="#fff9c4" stroke="#fbc02d" stroke-width="0.5"/>
+    <text x="200" y="35" fill="#fbc02d">title</text>
+    <rect x="198" y="45" width="122" height="25" fill="#fff9c4" stroke="#fbc02d" stroke-width="0.5"/>
+    <text x="200" y="60" fill="#fbc02d">player_1</text>
+    <rect x="198" y="70" width="122" height="25" fill="#fff9c4" stroke="#fbc02d" stroke-width="0.5"/>
+    <text x="200" y="85" fill="#fbc02d">player_2</text>
+    <rect x="198" y="95" width="122" height="25" fill="#fff9c4" stroke="#fbc02d" stroke-width="0.5"/>
+    <text x="200" y="110" fill="#fbc02d">high_score</text>
+    <rect x="198" y="120" width="122" height="100" fill="#ffe0b2" stroke="#f57c00" stroke-width="0.5"/>
+    <text x="200" y="135" fill="#f57c00">credits</text>
 </svg>

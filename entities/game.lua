@@ -35,6 +35,7 @@ function Game:new(params)
 
     local instance = {
         layout = layout_config.layout,
+        current_player = 1,
         players = players,
         stateMachine = StateMachine:new(game_states),
         ball = Ball:new({
@@ -62,6 +63,27 @@ function Game:new(params)
     setmetatable(instance, Game)
 
     return instance
+end
+
+function Game:nextRound()
+    table.remove(self.players[self.current_player].lives)
+    if #self.players == 2 then
+        if self.current_player == 1 then
+            self.current_player = 2
+        elseif self.current_player == 2 then
+            self.current_player = 1
+        end
+    end
+    self.paddle = Paddle:new({
+        paddle = self.layout.paddle,
+        live_area = self.layout.areas.live,
+        physics = require("config.physics.entities").paddle,
+    })
+    self.ball = Ball:new({
+        ball = self.layout.ball,
+        live_area = self.layout.areas.live,
+        physics = require("config.physics.entities").ball,
+    })
 end
 
 function Game:nextLevel()

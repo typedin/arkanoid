@@ -64,21 +64,7 @@ end
 ---@param game Game
 function Collision.ball_fell(game)
     if game.ball.y > game.paddle.y + game.paddle.height then
-        table.remove(game.players[1].lives)
-        game.paddle = Paddle:new({
-            paddle = game.layout.paddle,
-            live_area = game.layout.areas.live,
-            physics = require("config.physics.entities").paddle,
-        })
-        game.ball = Ball:new({
-            ball = game.layout.ball,
-            live_area = game.layout.areas.live,
-            physics = require("config.physics.entities").ball,
-        })
-        -- if 2 players then
-        -- game:nextPlayer()
-        -- else game:nextLife()
-        -- end
+        game:nextRound()
     end
 end
 
@@ -97,7 +83,7 @@ function Collision.ball_bricks(game)
         then
             brick.hits = brick.hits - 1
             if brick.hits < 1 then
-                game.players[1].score:add(brick.points)
+                game.players[game.current_player].score:add(brick.points)
             end
             ball.dy = -ball.dy
         end

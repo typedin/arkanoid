@@ -69,6 +69,14 @@ function Ball:checkCollision(e)
         and self:getGeometry().top < e:getGeometry().bottom
 end
 
+---@class DiscGeometry
+---@field left number
+---@field top number
+---@field right number
+---@field bottom number
+---@field center number
+
+---@return DiscGeometry
 ---@diagnostic disable-next-line: duplicate-set-field
 function Ball:getGeometry()
     local geometry = {

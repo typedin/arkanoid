@@ -17,7 +17,6 @@
 - [ ] multi player (2)
 - [ ] levels (see)[https://www.mobygames.com/game/1087/arkanoid/screenshots/]
 - [ ] bonuses (extra lives, extra points, weapons)
-- [ ] player name
 - [ ] save scores
 - [ ] Add a game over screen
 - [ ] Add a pause screen

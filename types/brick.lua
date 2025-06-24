@@ -7,7 +7,7 @@
 ---@field hits number
 ---@field points number
 ---@field kind BrickKind
----
+
 ---@class BricksKinds
 ---@field [string] BrickKind
 

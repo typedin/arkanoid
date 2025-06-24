@@ -34,30 +34,30 @@ function Game:new(params)
     })
 
     local instance = {
-        layout = layout_config.layout,
-        current_player = 1,
-        players = players,
-        stateMachine = StateMachine:new(game_states),
         ball = Ball:new({
             ball = layout_config.layout.ball,
             live_area = layout_config.layout.areas.live,
             physics = require("config.physics.entities").ball,
+        }),
+        current_player = 1,
+        layout = layout_config.layout,
+        level = Level:load({
+            level_name = "1",
+            brick = layout_config.layout.brick,
+            live_area = layout_config.layout.areas.live,
         }),
         paddle = Paddle:new({
             paddle = layout_config.layout.paddle,
             live_area = layout_config.layout.areas.live,
             physics = require("config.physics.entities").paddle,
         }),
+        players = players,
+        stateMachine = StateMachine:new(game_states),
         walls = {
             left = Wall:new(layout_config.layout.areas.walls.left),
             top = Wall:new(layout_config.layout.areas.walls.top),
             right = Wall:new(layout_config.layout.areas.walls.right),
         },
-        level = Level:load({
-            level_name = "1",
-            brick = layout_config.layout.brick,
-            live_area = layout_config.layout.areas.live,
-        }),
     }
 
     setmetatable(instance, Game)

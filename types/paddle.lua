@@ -7,6 +7,7 @@
 ---@field stateMachine StateMachine
 ---@field move_left fun(self: Paddle, context: PaddleContext)
 ---@field move_right fun(self: Paddle, context: PaddleContext)
+---@field getGeometry fun(self: Paddle): Geometry
 
 ---@class PaddleContext
 ---@field dt number

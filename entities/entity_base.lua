@@ -9,6 +9,13 @@ end
 
 local EntityBase = {}
 
+---@class Geometry
+---@field left number
+---@field top number
+---@field right number
+---@field bottom number
+
+---@return Geometry
 function EntityBase:getGeometry()
     local geometry = {
         left = self.x, -- left

@@ -9,3 +9,4 @@
 ---@field speed number
 ---@field diameter number
 ---@field stateMachine StateMachine
+---@field getGeometry fun(self: Ball): DiscGeometry

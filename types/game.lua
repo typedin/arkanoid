@@ -1,9 +1,10 @@
 ---@class Game
 ---@field ball Ball
----@field config Layout
+---@field current_player number
 ---@field layout Layout
----@field paddle Paddle
----@field stateMachine StateMachine
----@field walls Wall
----@field players Player[]
 ---@field level Level
+---@field paddle Paddle
+---@field players Player[]
+---@field stateMachine StateMachine
+---@field walls Walls
+---@field nextRound fun(self: Game)

@@ -1,6 +1,3 @@
-local Ball = require("entities/ball")
-local Paddle = require("entities/paddle")
-
 local Collision = {}
 
 ---@param game Game

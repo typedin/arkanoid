@@ -19,6 +19,7 @@
 ---@field width number
 ---@field height number
 ---@field thickness number
+---@field getGeometry fun(self: Wall): Geometry
 
 ---@class Walls
 ---@field left Wall

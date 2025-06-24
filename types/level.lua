@@ -1,5 +1,5 @@
 ---@class Level
----@field id string
+---@field id number
 ---@field name string
 ---@field bricks Brick[]
 

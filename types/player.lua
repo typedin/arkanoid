@@ -3,4 +3,5 @@
 ---@field lives Life[]
 ---@field current_level number
 ---@field score Score
+---@field level Level
 ---@field draw fun(self: Player)

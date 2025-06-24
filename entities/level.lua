@@ -54,7 +54,7 @@ local Level = {}
 Level.__index = Level
 
 ---@class LevelParams
----@field level_name string
+---@field id number
 ---@field live_area table
 ---@field brick table
 
@@ -62,13 +62,14 @@ Level.__index = Level
 ---@return Level
 function Level:load(params)
     -- don't load all levels at once for memory reasons
-    local level = require("levels/" .. params.level_name)
+    -- explicitly cast the level name to a string
+    local level = require("levels/" .. tostring(params.id))
     assert(type(level) == "table", "count not load level")
     assert(type(level.name) == "string", "params.name must be a string")
     assert(type(level.rows) == "table", "params.rows must be a table")
 
     local instance = {
-        id = params.level_name,
+        id = params.id,
         name = level.name,
         bricks = {},
     }
@@ -79,9 +80,9 @@ function Level:load(params)
     return instance
 end
 
-function Level:next(params)
-    params.level_name = self.id + 1
-    return Level:load(params)
+---@return number
+function Level:getNext()
+    return self.id + 1
 end
 
 function Level:cleared()

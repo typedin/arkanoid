@@ -68,7 +68,7 @@ end
 ---@param game Game
 function Collision.ball_bricks(game)
     local ball = game.ball
-    local bricks = game.level.bricks
+    local bricks = game.players[game.current_player].level.bricks
 
     for _, brick in ipairs(bricks) do
         if

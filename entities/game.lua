@@ -31,6 +31,7 @@ function Game:new(params)
         hud = layout_config.layout.areas.hud,
         live_area = layout_config.layout.areas.live,
         life = layout_config.layout.life,
+        brick = layout_config.layout.brick,
     })
 
     local instance = {
@@ -41,11 +42,6 @@ function Game:new(params)
         }),
         current_player = 1,
         layout = layout_config.layout,
-        level = Level:load({
-            level_name = "1",
-            brick = layout_config.layout.brick,
-            live_area = layout_config.layout.areas.live,
-        }),
         paddle = Paddle:new({
             paddle = layout_config.layout.paddle,
             live_area = layout_config.layout.areas.live,
@@ -87,7 +83,11 @@ function Game:nextRound()
 end
 
 function Game:nextLevel()
-    self.level = self.level:next()
+    self.players[self.current_player].level = Level:load({
+        id = self.players[self.current_player].level:getNext(),
+        brick = self.layout.brick,
+        live_area = self.layout.areas.live,
+    })
 end
 
 return Game

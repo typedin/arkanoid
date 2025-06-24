@@ -20,7 +20,7 @@ function love.update(dt)
     game.stateMachine:update(game, dt)
     Collision.handle(game)
 
-    if game.level:cleared() then
+    if game.players[game.current_player].level:cleared() then
         game:nextLevel()
     end
 
@@ -41,7 +41,7 @@ function love.draw()
         wall:draw()
     end
     -- Draw bricks
-    for _, brick in ipairs(game.level.bricks) do
+    for _, brick in ipairs(game.players[game.current_player].level.bricks) do
         if brick.hits > 0 then
             brick:draw()
         end

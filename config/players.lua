@@ -1,3 +1,4 @@
+local Level = require("entities/level")
 local Score = require("entities/score")
 local Life = require("entities/life")
 local merge_table = require("libraries.merge_table")
@@ -10,6 +11,7 @@ local Players = {}
 ---@field hud HudArea
 ---@field live_area LiveArea
 ---@field life LifeLayout
+---@field brick BrickLayout
 
 ---@return Player[]
 function Players:create(params)
@@ -21,6 +23,7 @@ function Players:create(params)
     assert(type(params.life) == "table", "Config:new requires a life table")
     assert(type(params.life.height) == "number", "params.life.height must be a number")
     assert(type(params.life.width) == "number", "params.life.width must be a number")
+    assert(params.brick, "Players:create requires a level")
 
     for index, player in ipairs(params.players) do
         assert(type(player.name) == "string", "Config:new requires a name (error at " .. index .. ")")
@@ -52,8 +55,12 @@ function Players:create(params)
         }
 
         local score = Score:new(score_params)
-
-        table.insert(players, index, Player:new({ name = player.name, lives = lives, score = score }))
+        local level = Level:load({
+            id = 1,
+            brick = params.brick,
+            live_area = params.live_area,
+        })
+        table.insert(players, index, Player:new({ name = player.name, lives = lives, score = score, level = level }))
     end
 
     return players

@@ -21,7 +21,7 @@ M.rows = {
 	},
     --[[ row 3 ]]
     {
-        { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, 
+        { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" },
 	},
     --[[ row 4 ]]
     {

@@ -16,11 +16,11 @@ local layout_fixture = {
                 width = 290,
                 height = 600,
                 subsections = {
-                    title =      { x = 510, y = 0,   width = 290, height = 75 },
-                    player_1 =   { x = 510, y = 75,  width = 290, height = 75 },
-                    player_2 =   { x = 510, y = 150, width = 290, height = 75 },
+                    title = { x = 510, y = 0, width = 290, height = 75 },
+                    player_1 = { x = 510, y = 75, width = 290, height = 75 },
+                    player_2 = { x = 510, y = 150, width = 290, height = 75 },
                     high_score = { x = 510, y = 225, width = 290, height = 75 },
-                    credits =    { x = 510, y = 300, width = 290, height = 300 },
+                    credits = { x = 510, y = 300, width = 290, height = 300 },
                 },
             },
         },
@@ -29,6 +29,7 @@ local layout_fixture = {
         brick = { width = 32, height = 16 },
         life = { width = 32, height = 12 },
         paddle = { width = 64, height = 16 },
+        power_up = { width = 32, height = 16 },
         wall = { thickness = 10 },
     },
 }

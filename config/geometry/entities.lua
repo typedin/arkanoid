@@ -9,6 +9,10 @@
 ---@field width number
 ---@field height number
 
+---@class PowerUpLayout
+---@field width number
+---@field height number
+
 ---@class LifeLayout
 ---@field width number
 ---@field height number
@@ -27,5 +31,6 @@ return {
     brick = { width = 16, height = 8 },
     life = { width = 16, height = 6 },
     paddle = { width = 32, height = 8 },
+    power_up = { width = 16, height = 8 },
     wall = { thickness = 8 },
 }

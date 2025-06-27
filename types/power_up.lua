@@ -1,0 +1,3 @@
+---@class PowerUp
+---@field name PowerUpName
+---@field new fun(PowerUpParams): PowerUp

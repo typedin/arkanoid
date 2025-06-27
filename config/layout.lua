@@ -48,6 +48,7 @@ function Layout:new(params)
             brick = apply_scale(params, entities.brick),
             life = apply_scale(params, entities.life),
             paddle = apply_scale(params, entities.paddle),
+            power_up = apply_scale(params, entities.power_up),
             wall = apply_scale(params, entities.wall),
         },
     }

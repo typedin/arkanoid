@@ -6,18 +6,14 @@
 - [ ] bug if I use the live height it freezes the game
 
 # TODO
+- [ ] bonuses (extra lives, extra points, weapons)
 - [ ] title area 
 - [ ] credits area
 - [ ] game over screen one per player
-- [ ] todo difficulties? -> ball speed
-- [ ] on game load / new life / new level, put the paddle at the center
-- [ ] add rotation to ball ?
 - [ ] a level may have a fixed amount of bonuses and they are assigned randomly
 - [ ] (physics)[https://www.love2d.org/wiki/love.physics]
 - [ ] State machine
-- [ ] multi player (2)
 - [ ] levels (see)[https://www.mobygames.com/game/1087/arkanoid/screenshots/]
-- [ ] bonuses (extra lives, extra points, weapons)
 - [ ] save scores
 - [ ] Add a game over screen
 - [ ] Add a pause screen
@@ -25,3 +21,9 @@
 - [ ] create music
 - [ ] sprites for wall, paddle, ball
 - [ ] font for score
+- [ ] add rotation to ball ?
+- [ ] todo difficulties? -> ball speed
+
+# DONE
+- [x] multi player (2)
+- [x] on game load / new life / new level, put the paddle at the center

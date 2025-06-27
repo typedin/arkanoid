@@ -73,10 +73,10 @@ function Collision.ball_bricks(game)
     for _, brick in ipairs(bricks) do
         if
             brick.hits > 0
-            and ball.x + ball.diameter / 2 > brick.x
-            and ball.x - ball.diameter / 2 < brick.x + brick.width
-            and ball.y + ball.diameter / 2 > brick.y
-            and ball.y - ball.diameter / 2 < brick.y + brick.height
+            and ball.x + ball.radius > brick.x
+            and ball.x - ball.radius < brick.x + brick.width
+            and ball.y + ball.radius > brick.y
+            and ball.y - ball.radius < brick.y + brick.height
         then
             brick.hits = brick.hits - 1
             if brick.hits < 1 then

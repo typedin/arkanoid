@@ -8,5 +8,6 @@
 ---@field dy number
 ---@field speed number
 ---@field diameter number
+---@field radius number
 ---@field stateMachine StateMachine
 ---@field getGeometry fun(self: Ball): DiscGeometry

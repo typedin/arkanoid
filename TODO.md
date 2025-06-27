@@ -3,6 +3,7 @@
 # BUGS
 - [ ] collision with 2 bricks at the same time
 - [ ] bricks layout is buggy: weird margin to the right most brick
+- [ ] bug if I use the live height it freezes the game
 
 # TODO
 - [ ] title area 

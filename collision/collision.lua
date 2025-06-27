@@ -60,6 +60,10 @@ end
 
 ---@param game Game
 function Collision.ball_fell(game)
+    -- TODO
+    -- if I use the live height it freezes the game
+    -- figure out why
+    -- TODO:
     if game.ball.y > game.paddle.y + game.paddle.height then
         game:nextRound()
     end

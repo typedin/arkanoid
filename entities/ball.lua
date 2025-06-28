@@ -111,6 +111,7 @@ end
 
 ---@param glued boolean
 function Ball:setGlued(glued)
+    print("ball setGlued")
     self.glued = glued
 end
 

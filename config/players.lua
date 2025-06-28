@@ -1,7 +1,5 @@
 local Level = require("entities/level")
 local Score = require("entities/score")
-local Life = require("entities/life")
-local merge_table = require("libraries.merge_table")
 local Player = require("entities.player")
 
 local Players = {}
@@ -44,12 +42,6 @@ function Players:create(params)
             height = params.life.height,
         }
 
-        local lives = {
-            Life:new(merge_table.merge(life_params, { life_number = 1 })),
-            Life:new(merge_table.merge(life_params, { life_number = 2 })),
-            Life:new(merge_table.merge(life_params, { life_number = 3 })),
-        }
-
         local score_params = {
             x = params.hud.subsections["player_" .. index].x,
             y = params.hud.subsections["player_" .. index].y,
@@ -66,7 +58,7 @@ function Players:create(params)
             power_up = params.power_up,
             live_area = params.live_area,
         })
-        table.insert(players, index, Player:new({ name = player.name, lives = lives, score = score, level = level }))
+        table.insert(players, index, Player:new({ name = player.name, life_params = life_params, score = score, level = level }))
     end
 
     return players

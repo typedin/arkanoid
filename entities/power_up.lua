@@ -1,12 +1,6 @@
 local collision = require("collision.rectangle")
 local RectangleBase = require("entities.rectangle_base")
 local PowerUps = require("config.power_ups")
---[[
-Capsule type is predetermined at specific bricks per level, but those exact positions aren't publicly documented.
-Silver/gold bricks don't drop capsules.
-Early/mid levels have the most capsule bricks; late levels far fewer.
-Fans haven't documented a full level‑by‑capsule breakdown, so your best bet is firsthand observation or fandom collaboration.
---]]
 
 local PowerUp = {}
 PowerUp.__index = PowerUp
@@ -24,6 +18,7 @@ setmetatable(PowerUp, { __index = RectangleBase })
 ---@return PowerUp
 function PowerUp:new(params)
     local instance = {
+        action = PowerUps[params.name].action,
         dy = params.speed,
         height = params.height,
         name = params.name,
@@ -49,6 +44,7 @@ end
 ---@field paddle Paddle
 ---@field player Player
 ---@field game Game
+
 ---@param context PowerUpCheckCollisionContext
 function PowerUp:resolveCollision(context)
     -- if power_up is out of bounds then ask the caller to destroy it
@@ -56,26 +52,43 @@ function PowerUp:resolveCollision(context)
         self:markAsDestroyable()
     end
     if collision.check_rectangle_collision(self, context.paddle) then
-        if self.name == "break" then
+        print(self.name)
+        -- player
+        if self.action == "extra_life" then
+            print("calling player extraLife")
+            context.player:extraLife()
+        -- game
+        elseif self.action == "break" then
+            print("calling game nextLevel")
             context.game:nextLevel()
-        elseif self.name == "catch" then
+        elseif self.action == "multiple_balls" then
+            print("calling game spawnBalls")
+            context.game:spawnBalls(2)
+        -- ball
+        elseif self.action == "catch" then
             for _, ball in ipairs(context.game.balls) do
+                print("calling ball setGlued")
                 ball:setGlued(true)
             end
-        elseif self.name == "slow_down" then
-            context.ball:slowDown()
-        elseif self.name == "extend" then
+        elseif self.action == "speed_up" then
+            for _, ball in ipairs(context.game.balls) do
+                print("calling ball speedUp")
+                ball:speedUp()
+            end
+        elseif self.action == "slow_down" then
+            for _, ball in ipairs(context.game.balls) do
+                print("calling ball slowDown")
+                ball:slowDown()
+            end
+        elseif self.action == "extend" then
+            print("calling paddle extend")
             context.paddle:extend()
-        elseif self.name == "laser" then
+        elseif self.action == "laser" then
+            print("calling paddle laser")
             context.paddle:laser()
-        elseif self.name == "multiple_balls" then
-            context.game:spawnBalls(2)
-        elseif self.name == "extra_life" then
-            context.player:extraLife()
-        elseif self.name == "shrink" then
+        elseif self.action == "shrink" then
+            print("calling paddle shrink")
             context.paddle:shrink()
-        elseif self.name == "speed_up" then
-            context.ball:speedUp()
         end
         self:markAsDestroyable()
     end

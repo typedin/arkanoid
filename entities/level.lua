@@ -77,6 +77,7 @@ function Level:load(params)
         id = params.id,
         name = level.name,
     }
+
     buildBricks(instance, level, params)
 
     setmetatable(instance, Level)

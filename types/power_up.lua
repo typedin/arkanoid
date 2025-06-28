@@ -8,6 +8,7 @@
 ---@field dy number
 ---@field height number
 ---@field name PowerUpName
+---@field action PowerUpAction
 ---@field rgb integer[] -- RGB color array: { r, g, b }
 ---@field width number
 ---@field x number

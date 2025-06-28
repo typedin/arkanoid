@@ -1,3 +1,8 @@
+Capsule type is predetermined at specific bricks per level, but those exact positions aren't publicly documented.
+Silver/gold bricks don't drop capsules.
+Early/mid levels have the most capsule bricks; late levels far fewer.
+Fans haven't documented a full level‑by‑capsule breakdown, so your best bet is firsthand observation or fandom collaboration.
+
 # READINGS
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 # BUGS

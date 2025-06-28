@@ -4,7 +4,6 @@
 local function check_rectangle_collision(obj1, obj2)
     local geom1 = obj1:getGeometry()
     local geom2 = obj2:getGeometry()
-
     -- Check if rectangles overlap
     -- Rectangle 1 is to the left of Rectangle 2
     if geom1.right < geom2.left then

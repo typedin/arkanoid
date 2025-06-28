@@ -53,6 +53,15 @@ function love.update(dt)
         Collision.handle(ball, game)
     end
 
+    -- Remove destroyable power-ups (iterate backwards to avoid index issues)
+    -- CURSOR did this
+    for i = #game.power_ups, 1, -1 do
+        local power_up = game.power_ups[i]
+        if power_up.destroyable then
+            table.remove(game.power_ups, i)
+        end
+    end
+
     if game.players[game.current_player].level:cleared() then
         game:nextLevel()
     end

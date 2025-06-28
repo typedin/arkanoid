@@ -9,47 +9,58 @@
 ---| "S" -– Shrink: Shrinks the paddle.
 ---| "U" -- speed Up: Ball moves faster
 
+---@alias PowerUpAction
+---| "break"
+---| "catch"
+---| "slow_down"
+---| "extend"
+---| "laser"
+---| "multiple_balls"
+---| "extra_life"
+---| "shrink"
+---| "speed_up"
+
 ---@class PowerUpDef
----@field name string
+---@field action PowerUpAction
 ---@field rgb integer[] -- RGB color array: { r, g, b }
 
 ---@class PowerUps
 ---@field kinds table<PowerUpName, PowerUpDef>
 local PowerUps = {
     B = {
-        name = "break",
+        action = "break",
         rgb = { 0, 1, 1 }, -- Cyan
     },
     C = {
-        name = "catch",
+        action = "catch",
         rgb = { 1, 0.5, 0 }, -- Orange
     },
     D = {
-        name = "slow_down",
+        action = "slow_down",
         rgb = { 1, 1, 0 }, -- Yellow
     },
     E = {
-        name = "extend",
+        action = "extend",
         rgb = { 1, 0, 0 }, -- Red
     },
     L = {
-        name = "laser",
+        action = "laser",
         rgb = { 0.5, 0, 1 }, -- Purple
     },
     M = {
-        name = "multiple_balls",
+        action = "multiple_balls",
         rgb = { 1, 1, 0 }, -- Yellow
     },
     P = {
-        name = "extra_life",
+        action = "extra_life",
         rgb = { 1, 0, 1 }, -- Magenta
     },
     S = {
-        name = "shrink",
+        action = "shrink",
         rgb = { 0, 0, 1 }, -- Blue
     },
     U = {
-        name = "speed_up",
+        action = "speed_up",
         rgb = { 0, 1, 0 }, -- Green
     },
 }

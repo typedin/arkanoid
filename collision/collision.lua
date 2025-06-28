@@ -108,7 +108,7 @@ function Collision.ball_bricks(ball, game)
                     )
                 end
             end
-            ball.dy = -ball.dy
+            ball:invert("dy")
         end
     end
 end

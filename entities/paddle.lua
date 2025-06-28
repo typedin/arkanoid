@@ -1,6 +1,6 @@
-local EntityBase = require("entities/entity_base")
+local RectangleBase = require("entities.rectangle_base")
 
-local Paddle = setmetatable({}, { __index = EntityBase })
+local Paddle = setmetatable({}, { __index = RectangleBase })
 Paddle.__index = Paddle
 
 ---@class PaddleConfig

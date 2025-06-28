@@ -1,4 +1,9 @@
 ---@class PowerUp
+---@field new fun(PowerUpParams): PowerUp
+---@field draw fun(PowerUp)
+---@field getGeometry fun(PowerUp): RectangleGeometry
+---@field resolveCollision fun(PowerUp, PowerUpCheckCollisionParams)
+---@field update fun(PowerUp, dt: number)
 ---@field destroyable boolean
 ---@field dy number
 ---@field height number
@@ -7,8 +12,3 @@
 ---@field width number
 ---@field x number
 ---@field y number
----@field new fun(PowerUpParams): PowerUp
----@field update fun(PowerUp, dt: number)
----@field draw fun(PowerUp)
----@field resolveCollision fun(PowerUp, PowerUpCheckCollisionParams)
----@field getGeometry fun(PowerUp): Geometry

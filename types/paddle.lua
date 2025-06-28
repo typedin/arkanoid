@@ -1,7 +1,7 @@
 ---@class Paddle
 ---@field draw fun(self: Paddle)
 ---@field extend fun(self: Paddle)
----@field getGeometry fun(self: Paddle): Geometry
+---@field getGeometry fun(self: Paddle): RectangleGeometry
 ---@field laser fun(self: Paddle)
 ---@field move_left fun(self: Paddle, context: PaddleContext)
 ---@field move_right fun(self: Paddle, context: PaddleContext)

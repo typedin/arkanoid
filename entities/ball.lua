@@ -1,6 +1,6 @@
-local EntityBase = require("entities/entity_base")
+local DiscBase = require("entities/circle_base")
 
-local Ball = setmetatable({}, { __index = EntityBase })
+local Ball = setmetatable({}, { __index = DiscBase })
 Ball.__index = Ball
 
 ---@class BallConfig
@@ -31,6 +31,7 @@ function Ball:new(params)
     return instance
 end
 
+-- TODO params
 function Ball:checkCollision(e)
     return self:getGeometry().right > e:getGeometry().left
         and self:getGeometry().left < e:getGeometry().right
@@ -43,28 +44,12 @@ function Ball:draw()
     love.graphics.circle("fill", self.x, self.y, self.radius)
 end
 
----@return DiscGeometry
----@diagnostic disable-next-line: duplicate-set-field
-function Ball:getGeometry()
-    local geometry = {
-        left = self.x - self.radius, -- left
-        top = self.y - self.radius, -- top
-        right = self.x + self.radius, -- right
-        bottom = self.y + self.radius, -- bottom
-        center = self.x, -- center
-    }
-
-    return setmetatable(geometry, EntityBase)
-end
-
+---@param axis string
 function Ball:invert(axis)
     assert(axis == "dx" or axis == "dy", "Ball:invert can only be called with dx or dy")
 
     self[axis] = -self[axis]
 end
-
----@class BallCollisionContext
----@field walls Walls
 
 ---@class DiscGeometry
 ---@field left number
@@ -73,6 +58,7 @@ end
 ---@field bottom number
 ---@field center number
 
+---@param dt number
 function Ball:move(dt)
     if self.glued then
         return
@@ -84,7 +70,7 @@ end
 ---@class BallMoveContext
 ---@field dt number
 ---@field speed number
----
+
 ---@param context BallMoveContext
 function Ball:moveLeft(context)
     self.x = self.x - context.speed * context.dt
@@ -95,7 +81,11 @@ function Ball:moveRight(context)
     self.x = self.x + context.speed * context.dt
 end
 
----@params context BallCollisionContext
+---@class BallCollisionContext
+---@field paddle Paddle
+---@field walls Walls
+
+---@param context BallCollisionContext
 function Ball:resolveCollision(context)
     if self:checkCollision(context.walls.right) then
         self.x = self.last.x

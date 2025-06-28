@@ -1,5 +1,5 @@
 local collision = require("collision.rectangle")
-local EntityBase = require("entities/entity_base")
+local RectangleBase = require("entities.rectangle_base")
 local PowerUps = require("config.power_ups")
 --[[
 Capsule type is predetermined at specific bricks per level, but those exact positions aren't publicly documented.
@@ -10,7 +10,7 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 
 local PowerUp = {}
 PowerUp.__index = PowerUp
-setmetatable(PowerUp, { __index = EntityBase })
+setmetatable(PowerUp, { __index = RectangleBase })
 
 ---@class PowerUpConfig
 ---@field height number
@@ -60,7 +60,7 @@ function PowerUp:resolveCollision(context)
             context.game:nextLevel()
         elseif self.name == "catch" then
             for _, ball in ipairs(context.game.balls) do
-                ball.glued = true
+                ball:setGlued(true)
             end
         elseif self.name == "slow_down" then
             context.ball:slowDown()

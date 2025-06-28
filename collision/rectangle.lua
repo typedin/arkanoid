@@ -33,4 +33,3 @@ end
 return {
     check_rectangle_collision = check_rectangle_collision,
 }
-

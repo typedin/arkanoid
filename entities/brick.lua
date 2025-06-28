@@ -1,9 +1,9 @@
-local EntityBase = require("entities/entity_base")
+local RectangleBase = require("entities.rectangle_base")
 
 local Brick = {}
 
 Brick.__index = Brick
-setmetatable(Brick, { __index = EntityBase })
+setmetatable(Brick, { __index = RectangleBase })
 
 ---@class BrickParams
 ---@field height number

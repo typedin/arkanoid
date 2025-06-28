@@ -1,8 +1,8 @@
-local EntityBase = require("entities/entity_base")
+local RectangleBase = require("entities.rectangle_base")
 local Wall = {}
 
 Wall.__index = Wall
-setmetatable(Wall, { __index = EntityBase })
+setmetatable(Wall, { __index = RectangleBase })
 
 function Wall:new(params)
     if not params then

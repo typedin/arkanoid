@@ -1,9 +1,9 @@
-local EntityBase = require("entities/entity_base")
+local RectangleBase = require("entities.rectangle_base")
 local Life = {}
 
 Life.__index = Life
 
-setmetatable(Life, { __index = EntityBase })
+setmetatable(Life, { __index = RectangleBase })
 
 local function calculateX(params)
     local margin_left = 5

@@ -86,6 +86,7 @@ function Game:nextRound()
 end
 
 function Game:nextLevel()
+    print("next level for player " .. self.current_player)
     self.players[self.current_player].level = Level:load({
         id = self.players[self.current_player].level:getNext(),
         power_up = self.layout.power_up,
@@ -93,7 +94,10 @@ function Game:nextLevel()
         live_area = self.layout.areas.live,
     })
 end
+
+---@param number_of_balls number
 function Game:spawnBalls(number_of_balls)
+    print("spawning " .. number_of_balls .. " balls")
     -- max of 3 balls
     for index = 1, number_of_balls do
         table.insert(

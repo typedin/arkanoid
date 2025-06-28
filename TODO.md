@@ -12,6 +12,7 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 
 # TODO
 - [ ] when the level is complete open a door and move the paddle out of the live area
+- [ ] add timer to power-ups
 - [ ] bonuses (extra lives, extra points, weapons)
 - [ ] title area 
 - [ ] credits area

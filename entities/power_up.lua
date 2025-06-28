@@ -47,14 +47,13 @@ end
 
 ---@param context PowerUpCheckCollisionContext
 function PowerUp:resolveCollision(context)
-    -- if power_up is out of bounds then ask the caller to destroy it
-    if self:getGeometry().bottom > context.live_area.height then
-        self:markAsDestroyable()
-    end
     if collision.check_rectangle_collision(self, context.paddle) then
-        print(self.name)
+        if 1 == 1 then
+            context.game:spawnBalls(2)
+            self:markAsDestroyable()
+
         -- player
-        if self.action == "extra_life" then
+        elseif self.action == "extra_life" then
             print("calling player extraLife")
             context.player:extraLife()
         -- game
@@ -92,6 +91,10 @@ function PowerUp:resolveCollision(context)
         end
         self:markAsDestroyable()
     end
+    -- if power_up is out of bounds then ask the caller to destroy it
+    if self:getGeometry().top > context.live_area.height then
+        self:markAsDestroyable()
+    end
 end
 
 function PowerUp:update(dt)
@@ -118,6 +121,9 @@ function PowerUp:draw()
     local text_y = self.y + (self.height - text_height) / 2
 
     love.graphics.print(self.name, text_x, text_y)
+
+    -- Reset color to white for subsequent drawing operations
+    love.graphics.setColor(1, 1, 1)
 end
 
 return PowerUp

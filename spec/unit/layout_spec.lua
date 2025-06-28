@@ -154,7 +154,7 @@ describe("Layout", function()
         end)
     end)
 
-    describe("live areas", function()
+    describe("live area", function()
         it("should define a live area this is 62% of the active area", function()
             local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
 
@@ -168,60 +168,60 @@ describe("Layout", function()
         end)
     end)
 
-    it("should define walls", function()
+    describe("walls", function()
         -- width = 320,
         -- height = 256,
         local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
-
-        assert(3, #layout.layout.areas.walls)
-        -- left
-        -- WARNING letterboxing
-        assert.are.equal(0, layout.layout.areas.walls.left.x)
-        assert.are.equal(20, layout.layout.areas.walls.left.y)
-        assert.are.equal(200, layout.layout.areas.walls.left.height)
-        assert.are.equal(8, layout.layout.areas.walls.left.width)
-        assert.are.equal(8, layout.layout.areas.walls.left.thickness)
-        -- right
-        assert.are.equal(190, layout.layout.areas.walls.right.x)
-        assert.are.equal(20, layout.layout.areas.walls.right.y)
-        assert.are.equal(8, layout.layout.areas.walls.right.width)
-        assert.are.equal(200, layout.layout.areas.walls.right.height)
-        assert.are.equal(8, layout.layout.areas.walls.left.thickness)
-        -- top
-        assert.are.equal(0, layout.layout.areas.walls.top.x)
-        assert.are.equal(20, layout.layout.areas.walls.top.y)
-        assert.are.equal(198, layout.layout.areas.walls.top.width)
-        assert.are.equal(8, layout.layout.areas.walls.top.height)
-        assert.are.equal(8, layout.layout.areas.walls.left.thickness)
+        it("should define a left wall", function()
+            assert(3, #layout.layout.areas.walls)
+            -- left
+            -- WARNING letterboxing
+            assert.are.equal(0, layout.layout.areas.walls.left.x)
+            assert.are.equal(20, layout.layout.areas.walls.left.y)
+            assert.are.equal(200, layout.layout.areas.walls.left.height)
+            assert.are.equal(8, layout.layout.areas.walls.left.width)
+            assert.are.equal(8, layout.layout.areas.walls.left.thickness)
+        end)
+        it("should define a top wall", function()
+            assert(3, #layout.layout.areas.walls)
+            -- WARNING letterboxing
+            -- top
+            assert.are.equal(0, layout.layout.areas.walls.top.x)
+            assert.are.equal(20, layout.layout.areas.walls.top.y)
+            assert.are.equal(198, layout.layout.areas.walls.top.width)
+            assert.are.equal(8, layout.layout.areas.walls.top.height)
+            assert.are.equal(8, layout.layout.areas.walls.left.thickness)
+        end)
+        it("should define a right wall", function()
+            assert(3, #layout.layout.areas.walls)
+            -- WARNING letterboxing
+            -- right
+            assert.are.equal(190, layout.layout.areas.walls.right.x)
+            assert.are.equal(20, layout.layout.areas.walls.right.y)
+            assert.are.equal(8, layout.layout.areas.walls.right.width)
+            assert.are.equal(200, layout.layout.areas.walls.right.height)
+            assert.are.equal(8, layout.layout.areas.walls.left.thickness)
+        end)
     end)
 
     describe("entities", function()
+        local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
         it("should define the paddle", function()
-            local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
-
             assert.are.equal(layout.layout.paddle.width, 32)
             assert.are.equal(layout.layout.paddle.height, 8)
         end)
         it("should define the ball", function()
-            local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
-
             assert.are.equal(layout.layout.ball.diameter, 4)
         end)
         it("should define the brick", function()
-            local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
-
             assert.are.equal(layout.layout.brick.width, 16) -- let the sprite display a padding
             assert.are.equal(layout.layout.brick.height, 8)
         end)
         it("should define the life", function()
-            local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
-
             assert.are.equal(layout.layout.life.width, 16)
             assert.are.equal(layout.layout.life.height, 6)
         end)
         it("should define the bonus", function()
-            local layout = Layout:new({ resolution = resolutions["amiga"], screen = { width = 320, height = 240 } })
-
             assert.are.equal(layout.layout.bonus.width, 16)
             assert.are.equal(layout.layout.bonus.height, 8)
         end)

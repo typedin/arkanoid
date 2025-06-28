@@ -65,6 +65,8 @@ function Game:new(params)
 end
 
 function Game:nextRound()
+    -- TODO
+    -- WTF is that ??
     table.remove(self.players[self.current_player].lives)
     if #self.players == 2 then
         if self.current_player == 1 then
@@ -78,15 +80,21 @@ function Game:nextRound()
         live_area = self.layout.areas.live,
         physics = require("config.physics.entities").paddle,
     })
-    self.ball = Ball:new({
-        ball = self.layout.ball,
-        live_area = self.layout.areas.live,
-        physics = require("config.physics.entities").ball,
-    })
+    for i = #self.power_ups, 1, -1 do
+        table.remove(self.power_ups, i)
+    end
+    self.balls = {}
+    self:spawnBalls(1)
 end
 
 function Game:nextLevel()
-    print("next level for player " .. self.current_player)
+    self.paddle = Paddle:new({
+        paddle = self.layout.paddle,
+        live_area = self.layout.areas.live,
+        physics = require("config.physics.entities").paddle,
+    })
+    self.balls = {}
+    self:spawnBalls(1)
     self.players[self.current_player].level = Level:load({
         id = self.players[self.current_player].level:getNext(),
         power_up = self.layout.power_up,
@@ -97,16 +105,26 @@ end
 
 ---@param number_of_balls number
 function Game:spawnBalls(number_of_balls)
-    print("spawning " .. number_of_balls .. " balls")
     -- max of 3 balls
+    assert(type(number_of_balls) == "number", "Game:spawnBalls requires a number_of_balls")
+    assert(number_of_balls < 3 and number_of_balls > 0, "Game:spawnBalls requires a number_of_balls between 1 and 3")
+    print("spawning " .. number_of_balls .. " balls")
+
     for index = 1, number_of_balls do
+        -- assign a random number between 100 and a resonable modification of require("config.physics.entities").ball.speed
+        local dx = math.random(100, require("config.physics.entities").ball.speed - 100)
+        local dy = require("config.physics.entities").ball.speed
+
+        local glued = number_of_balls == 1
         table.insert(
             self.balls,
             index,
             Ball:new({
+                dx = dx,
+                dy = dy * -1, -- So I can see it
+                glued = glued,
                 ball = self.layout.ball,
                 live_area = self.layout.areas.live,
-                physics = require("config.physics.entities").ball,
             })
         )
     end

@@ -13,7 +13,10 @@ local game_states = {
         update = function(_, game, dt)
             for _, ball in ipairs(game.balls) do
                 ball:update(dt)
-                ball:resolveCollision({ walls = game.walls, paddle = game.paddle, bricks = game.players[game.current_player].level.bricks })
+                ball:resolveCollision({ walls = game.walls, paddle = game.paddle })
+                if ball:resolveOutOfBound({ live_area = game.layout.areas.live }) then
+                    ball:markAsDestroyable()
+                end
                 game.paddle:update(dt, { ball = ball })
                 game.paddle:resolveCollision({ walls = game.walls, ball = ball })
             end

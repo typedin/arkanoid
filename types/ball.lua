@@ -4,10 +4,12 @@
 ---@field draw fun(self: Ball)
 ---@field getGeometry fun(self: Ball): DiscGeometry
 ---@field invert fun(self: Ball, axis: string)
+---@field markAsDestroyable fun(self: Ball)
 ---@field move fun(self: Ball, context: { dt: number, layout: Layout })
 ---@field moveLeft fun(self: Ball, context: { dt: number, speed: number })
 ---@field moveRight fun(self: Ball, context: { dt: number,speed: number })
 ---@field resolveCollision fun(self: Ball, context: BallCollisionContext)
+---@field resolveOutOfBound fun(self: Ball, context: { live_area: LiveArea }): boolean
 ---@field setGlued fun(self: Ball, glued: boolean)
 ---@field slowDown fun(self: Ball)
 ---@field speedUp fun(self: Ball)

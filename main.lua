@@ -8,6 +8,8 @@ local cli_args = parse_args()
 local game
 
 function love.load()
+    -- needed in Game:spawnBalls
+    math.randomseed(os.time())
     love.window.setTitle("Arkanoid Clone")
     love.window.setMode(640, 480)
 
@@ -62,6 +64,17 @@ function love.update(dt)
         end
     end
 
+    for i = #game.balls, 1, -1 do
+        local ball = game.balls[i]
+        if ball.destroyable then
+            table.remove(game.balls, i)
+        end
+    end
+
+    if #game.balls == 0 then
+        game:nextRound()
+    end
+
     if game.players[game.current_player].level:cleared() then
         game:nextLevel()
     end
@@ -80,6 +93,7 @@ function love.update(dt)
 end
 
 function love.draw()
+    love.graphics.setColor(1, 1, 1)
     -- key value pairs
     for _, wall in pairs(game.walls) do
         wall:draw()

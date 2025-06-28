@@ -1,25 +1,41 @@
+local collision = require("collision.rectangle")
 local DiscBase = require("entities/circle_base")
 
 local Ball = setmetatable({}, { __index = DiscBase })
 Ball.__index = Ball
 
 ---@class BallConfig
+---@field dx number
+---@field dy number
+---@field glued? boolean
 ---@field ball table
----@field live_area table
----@field physics table
+---@field live_area LiveArea
 
 ---@param params BallConfig
 ---@return Ball
 function Ball:new(params)
+    assert(type(params) == "table", "Ball:new requires a params table")
+    assert(type(params.ball) == "table", "Ball:new requires params.ball to be a table")
+    assert(type(params.live_area) == "table", "Ball:new requires params.live_area to be a table")
+    assert(type(params.dx) == "number", "Ball:new requires params.dx to be a number")
+    assert(type(params.dy) == "number", "Ball:new requires params.dy to be a number")
+
+    assert(params.dy < 0, "Ball:new requires params.dy to less than 0")
+
     local instance = {
-        glued = true,
-        dx = params.physics.speed,
-        dy = -params.physics.speed,
+        dy = params.dy,
+        dx = params.dx,
         diameter = params.ball.diameter,
         radius = params.ball.diameter / 2,
         x = (params.live_area.width / 2) + params.live_area.x, -- center the paddle at the center of the live area
         y = params.live_area.paddle_line - params.ball.diameter / 2,
     }
+
+    if type(params.glued) ~= "boolean" then
+        instance.glued = true
+    else
+        instance.glued = params.glued
+    end
 
     instance.last = {
         x = instance.x,
@@ -79,6 +95,14 @@ end
 ---@param context BallMoveContext
 function Ball:moveRight(context)
     self.x = self.x + context.speed * context.dt
+end
+
+function Ball:markAsDestroyable()
+    self.destroyable = true
+end
+
+function Ball:resolveOutOfBound(context)
+    return collision.check_out_of_bond(self, context.live_area)
 end
 
 ---@class BallCollisionContext

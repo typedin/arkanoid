@@ -5,7 +5,6 @@ local Collision = {}
 ---@param ball Ball
 ---@param game Game
 function Collision.handle(ball, game)
-    Collision.ball_fell(ball, game)
     Collision.ball_bricks(ball, game)
 end
 
@@ -73,8 +72,9 @@ function Collision.ball_fell(ball, game)
     -- figure out why
     -- TODO:
     if ball.y > game.paddle.y + game.paddle.height then
-        game:nextRound()
+        return true
     end
+    return false
 end
 
 ---@param ball Ball
@@ -91,6 +91,7 @@ function Collision.ball_bricks(ball, game)
             and ball.y - ball.radius < brick.y + brick.height
         then
             brick:hit()
+            ball:invert("dy")
             if brick.hits < 1 then
                 game.players[game.current_player].score:add(brick.points)
                 -- instanciate the power_up here
@@ -108,7 +109,6 @@ function Collision.ball_bricks(ball, game)
                     )
                 end
             end
-            ball:invert("dy")
         end
     end
 end

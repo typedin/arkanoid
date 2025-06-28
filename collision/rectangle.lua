@@ -29,6 +29,38 @@ local function check_rectangle_collision(obj1, obj2)
     return true
 end
 
+---@param object table Object with getGeometry() method
+---@param area table Area with x, y, width, height properties
+---@return boolean
+local function check_out_of_bond(object, area)
+    local geom = object:getGeometry()
+
+    -- Check if object is outside the area bounds
+    -- Object is to the left of the area
+    if geom.right < area.x then
+        return true
+    end
+
+    -- Object is to the right of the area
+    if geom.left > area.x + area.width then
+        return true
+    end
+
+    -- Object is above the area
+    if geom.bottom < area.y then
+        return true
+    end
+
+    -- Object is below the area
+    if geom.top > area.y + area.height then
+        return true
+    end
+
+    -- If none of the above conditions are true, object is within the area
+    return false
+end
+
 return {
     check_rectangle_collision = check_rectangle_collision,
+    check_out_of_bond = check_out_of_bond,
 }

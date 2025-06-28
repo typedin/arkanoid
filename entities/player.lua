@@ -48,13 +48,16 @@ function Player:draw()
 end
 
 function Player:extraLife()
-    print("extra life for player " .. self.name)
     local index = #self.lives + 1
     table.insert(
         self.lives,
         index,
         Life:new({
-            merge_table.merge(self.life_params, { life_number = index }),
+            x = self.life_params.x,
+            y = self.life_params.y,
+            width = self.life_params.width,
+            height = self.life_params.height,
+            life_number = index,
         })
     )
 end

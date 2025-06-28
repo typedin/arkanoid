@@ -133,18 +133,27 @@ function Ball:resolveCollision(context)
     end
 end
 
----@param glued boolean
-function Ball:setGlued(glued)
-    print("ball setGlued")
-    self.glued = glued
+---@class SetGluedContext
+---@field paddle Paddle
+---@field glued boolean
+
+---@param context SetGluedContext
+function Ball:setGlued(context)
+    -- set the ball to the middle of the paddle
+    self.x = context.paddle.x + context.paddle.width / 2
+    -- set the ball to top of the paddle
+    self.y = context.paddle:getGeometry().top - self.radius
+    self.glued = context.glued
 end
 
 function Ball:slowDown()
-    print("slowDown not implemented")
+    self.dx = self.dx - 50
+    self.dy = self.dy - 50
 end
 
 function Ball:speedUp()
-    print("speedUp not implemented")
+    self.dx = self.dx + 50
+    self.dy = self.dy + 50
 end
 
 function Ball:update(dt)

@@ -99,15 +99,13 @@ function Paddle:moveRight(dt)
 end
 
 function Paddle:shrink()
-    -- TODO
-    print("Paddle:shrink not implemented")
-    -- self.width = self.width + (self.width * 0.3) -- TODO
+    -- shrink by the half of the paddle
+    self.width = self.width - (self.width / 2)
 end
 
 function Paddle:extend()
-    -- TODO
-    print("Paddle:extend not implemented")
-    -- self.width = self.width + (self.width * 0.3) -- TODO
+    -- extend by the half of the paddle
+    self.width = self.width + (self.width / 2)
 end
 
 function Paddle:laser()

@@ -49,45 +49,38 @@ end
 function PowerUp:resolveCollision(context)
     if collision.check_rectangle_collision(self, context.paddle) then
         if 1 == 1 then
-            context.game:spawnBalls(2)
+            print("calling paddle laser")
+            context.paddle:laser()
             self:markAsDestroyable()
 
         -- player
         elseif self.action == "extra_life" then
-            print("calling player extraLife")
             context.player:extraLife()
         -- game
         elseif self.action == "break" then
-            print("calling game nextLevel")
             context.game:nextLevel()
         elseif self.action == "multiple_balls" then
             print("calling game spawnBalls")
-            context.game:spawnBalls(2)
         -- ball
         elseif self.action == "catch" then
             for _, ball in ipairs(context.game.balls) do
-                print("calling ball setGlued")
-                ball:setGlued(true)
+                ball:setGlued({ glued = true, paddle = context.paddle })
             end
         elseif self.action == "speed_up" then
             for _, ball in ipairs(context.game.balls) do
-                print("calling ball speedUp")
                 ball:speedUp()
             end
         elseif self.action == "slow_down" then
             for _, ball in ipairs(context.game.balls) do
-                print("calling ball slowDown")
                 ball:slowDown()
             end
         elseif self.action == "extend" then
-            print("calling paddle extend")
             context.paddle:extend()
+        elseif self.action == "shrink" then
+            context.paddle:shrink()
         elseif self.action == "laser" then
             print("calling paddle laser")
             context.paddle:laser()
-        elseif self.action == "shrink" then
-            print("calling paddle shrink")
-            context.paddle:shrink()
         end
         self:markAsDestroyable()
     end

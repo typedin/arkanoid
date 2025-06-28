@@ -7,11 +7,20 @@ local game_states = {
     },
     play = {
         enter = function() end,
+        ---@param _ StateMachineState
+        ---@param game Game
+        ---@param dt number
         update = function(_, game, dt)
-            game.paddle:update(dt, { ball = game.ball })
-            game.paddle:resolveCollision({ walls = game.walls, ball = game.ball })
-            game.ball:update(dt)
-            game.ball:resolveCollision({ walls = game.walls, paddle = game.paddle, bricks = game.players[game.current_player].level.bricks })
+            for _, ball in ipairs(game.balls) do
+                ball:update(dt)
+                ball:resolveCollision({ walls = game.walls, paddle = game.paddle, bricks = game.players[game.current_player].level.bricks })
+                game.paddle:update(dt, { ball = ball })
+                game.paddle:resolveCollision({ walls = game.walls, ball = ball })
+            end
+            for _, power_up in ipairs(game.power_ups) do
+                power_up:update(dt)
+                power_up:resolveCollision({ live_area = game.layout.areas.live, paddle = game.paddle, player = game.players[game.current_player], game = game })
+            end
         end,
         exit = function() end,
     },

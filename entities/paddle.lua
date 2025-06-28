@@ -29,6 +29,11 @@ function Paddle:new(params)
     return instance
 end
 
+---@class PaddleUpdateContext
+---@field ball Ball
+
+---@param dt number
+---@param context PaddleUpdateContext
 function Paddle:update(dt, context)
     self.last.x = self.x
     self.last.y = self.y
@@ -38,19 +43,26 @@ function Paddle:update(dt, context)
 
     if love.keyboard.isDown("left") then
         if context.ball.glued then
-            context.paddle = self
+            -- WARNING was it used
+            -- context.paddle = self
             context.ball:moveLeft({ dt = dt, speed = self.speed })
         end
         self:moveLeft(dt)
     elseif love.keyboard.isDown("right") then
         if context.ball.glued then
-            context.paddle = self
+            -- WARNING was it used
+            -- context.paddle = self
             context.ball:moveRight({ dt = dt, speed = self.speed })
         end
         self:moveRight(dt)
     end
 end
 
+---@class PaddleCollisionContext
+---@field walls Walls
+---@field ball Ball
+
+---@param context PaddleCollisionContext
 function Paddle:resolveCollision(context)
     -- reset the position
     if self:checkCollision(context.walls.right) then
@@ -84,6 +96,19 @@ end
 
 function Paddle:moveRight(dt)
     self.x = self.x + self.speed * dt
+end
+
+function Paddle:shrink()
+    self.width = self.width + (self.width * 0.3) -- TODO
+end
+
+function Paddle:extend()
+    self.width = self.width + (self.width * 0.3) -- TODO
+end
+
+function Paddle:laser()
+    -- TODO
+    print("Paddle:laser() not implemented")
 end
 
 function Paddle:draw()

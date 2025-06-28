@@ -1,3 +1,5 @@
+local collision = require("collision.rectangle")
+local EntityBase = require("entities/entity_base")
 local PowerUps = require("config.power_ups")
 --[[
 Capsule type is predetermined at specific bricks per level, but those exact positions aren't publicly documented.
@@ -8,6 +10,7 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 
 local PowerUp = {}
 PowerUp.__index = PowerUp
+setmetatable(PowerUp, { __index = EntityBase })
 
 ---@class PowerUpConfig
 ---@field height number
@@ -19,24 +22,71 @@ PowerUp.__index = PowerUp
 
 ---@param params PowerUpConfig
 ---@return PowerUp
-function PowerUp.new(params)
+function PowerUp:new(params)
     local instance = {
+        dy = params.speed,
         height = params.height,
         name = params.name,
-        speed = params.speed,
+        rgb = PowerUps[params.name].rgb,
         width = params.width,
         x = params.x,
         y = params.y,
     }
+    instance.destroyable = false
 
     setmetatable(instance, PowerUp)
+
     return instance
 end
 
-function PowerUp:draw()
-    local color = PowerUps[self.name].color
+function PowerUp:markAsDestroyable()
+    self.destroyable = true
+end
 
-    love.graphics.setColor(color[1], color[2], color[3])
+---@class PowerUpCheckCollisionContext
+---@field live_area LiveArea
+---@field ball Ball
+---@field paddle Paddle
+---@field player Player
+---@field game Game
+---@param context PowerUpCheckCollisionContext
+function PowerUp:resolveCollision(context)
+    -- if power_up is out of bounds then ask the caller to destroy it
+    if self:getGeometry().bottom > context.live_area.height then
+        self:markAsDestroyable()
+    end
+    if collision.check_rectangle_collision(self, context.paddle) then
+        if self.name == "break" then
+            context.game:nextLevel()
+        elseif self.name == "catch" then
+            for _, ball in ipairs(context.game.balls) do
+                ball.glued = true
+            end
+        elseif self.name == "slow_down" then
+            context.ball:slowDown()
+        elseif self.name == "extend" then
+            context.paddle:extend()
+        elseif self.name == "laser" then
+            context.paddle:laser()
+        elseif self.name == "multiple_balls" then
+            context.game:spawnBalls(2)
+        elseif self.name == "extra_life" then
+            context.player:extraLife()
+        elseif self.name == "shrink" then
+            context.paddle:shrink()
+        elseif self.name == "speed_up" then
+            context.ball:speedUp()
+        end
+        self:markAsDestroyable()
+    end
+end
+
+function PowerUp:update(dt)
+    self.y = self.y + self.dy * dt
+end
+
+function PowerUp:draw()
+    love.graphics.setColor(self.rgb[1], self.rgb[2], self.rgb[3])
 
     -- Draw the rectangle
     love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)

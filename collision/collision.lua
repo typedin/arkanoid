@@ -1,9 +1,12 @@
+local power_up_physics = require("config.physics.entities").power_up
+local PowerUp = require("entities.power_up")
 local Collision = {}
 
+---@param ball Ball
 ---@param game Game
-function Collision.handle(game)
-    Collision.ball_fell(game)
-    Collision.ball_bricks(game)
+function Collision.handle(ball, game)
+    Collision.ball_fell(ball, game)
+    Collision.ball_bricks(ball, game)
 end
 
 ---@param game Game
@@ -22,56 +25,61 @@ function Collision.paddle_right_wall(game)
     return false
 end
 
+---@param ball Ball
 ---@param game Game
-function Collision.ball_left_wall(game)
-    if game.ball:getGeometry().left <= game.walls.left:getGeometry().right then
+function Collision.ball_left_wall(ball, game)
+    if ball:getGeometry().left <= game.walls.left:getGeometry().right then
         return true
     end
     return false
 end
 
+---@param ball Ball
 ---@param game Game
-function Collision.ball_right_wall(game)
-    if game.ball:getGeometry().right >= game.walls.right:getGeometry().left then
+function Collision.ball_right_wall(ball, game)
+    if ball:getGeometry().right >= game.walls.right:getGeometry().left then
         return true
     end
     return false
 end
 
+---@param ball Ball
 ---@param game Game
-function Collision.ball_top_wall(game, dt)
-    if game.ball:getGeometry().top + dt < game.walls.top:getGeometry().bottom then
+function Collision.ball_top_wall(ball, game, dt)
+    if ball:getGeometry().top + dt < game.walls.top:getGeometry().bottom then
         return true
     end
     return false
 end
 
+---@param ball Ball
 ---@param game Game
-function Collision.ball_paddle(game)
+function Collision.ball_paddle(ball, game)
     if
-        game.ball:getGeometry().bottom <= game.paddle:getGeometry().top
-        and game.ball:getGeometry().center >= game.paddle:getGeometry().left
-        and game.ball:getGeometry().center <= game.paddle:getGeometry().right
+        ball:getGeometry().bottom <= game.paddle:getGeometry().top
+        and ball:getGeometry().center >= game.paddle:getGeometry().left
+        and ball:getGeometry().center <= game.paddle:getGeometry().right
     then
         return true
     end
     return false
 end
 
+---@param ball Ball
 ---@param game Game
-function Collision.ball_fell(game)
+function Collision.ball_fell(ball, game)
     -- TODO
     -- if I use the live height it freezes the game
     -- figure out why
     -- TODO:
-    if game.ball.y > game.paddle.y + game.paddle.height then
+    if ball.y > game.paddle.y + game.paddle.height then
         game:nextRound()
     end
 end
 
+---@param ball Ball
 ---@param game Game
-function Collision.ball_bricks(game)
-    local ball = game.ball
+function Collision.ball_bricks(ball, game)
     local bricks = game.players[game.current_player].level.bricks
 
     for _, brick in ipairs(bricks) do
@@ -82,9 +90,23 @@ function Collision.ball_bricks(game)
             and ball.y + ball.radius > brick.y
             and ball.y - ball.radius < brick.y + brick.height
         then
-            brick.hits = brick.hits - 1
+            brick:hit()
             if brick.hits < 1 then
                 game.players[game.current_player].score:add(brick.points)
+                -- instanciate the power_up here
+                if brick.power_up then
+                    table.insert(
+                        game.power_ups,
+                        PowerUp:new({
+                            height = game.layout.power_up.height,
+                            name = brick.power_up,
+                            speed = power_up_physics.speed,
+                            width = game.layout.power_up.width,
+                            x = brick.x,
+                            y = brick.y,
+                        })
+                    )
+                end
             end
             ball.dy = -ball.dy
         end

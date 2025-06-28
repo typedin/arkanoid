@@ -1,13 +1,25 @@
 ---@class Ball
----@field new fun(self: Ball): Ball
----@field move fun(self: Ball, context: { dt: number, layout: Layout })
+---@field getGeometry fun(self: Ball): DiscGeometry
 ---@field invert fun(self: Ball, axis: string)
----@field x number
----@field y number
+---@field move fun(self: Ball, context: { dt: number, layout: Layout })
+---@field moveLeft fun(self: Ball, context: { dt: number, speed: number })
+---@field moveRight fun(self: Ball, context: { dt: number,speed: number })
+---@field new fun(self: Ball): Ball
+---@field slowDown fun(self: Ball)
+---@field speedUp fun(self: Ball)
+---@field resolveCollision fun(self: Ball, context: BallCollisionContext)
+---@field update fun(self: Ball, dt: number)
+---@field diameter number
 ---@field dx number
 ---@field dy number
----@field speed number
----@field diameter number
+---@field glued boolean
+---@field last LastPosition
 ---@field radius number
+---@field speed number
 ---@field stateMachine StateMachine
----@field getGeometry fun(self: Ball): DiscGeometry
+---@field x number
+---@field y number
+
+---@class LastPosition
+---@field x number
+---@field y number

@@ -9,3 +9,4 @@
 
 ---@class LevelFileRow
 ---@field kind BrickName
+---@field power_up? PowerUpName

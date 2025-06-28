@@ -1,5 +1,5 @@
-local brick_kind = require("config/bricks").kinds
-local Brick = require("entities/brick")
+local brick_kind = require("config.bricks").kinds
+local Brick = require("entities.brick")
 
 --- Calculates the width of a single brick based on the live area, spacing, and brick count.
 ---@param areaWidth number - total usable width for all bricks (no padding on sides)
@@ -32,17 +32,19 @@ local function buildBricks(instance, level, params)
             -- Keep brickWidth out of Brick
             local x = (j - 1) * brickWidth + params.live_area.x
             local y = i * params.brick.height + params.live_area.y
+            local power_up = brick.power_up
             table.insert(
                 instance.bricks,
                 Brick:new({
+                    height = params.brick.height,
+                    hits = brick_kind[brick.kind].hits,
+                    kind = brick.kind,
+                    points = brick_kind[brick.kind].points,
+                    power_up = power_up,
+                    rgb = brick_kind[brick.kind].rgb,
+                    width = brickWidth,
                     x = x,
                     y = y,
-                    width = brickWidth,
-                    height = params.brick.height,
-                    kind = brick.kind,
-                    hits = brick_kind[brick.kind].hits,
-                    points = brick_kind[brick.kind].points,
-                    rgb = brick_kind[brick.kind].rgb,
                 })
             )
         end
@@ -57,21 +59,23 @@ Level.__index = Level
 ---@field id number
 ---@field live_area table
 ---@field brick table
+---@field power_up table
 
 ---@param params LevelParams
 ---@return Level
 function Level:load(params)
     -- don't load all levels at once for memory reasons
     -- explicitly cast the level name to a string
+    ---@type LevelFile
     local level = require("levels/" .. tostring(params.id))
     assert(type(level) == "table", "count not load level")
     assert(type(level.name) == "string", "params.name must be a string")
     assert(type(level.rows) == "table", "params.rows must be a table")
 
     local instance = {
+        bricks = {},
         id = params.id,
         name = level.name,
-        bricks = {},
     }
     buildBricks(instance, level, params)
 

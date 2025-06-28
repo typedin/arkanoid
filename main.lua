@@ -49,14 +49,18 @@ end
 function love.update(dt)
     -- first argument received by update is _self_
     game.stateMachine:update(game, dt)
-    Collision.handle(game)
+    for _, ball in ipairs(game.balls) do
+        Collision.handle(ball, game)
+    end
 
     if game.players[game.current_player].level:cleared() then
         game:nextLevel()
     end
 
     if love.keyboard.isDown("space") then
-        game.ball.glued = false
+        for _, ball in ipairs(game.balls) do
+            ball.glued = false
+        end
     end
 
     if love.keyboard.isDown("p") then
@@ -79,8 +83,13 @@ function love.draw()
     end
 
     game.paddle:draw()
-    game.ball:draw()
+    for _, ball in ipairs(game.balls) do
+        ball:draw()
+    end
 
+    for _, power_up in ipairs(game.power_ups) do
+        power_up:draw()
+    end
     for _, player in ipairs(game.players) do
         player:draw()
     end

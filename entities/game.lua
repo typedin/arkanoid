@@ -28,21 +28,18 @@ function Game:new(params)
     local layout_config = Layout:new({ resolution = params.resolution, screen = params.screen })
 
     local players = Players:create({
-        players = params.players,
-        hud = layout_config.layout.areas.hud,
-        live_area = layout_config.layout.areas.live,
-        life = layout_config.layout.life,
+        power_up = layout_config.layout.power_up,
         brick = layout_config.layout.brick,
+        hud = layout_config.layout.areas.hud,
         level_id = tonumber(params.level),
+        life = layout_config.layout.life,
+        live_area = layout_config.layout.areas.live,
+        players = params.players,
     })
 
     local instance = {
-        ball = Ball:new({
-            ball = layout_config.layout.ball,
-            live_area = layout_config.layout.areas.live,
-            physics = require("config.physics.entities").ball,
-        }),
         current_player = 1,
+        balls = {},
         layout = layout_config.layout,
         paddle = Paddle:new({
             paddle = layout_config.layout.paddle,
@@ -50,6 +47,7 @@ function Game:new(params)
             physics = require("config.physics.entities").paddle,
         }),
         players = players,
+        power_ups = {},
         stateMachine = StateMachine:new(game_states),
         walls = {
             left = Wall:new(layout_config.layout.areas.walls.left),
@@ -59,6 +57,9 @@ function Game:new(params)
     }
 
     setmetatable(instance, Game)
+
+    -- initialize the game with 1 ball
+    instance:spawnBalls(1)
 
     return instance
 end
@@ -87,9 +88,23 @@ end
 function Game:nextLevel()
     self.players[self.current_player].level = Level:load({
         id = self.players[self.current_player].level:getNext(),
+        power_up = self.layout.power_up,
         brick = self.layout.brick,
         live_area = self.layout.areas.live,
     })
 end
-
+function Game:spawnBalls(number_of_balls)
+    -- max of 3 balls
+    for index = 1, number_of_balls do
+        table.insert(
+            self.balls,
+            index,
+            Ball:new({
+                ball = self.layout.ball,
+                live_area = self.layout.areas.live,
+                physics = require("config.physics.entities").ball,
+            })
+        )
+    end
+end
 return Game

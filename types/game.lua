@@ -1,10 +1,14 @@
 ---@class Game
----@field ball Ball
+---@field balls Ball[]
 ---@field current_player number
 ---@field layout Layout
 ---@field level Level
 ---@field paddle Paddle
 ---@field players Player[]
+---@field power_ups PowerUp[]
 ---@field stateMachine StateMachine
 ---@field walls Walls
+---@field new fun(params: GameParams): Game
 ---@field nextRound fun(self: Game)
+---@field nextLevel fun(self: Game)
+---@field spawnBalls fun(self: Game, number_of_balls: number)

@@ -5,4 +5,7 @@ return {
     paddle = {
         speed = 400,
     },
+    power_up = {
+        speed = 100,
+    },
 }

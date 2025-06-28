@@ -1,7 +1,9 @@
 ---@class Player
----@field name string
----@field lives Life[]
 ---@field current_level number
----@field score Score
 ---@field level Level
+---@field lives Life[]
+---@field name string
+---@field score Score
 ---@field draw fun(self: Player)
+---@field extraLife fun(self: Player)
+---@field nextLevel fun(self: Player)

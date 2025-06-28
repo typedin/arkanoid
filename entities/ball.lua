@@ -39,6 +39,10 @@ function Ball:update(dt)
     end
 end
 
+---@class BallCollisionContext
+---@field walls Walls
+
+---@params context BallCollisionContext
 function Ball:resolveCollision(context)
     if self:checkCollision(context.walls.right) then
         self.x = self.last.x

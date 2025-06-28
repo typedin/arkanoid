@@ -63,6 +63,7 @@ function Players:create(params)
         local level = Level:load({
             id = level_id,
             brick = params.brick,
+            power_up = params.power_up,
             live_area = params.live_area,
         })
         table.insert(players, index, Player:new({ name = player.name, lives = lives, score = score, level = level }))

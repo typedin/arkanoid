@@ -6,6 +6,7 @@
 - [ ] bug if I use the live height it freezes the game
 
 # TODO
+- [ ] when the level is complete open a door and move the paddle out of the live area
 - [ ] bonuses (extra lives, extra points, weapons)
 - [ ] title area 
 - [ ] credits area

@@ -1,13 +1,19 @@
 ---@class Paddle
----@field x number
----@field y number
----@field width number
+---@field draw fun(self: Paddle)
+---@field extend fun(self: Paddle)
+---@field getGeometry fun(self: Paddle): Geometry
+---@field laser fun(self: Paddle)
+---@field move_left fun(self: Paddle, context: PaddleContext)
+---@field move_right fun(self: Paddle, context: PaddleContext)
+---@field resolveCollision fun(self: Paddle, context: PaddleCollisionContext)
+---@field shrink fun(self: Paddle)
+---@field update fun(self: Paddle, dt: number, context: PaddleUpdateContext)
 ---@field height number
 ---@field speed number
 ---@field stateMachine StateMachine
----@field move_left fun(self: Paddle, context: PaddleContext)
----@field move_right fun(self: Paddle, context: PaddleContext)
----@field getGeometry fun(self: Paddle): Geometry
+---@field width number
+---@field x number
+---@field y number
 
 ---@class PaddleContext
 ---@field dt number

@@ -1,3 +1,14 @@
 ---@class PowerUp
+---@field destroyable boolean
+---@field dy number
+---@field height number
 ---@field name PowerUpName
+---@field rgb integer[] -- RGB color array: { r, g, b }
+---@field width number
+---@field x number
+---@field y number
 ---@field new fun(PowerUpParams): PowerUp
+---@field update fun(PowerUp, dt: number)
+---@field draw fun(PowerUp)
+---@field resolveCollision fun(PowerUp, PowerUpCheckCollisionParams)
+---@field getGeometry fun(PowerUp): Geometry

@@ -8,22 +8,6 @@ function Collision.handle(ball, game)
     Collision.ball_bricks(ball, game)
 end
 
----@param game Game
-function Collision.paddle_left_wall(game)
-    if game.paddle:getGeometry().left <= game.walls.left:getGeometry().right then
-        return true
-    end
-    return false
-end
-
----@param game Game
-function Collision.paddle_right_wall(game)
-    if game.paddle:getGeometry().right >= game.walls.right:getGeometry().left then
-        return true
-    end
-    return false
-end
-
 ---@param ball Ball
 ---@param game Game
 function Collision.ball_left_wall(ball, game)

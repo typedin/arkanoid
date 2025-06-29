@@ -147,11 +147,15 @@ function Ball:setGlued(context)
 end
 
 function Ball:slowDown()
+    -- TODO
+    -- better physics
     self.dx = self.dx - 50
     self.dy = self.dy - 50
 end
 
 function Ball:speedUp()
+    -- TODO
+    -- better physics
     self.dx = self.dx + 50
     self.dy = self.dy + 50
 end

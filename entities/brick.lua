@@ -74,7 +74,6 @@ function Brick:resolveCollision(context)
         -- It's not necessary to extract a function
         self.hits = self.hits - 1
         ball:invert("dy")
-        print("hit in entities/brick.lua")
     end
 end
 

@@ -10,7 +10,7 @@ local game_states = {
     },
     play = {
         enter = function() end,
-        ---@param _ StateMachineState
+        ---@param _ StateMachineState in this case play
         ---@param game Game
         ---@param dt number
         update = function(_, game, dt)
@@ -24,7 +24,6 @@ local game_states = {
 				WARNING /!\/!\
 			]]
             --
-            print(#game.power_ups)
             for i = #game.power_ups, 1, -1 do
                 local power_up = game.power_ups[i]
                 power_up:update(dt)

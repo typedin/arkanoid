@@ -38,6 +38,15 @@ function PowerUp:markAsDestroyable()
     self.destroyable = true
 end
 
+--WARNING this class is defined in entities/power_up.lua
+
+---@param context ResolveOutOfBoundContext
+---@return boolean
+function PowerUp:resolveOutOfBound(context)
+    -- if power_up is out of bounds then ask the caller to destroy it
+    return collision.check_out_of_bond(self, context.live_area)
+end
+
 ---@class PowerUpCheckCollisionContext
 ---@field live_area LiveArea
 ---@field ball Ball
@@ -82,10 +91,6 @@ function PowerUp:resolveCollision(context)
             print("calling paddle laser")
             context.paddle:laser()
         end
-        self:markAsDestroyable()
-    end
-    -- if power_up is out of bounds then ask the caller to destroy it
-    if self:getGeometry().top > context.live_area.height then
         self:markAsDestroyable()
     end
 end

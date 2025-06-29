@@ -2,13 +2,15 @@
 ---@field new fun(PowerUpParams): PowerUp
 ---@field draw fun(PowerUp)
 ---@field getGeometry fun(PowerUp): RectangleGeometry
+---@field markAsDestroyable fun(self: PowerUp)
 ---@field resolveCollision fun(PowerUp, PowerUpCheckCollisionParams)
+---@field resolveOutOfBound fun(self: PowerUp, context: { live_area: LiveArea }): boolean
 ---@field update fun(PowerUp, dt: number)
+---@field action PowerUpAction
 ---@field destroyable boolean
 ---@field dy number
 ---@field height number
 ---@field name PowerUpName
----@field action PowerUpAction
 ---@field rgb integer[] -- RGB color array: { r, g, b }
 ---@field width number
 ---@field x number

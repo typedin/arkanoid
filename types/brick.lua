@@ -2,6 +2,7 @@
 ---@field new fun(self: Brick): Brick
 ---@field hit fun(self: Brick)
 ---@field draw fun(self: Brick)
+---@field resolveCollision fun(self: Brick, context: BrickCollisionContext)
 ---@field x number
 ---@field y number
 ---@field width number

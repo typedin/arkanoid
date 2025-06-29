@@ -53,8 +53,29 @@ function Brick:new(params)
     return instance
 end
 
-function Brick:hit()
-    self.hits = self.hits - 1
+function Brick:markAsDestroyable()
+    self.destroyable = true
+end
+
+---@class BrickCollisionContext
+---@field ball Ball
+
+---@param context BrickCollisionContext
+function Brick:resolveCollision(context)
+    local ball = context.ball
+    if
+        self.hits > 0
+        and ball.x + ball.radius > self.x
+        and ball.x - ball.radius < self.x + self.width
+        and ball.y + ball.radius > self.y
+        and ball.y - ball.radius < self.y + self.height
+    then
+        -- NOP
+        -- It's not necessary to extract a function
+        self.hits = self.hits - 1
+        ball:invert("dy")
+        print("hit in entities/brick.lua")
+    end
 end
 
 function Brick:draw()

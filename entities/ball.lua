@@ -101,6 +101,11 @@ function Ball:markAsDestroyable()
     self.destroyable = true
 end
 
+---@class ResolveOutOfBoundContext
+---@field live_area LiveArea
+
+---@param context ResolveOutOfBoundContext
+---@return boolean
 function Ball:resolveOutOfBound(context)
     return collision.check_out_of_bond(self, context.live_area)
 end

@@ -1,5 +1,4 @@
-local Collision = require("collision/collision")
-local Game = require("entities/game")
+local Game = require("entities.game")
 local resolutions = require("config.resolutions")
 local parse_args = require("libraries.parse_args")
 local merge_table = require("libraries.merge_table")
@@ -51,25 +50,6 @@ end
 function love.update(dt)
     -- first argument received by update is _self_
     game.stateMachine:update(game, dt)
-    for _, ball in ipairs(game.balls) do
-        Collision.handle(ball, game)
-    end
-
-    -- Remove destroyable power-ups (iterate backwards to avoid index issues)
-    -- CURSOR did this
-    for i = #game.power_ups, 1, -1 do
-        local power_up = game.power_ups[i]
-        if power_up.destroyable then
-            table.remove(game.power_ups, i)
-        end
-    end
-
-    for i = #game.balls, 1, -1 do
-        local ball = game.balls[i]
-        if ball.destroyable then
-            table.remove(game.balls, i)
-        end
-    end
 
     if #game.balls == 0 then
         game:nextRound()
@@ -94,22 +74,18 @@ end
 
 function love.draw()
     love.graphics.setColor(1, 1, 1)
-    -- key value pairs
+
+    game.paddle:draw()
+
     for _, wall in pairs(game.walls) do
         wall:draw()
     end
-    -- Draw bricks
     for _, brick in ipairs(game.players[game.current_player].level.bricks) do
-        if brick.hits > 0 then
-            brick:draw()
-        end
+        brick:draw()
     end
-
-    game.paddle:draw()
     for _, ball in ipairs(game.balls) do
         ball:draw()
     end
-
     for _, power_up in ipairs(game.power_ups) do
         power_up:draw()
     end

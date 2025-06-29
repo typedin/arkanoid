@@ -14,6 +14,7 @@
 ---@field slowDown fun(self: Ball)
 ---@field speedUp fun(self: Ball)
 ---@field update fun(self: Ball, dt: number)
+---@field destroyable boolean
 ---@field diameter number
 ---@field dx number
 ---@field dy number

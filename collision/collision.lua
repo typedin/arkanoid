@@ -10,32 +10,6 @@ end
 
 ---@param ball Ball
 ---@param game Game
-function Collision.ball_paddle(ball, game)
-    if
-        ball:getGeometry().bottom <= game.paddle:getGeometry().top
-        and ball:getGeometry().center >= game.paddle:getGeometry().left
-        and ball:getGeometry().center <= game.paddle:getGeometry().right
-    then
-        return true
-    end
-    return false
-end
-
----@param ball Ball
----@param game Game
-function Collision.ball_fell(ball, game)
-    -- TODO
-    -- if I use the live height it freezes the game
-    -- figure out why
-    -- TODO:
-    if ball.y > game.paddle.y + game.paddle.height then
-        return true
-    end
-    return false
-end
-
----@param ball Ball
----@param game Game
 function Collision.ball_bricks(ball, game)
     local bricks = game.players[game.current_player].level.bricks
 

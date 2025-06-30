@@ -48,18 +48,18 @@ function PowerUp:resolveOutOfBound(context)
 end
 
 ---@class PowerUpCheckCollisionContext
----@field live_area LiveArea
 ---@field ball Ball
+---@field game Game
+---@field live_area LiveArea
 ---@field paddle Paddle
 ---@field player Player
----@field game Game
 
 ---@param context PowerUpCheckCollisionContext
 function PowerUp:resolveCollision(context)
     if collision.check_rectangle_collision(self, context.paddle) then
         if 1 == 1 then
             print("calling paddle laser")
-            context.paddle:laser()
+            context.paddle:equipLaser()
             self:markAsDestroyable()
 
         -- player

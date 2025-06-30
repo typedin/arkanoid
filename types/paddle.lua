@@ -1,13 +1,14 @@
 ---@class Paddle
 ---@field draw fun(self: Paddle)
+---@field equipLaser fun(self: Paddle)
 ---@field extend fun(self: Paddle)
 ---@field getGeometry fun(self: Paddle): RectangleGeometry
----@field laser fun(self: Paddle)
 ---@field move_left fun(self: Paddle, context: PaddleContext)
 ---@field move_right fun(self: Paddle, context: PaddleContext)
 ---@field resolveCollision fun(self: Paddle, context: PaddleCollisionContext)
 ---@field shrink fun(self: Paddle)
 ---@field update fun(self: Paddle, dt: number, context: PaddleUpdateContext)
+---@field hasLaser boolean
 ---@field height number
 ---@field speed number
 ---@field stateMachine StateMachine

@@ -13,6 +13,7 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 # TODO
 - [ ] better physics for speed_up and slow_down (this +50 or -50 is weirs)
 - [ ] when the level is complete open a door and move the paddle out of the live area
+- [ ] power-ups add: superball
 - [ ] add timer to power-ups
 - [ ] bonuses (extra lives, extra points, weapons)
 - [ ] title area 

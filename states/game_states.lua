@@ -28,20 +28,16 @@ local game_states = {
                 local power_up = game.power_ups[i]
                 power_up:update(dt)
                 power_up:resolveCollision({ live_area = game.layout.areas.live, paddle = game.paddle, player = game.players[game.current_player], game = game })
+
                 if power_up:resolveOutOfBound({ live_area = game.layout.areas.live }) then
                     power_up:markAsDestroyable()
                 end
+
                 if power_up.destroyable then
                     table.remove(game.power_ups, i)
                 end
             end
 
-            --[[ 
-				WARNING /!\/!\
-				No stupid refactoring
-				WARNING /!\/!\
-			]]
-            --
             for i = #game.balls, 1, -1 do
                 local ball = game.balls[i]
                 game.paddle:update(dt, { ball = ball })
@@ -56,35 +52,50 @@ local game_states = {
                 if ball.destroyable then
                     table.remove(game.balls, i)
                 end
+            end
 
-                --[[ 
-                	WARNING /!\/!\
-                	No stupid refactoring
-                	WARNING /!\/!\
-                ]]
-                --
-                for j = #game.players[game.current_player].level.bricks, 1, -1 do
-                    local brick = game.players[game.current_player].level.bricks[j]
+            for i = #game.lasers, 1, -1 do
+                local laser = game.lasers[i]
+                laser:update(dt)
+
+                if laser:resolveOutOfBound({ live_area = game.layout.areas.live }) then
+                    laser:markAsDestroyable()
+                end
+
+                if laser.destroyable then
+                    table.remove(game.lasers, i)
+                end
+            end
+
+            for j = #game.players[game.current_player].level.bricks, 1, -1 do
+                local brick = game.players[game.current_player].level.bricks[j]
+                for i = #game.balls, 1, -1 do
+                    local ball = game.balls[i]
                     brick:resolveCollision({ ball = ball })
-                    if brick.hits < 1 then
-                        game.players[game.current_player].score:add(brick.points)
-                        table.remove(game.players[game.current_player].level.bricks, j)
-                        if brick.power_up then
-                            table.insert(
-                                game.power_ups,
-                                PowerUp:new({
-                                    height = game.layout.power_up.height,
-                                    name = brick.power_up,
-                                    speed = power_up_physics.speed,
-                                    width = game.layout.power_up.width,
-                                    x = brick.x,
-                                    y = brick.y,
-                                })
-                            )
-                        end
+                end
+                for i = #game.lasers, 1, -1 do
+                    local laser = game.lasers[i]
+                    brick:resolveCollision({ laser = laser })
+                end
+                if brick.hits < 1 then
+                    game.players[game.current_player].score:add(brick.points)
+                    table.remove(game.players[game.current_player].level.bricks, j)
+                    if brick.power_up then
+                        table.insert(
+                            game.power_ups,
+                            PowerUp:new({
+                                height = game.layout.power_up.height,
+                                name = brick.power_up,
+                                speed = power_up_physics.speed,
+                                width = game.layout.power_up.width,
+                                x = brick.x,
+                                y = brick.y,
+                            })
+                        )
                     end
                 end
             end
+            --
         end,
         exit = function() end,
     },

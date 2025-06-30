@@ -27,6 +27,7 @@ function Ball:new(params)
         dx = params.dx,
         diameter = params.ball.diameter,
         radius = params.ball.diameter / 2,
+        -- BUG WTF is this next line trying to do ?
         x = (params.live_area.width / 2) + params.live_area.x, -- center the paddle at the center of the live area
         y = params.live_area.paddle_line - params.ball.diameter / 2,
     }

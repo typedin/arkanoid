@@ -1,10 +1,15 @@
 local Game = require("entities.game")
-local resolutions = require("config.resolutions")
+local Laser = require("entities.laser")
 local parse_args = require("libraries.parse_args")
-local merge_table = require("libraries.merge_table")
 local cli_args = parse_args()
+local merge_table = require("libraries.merge_table")
+local resolutions = require("config.resolutions")
 
+---@type Game
 local game
+-- TODO this to the config
+local timer = 0
+local throttle_interval = 0.17
 
 function love.load()
     -- needed in Game:spawnBalls
@@ -49,6 +54,7 @@ end
 
 function love.update(dt)
     -- first argument received by update is _self_
+    -- TODO fix error
     game.stateMachine:update(game, dt)
 
     if #game.balls == 0 then
@@ -62,6 +68,25 @@ function love.update(dt)
     if love.keyboard.isDown("space") then
         for _, ball in ipairs(game.balls) do
             ball.glued = false
+        end
+
+        if game.paddle.hasLaser then
+            timer = timer + dt
+            if timer > throttle_interval then
+                table.insert(
+                    game.lasers,
+                    Laser:new({
+                        dx = 1,
+                        dy = -200,
+                        diameter = 10,
+                        x = game.paddle.x + game.paddle.width / 2,
+                        y = game.paddle.y,
+                    })
+                )
+                timer = timer - throttle_interval
+            end
+        else
+            timer = 0
         end
     end
 
@@ -77,6 +102,9 @@ function love.draw()
 
     game.paddle:draw()
 
+    for _, laser in ipairs(game.lasers) do
+        laser:draw()
+    end
     for _, wall in pairs(game.walls) do
         wall:draw()
     end

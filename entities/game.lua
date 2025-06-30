@@ -41,6 +41,7 @@ function Game:new(params)
         current_player = 1,
         balls = {},
         layout = layout_config.layout,
+        lasers = {},
         paddle = Paddle:new({
             paddle = layout_config.layout.paddle,
             live_area = layout_config.layout.areas.live,

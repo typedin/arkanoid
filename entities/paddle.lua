@@ -12,11 +12,12 @@ Paddle.__index = Paddle
 ---@return Paddle
 function Paddle:new(params)
     local instance = {
-        width = params.paddle.width,
+        hasLaser = false,
         height = params.paddle.height,
         speed = params.physics.speed,
-        y = params.live_area.paddle_line,
+        width = params.paddle.width,
         x = ((params.live_area.width / 2) + params.live_area.x) - (params.paddle.width / 2), -- center the paddle at the center of the live area
+        y = params.live_area.paddle_line,
     }
 
     instance.last = {
@@ -108,9 +109,8 @@ function Paddle:extend()
     self.width = self.width + (self.width / 2)
 end
 
-function Paddle:laser()
-    -- TODO
-    print("Paddle:laser() not implemented")
+function Paddle:equipLaser()
+    self.hasLaser = true
 end
 
 function Paddle:draw()

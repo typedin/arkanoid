@@ -1,0 +1,15 @@
+---@class Laser
+---@field new fun(self: Laser, params: LaserConfig): Laser
+---@field draw fun(self: Laser)
+---@field markAsDestroyable fun(self: Laser)
+---@field move fun(self: Laser, dt: number)
+---@field resolveOutOfBound fun(self: Laser, context: { live_area: LiveArea }): boolean
+---@field update fun(self: Laser, dt: number)
+---@field destroyable boolean
+---@field diameter number
+---@field dx number
+---@field dy number
+---@field last LastPosition
+---@field radius number
+---@field x number
+---@field y number

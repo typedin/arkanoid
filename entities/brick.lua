@@ -58,22 +58,39 @@ function Brick:markAsDestroyable()
 end
 
 ---@class BrickCollisionContext
----@field ball Ball
+---@field ball? Ball
+---@field laser? Laser
 
 ---@param context BrickCollisionContext
 function Brick:resolveCollision(context)
-    local ball = context.ball
-    if
-        self.hits > 0
-        and ball.x + ball.radius > self.x
-        and ball.x - ball.radius < self.x + self.width
-        and ball.y + ball.radius > self.y
-        and ball.y - ball.radius < self.y + self.height
-    then
-        -- NOP
-        -- It's not necessary to extract a function
-        self.hits = self.hits - 1
-        ball:invert("dy")
+    if context.ball ~= nil then
+        local ball = context.ball
+        if
+            ball ~= nil
+            and self.hits > 0
+            and ball.x + ball.radius > self.x
+            and ball.x - ball.radius < self.x + self.width
+            and ball.y + ball.radius > self.y
+            and ball.y - ball.radius < self.y + self.height
+        then
+            -- It's not necessary to extract a function
+            self.hits = self.hits - 1
+            ball:invert("dy")
+        end
+    elseif context.laser ~= nil then
+        local laser = context.laser
+        if
+            laser ~= nil
+            and self.hits > 0
+            and laser.x + laser.radius > self.x
+            and laser.x - laser.radius < self.x + self.width
+            and laser.y + laser.radius > self.y
+            and laser.y - laser.radius < self.y + self.height
+        then
+            -- It's not necessary to extract a function
+            self.hits = self.hits - 1
+            laser:markAsDestroyable()
+        end
     end
 end
 

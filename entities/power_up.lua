@@ -57,12 +57,8 @@ end
 ---@param context PowerUpCheckCollisionContext
 function PowerUp:resolveCollision(context)
     if collision.check_rectangle_collision(self, context.paddle) then
-        if 1 == 1 then
-            context.paddle:equipLaser()
-            self:markAsDestroyable()
-
         -- player
-        elseif self.action == "extra_life" then
+        if self.action == "extra_life" then
             context.player:extraLife()
         -- game
         elseif self.action == "break" then

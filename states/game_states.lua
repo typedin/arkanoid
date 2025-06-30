@@ -10,18 +10,16 @@ local game_states = {
     },
     play = {
         enter = function() end,
-        ---@param _ StateMachineState in this case play
         ---@param game Game
         ---@param dt number
         update = function(_, game, dt)
-            -- WARNING
-            -- CURSOR did this
-            -- Only use a update method for moving entities
-            -- Remove destroyable power-ups (iterate backwards to avoid index issues)
             --[[ 
-				WARNING /!\/!\
-				No stupid refactoring
-				WARNING /!\/!\
+			    WARNING /!\/!\
+			    No stupid refactoring
+			    -- CURSOR did this
+			    -- Only use a update method for moving entities
+			    -- Remove destroyable power-ups (iterate backwards to avoid index issues)
+				 WARNING /!\/!\
 			]]
             --
             for i = #game.power_ups, 1, -1 do
@@ -67,32 +65,37 @@ local game_states = {
                 end
             end
 
-            for j = #game.players[game.current_player].level.bricks, 1, -1 do
-                local brick = game.players[game.current_player].level.bricks[j]
-                for i = #game.balls, 1, -1 do
-                    local ball = game.balls[i]
+            for i = #game.players[game.current_player].level.bricks, 1, -1 do
+                local brick = game.players[game.current_player].level.bricks[i]
+                for j = #game.balls, 1, -1 do
+                    local ball = game.balls[j]
                     brick:resolveCollision({ ball = ball })
                 end
-                for i = #game.lasers, 1, -1 do
-                    local laser = game.lasers[i]
+                for j = #game.lasers, 1, -1 do
+                    local laser = game.lasers[j]
                     brick:resolveCollision({ laser = laser })
                 end
+
                 if brick.hits < 1 then
+                    brick:markAsDestroyable()
                     game.players[game.current_player].score:add(brick.points)
-                    table.remove(game.players[game.current_player].level.bricks, j)
-                    if brick.power_up then
-                        table.insert(
-                            game.power_ups,
-                            PowerUp:new({
-                                height = game.layout.power_up.height,
-                                name = brick.power_up,
-                                speed = power_up_physics.speed,
-                                width = game.layout.power_up.width,
-                                x = brick.x,
-                                y = brick.y,
-                            })
-                        )
-                    end
+                end
+
+                if brick.power_up and brick.hits < 1 then
+                    table.insert(
+                        game.power_ups,
+                        PowerUp:new({
+                            height = game.layout.power_up.height,
+                            name = brick.power_up,
+                            speed = power_up_physics.speed,
+                            width = game.layout.power_up.width,
+                            x = brick.x,
+                            y = brick.y,
+                        })
+                    )
+                end
+                if brick.destroyable then
+                    table.remove(game.players[game.current_player].level.bricks, i)
                 end
             end
             --

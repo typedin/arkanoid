@@ -4,8 +4,8 @@
 ---@field bonus BonusLayout
 ---@field brick BrickLayout
 ---@field power_up PowerUpLayout
----@field life LifeLayout
 ---@field laser LaserLayout
+---@field life LifeLayout
 ---@field paddle PaddleLayout
 ---@field wall WallLayout
 

@@ -64,7 +64,7 @@ function PowerUp:resolveCollision(context)
         elseif self.action == "break" then
             context.game:nextLevel()
         elseif self.action == "multiple_balls" then
-            print("calling game spawnBalls")
+            context.game:spawnBalls(2)
         -- ball
         elseif self.action == "catch" then
             for _, ball in ipairs(context.game.balls) do
@@ -78,12 +78,12 @@ function PowerUp:resolveCollision(context)
             for _, ball in ipairs(context.game.balls) do
                 ball:slowDown()
             end
+        -- paddle
         elseif self.action == "extend" then
             context.paddle:extend()
         elseif self.action == "shrink" then
             context.paddle:shrink()
         elseif self.action == "laser" then
-            print("calling paddle laser")
             context.paddle:equipLaser()
         end
         self:markAsDestroyable()

@@ -33,6 +33,7 @@ function Brick:new(params)
     end
 
     local instance = {
+        destroyable = false,
         height = params.height,
         hits = params.hits,
         kind = params.kind,

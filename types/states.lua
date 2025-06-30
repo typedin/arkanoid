@@ -9,4 +9,4 @@
 ---@field states StateMachineStateMap
 ---@field currentState StateMachineState
 ---@field change fun(self:StateMachine, state: string)
----@field update fun(owner: table, dt: number)
+---@field update fun(owner: table, ...)

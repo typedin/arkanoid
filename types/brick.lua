@@ -1,15 +1,17 @@
 ---@class Brick
 ---@field new fun(self: Brick): Brick
 ---@field draw fun(self: Brick)
+---@field markAsDestroyable fun(self: Brick)
 ---@field resolveCollision fun(self: Brick, context: BrickCollisionContext)
----@field x number
----@field y number
----@field width number
+---@field destroyable boolean
 ---@field height number
 ---@field hits number
----@field points number
 ---@field kind BrickKind
+---@field points number
 ---@field power_up? PowerUpName
+---@field width number
+---@field x number
+---@field y number
 
 ---@class BricksKinds
 ---@field [string] BrickKind

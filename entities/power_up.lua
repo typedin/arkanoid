@@ -58,7 +58,6 @@ end
 function PowerUp:resolveCollision(context)
     if collision.check_rectangle_collision(self, context.paddle) then
         if 1 == 1 then
-            print("calling paddle laser")
             context.paddle:equipLaser()
             self:markAsDestroyable()
 
@@ -89,7 +88,7 @@ function PowerUp:resolveCollision(context)
             context.paddle:shrink()
         elseif self.action == "laser" then
             print("calling paddle laser")
-            context.paddle:laser()
+            context.paddle:equipLaser()
         end
         self:markAsDestroyable()
     end

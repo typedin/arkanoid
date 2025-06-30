@@ -8,4 +8,11 @@ return {
     power_up = {
         speed = 100,
     },
+    laser = {
+        speed = {
+            x = 1,
+            y = -200,
+        },
+        throttle_interval = 0.17,
+    },
 }

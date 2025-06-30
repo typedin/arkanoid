@@ -73,14 +73,26 @@ function love.update(dt)
         if game.paddle.hasLaser then
             timer = timer + dt
             if timer > throttle_interval then
+                local dx = require("config.physics.entities").laser.speed.x
+                local dy = require("config.physics.entities").laser.speed.y
                 table.insert(
                     game.lasers,
                     Laser:new({
-                        dx = 1,
-                        dy = -200,
-                        diameter = 10,
-                        x = game.paddle.x + game.paddle.width / 2,
-                        y = game.paddle.y,
+                        dx = dx,
+                        dy = dy,
+                        diameter = game.layout.laser.diameter,
+                        x = game.paddle.x + game.layout.laser.offset,
+                        y = game.paddle.y - game.layout.laser.diameter / 2,
+                    })
+                )
+                table.insert(
+                    game.lasers,
+                    Laser:new({
+                        dx = dx,
+                        dy = dy,
+                        diameter = game.layout.laser.diameter,
+                        x = game.paddle.x + game.paddle.width - game.layout.laser.offset,
+                        y = game.paddle.y - game.layout.laser.diameter / 2,
                     })
                 )
                 timer = timer - throttle_interval

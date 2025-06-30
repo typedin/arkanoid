@@ -14,6 +14,14 @@ Laser.__index = Laser
 ---@param params LaserConfig
 ---@return Laser
 function Laser:new(params)
+    assert(type(params.diameter) == "number", "params.diameter must be a number")
+    assert(params.diameter > 0, "params.diameter must be greater than 0")
+    assert(type(params.dx) == "number", "params.dx must be a number")
+    assert(type(params.dy) == "number", "params.dy must be a number")
+    assert(params.dy < 0, "params.dy must be negative")
+    assert(type(params.x) == "number", "params.x must be a number")
+    assert(type(params.y) == "number", "params.y must be a number")
+
     local instance = {
         diameter = params.diameter,
         dx = params.dx,

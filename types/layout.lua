@@ -5,6 +5,7 @@
 ---@field brick BrickLayout
 ---@field power_up PowerUpLayout
 ---@field life LifeLayout
+---@field laser LaserLayout
 ---@field paddle PaddleLayout
 ---@field wall WallLayout
 

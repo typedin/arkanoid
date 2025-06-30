@@ -46,6 +46,7 @@ function Layout:new(params)
             ball = apply_scale(params, entities.ball),
             bonus = apply_scale(params, entities.bonus),
             brick = apply_scale(params, entities.brick),
+            laser = apply_scale(params, entities.laser),
             life = apply_scale(params, entities.life),
             paddle = apply_scale(params, entities.paddle),
             power_up = apply_scale(params, entities.power_up),

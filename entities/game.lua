@@ -65,9 +65,10 @@ function Game:new(params)
     return instance
 end
 
+-- This function removes a live from the current player
+-- if the player is a solo player, they're next
+-- if there are 2 players, next player plays
 function Game:nextRound()
-    -- TODO
-    -- WTF is that ??
     table.remove(self.players[self.current_player].lives)
     if #self.players == 2 then
         if self.current_player == 1 then
@@ -109,7 +110,6 @@ function Game:spawnBalls(number_of_balls)
     -- max of 3 balls
     assert(type(number_of_balls) == "number", "Game:spawnBalls requires a number_of_balls")
     assert(number_of_balls < 3 and number_of_balls > 0, "Game:spawnBalls requires a number_of_balls between 1 and 3")
-    print("spawning " .. number_of_balls .. " balls")
 
     for index = 1, number_of_balls do
         -- assign a random number between 100 and a resonable modification of require("config.physics.entities").ball.speed

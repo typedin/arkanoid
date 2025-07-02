@@ -65,22 +65,32 @@ local game_states = {
                 end
             end
 
+            local collision_resolved = false
             for i = #game.players[game.current_player].level.bricks, 1, -1 do
                 local brick = game.players[game.current_player].level.bricks[i]
+                -- Check collision with balls
                 for j = #game.balls, 1, -1 do
                     local ball = game.balls[j]
-                    brick:resolveCollision({ ball = ball })
+                    if brick:resolveBallCollision(ball) then
+                        collision_resolved = true
+                        break
+                    end
                 end
-                for j = #game.lasers, 1, -1 do
-                    local laser = game.lasers[j]
-                    brick:resolveCollision({ laser = laser })
+                -- If not already resolved, check collision with lasers
+                if not collision_resolved then
+                    for j = #game.lasers, 1, -1 do
+                        local laser = game.lasers[j]
+                        if brick:resolveLaserCollision(laser) then
+                            collision_resolved = true
+                            break
+                        end
+                    end
                 end
-
+                -- Handle brick destruction, power-ups, etc.
                 if brick.hits < 1 then
                     brick:markAsDestroyable()
                     game.players[game.current_player].score:add(brick.points)
                 end
-
                 if brick.power_up and brick.hits < 1 then
                     table.insert(
                         game.power_ups,
@@ -96,6 +106,9 @@ local game_states = {
                 end
                 if brick.destroyable then
                     table.remove(game.players[game.current_player].level.bricks, i)
+                end
+                if collision_resolved then
+                    break -- Stop after the first resolved collision
                 end
             end
             --

@@ -2,7 +2,8 @@
 ---@field new fun(self: Brick): Brick
 ---@field draw fun(self: Brick)
 ---@field markAsDestroyable fun(self: Brick)
----@field resolveCollision fun(self: Brick, context: BrickCollisionContext)
+---@field resolveBallCollision fun(self: Brick, ball: Ball)
+---@field resolveLaserCollision fun(self: Brick, laser: Laser)
 ---@field destroyable boolean
 ---@field height number
 ---@field hits number

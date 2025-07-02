@@ -58,41 +58,57 @@ function Brick:markAsDestroyable()
     self.destroyable = true
 end
 
----@class BrickCollisionContext
----@field ball? Ball
----@field laser? Laser
+---@param ball Ball
+function Brick:resolveBallCollision(ball)
+    if ball ~= nil and self.hits > 0 then
+        local ball_left = ball:getGeometry().left
+        local ball_right = ball:getGeometry().right
+        local ball_top = ball:getGeometry().top
+        local ball_bottom = ball:getGeometry().bottom
 
----@param context BrickCollisionContext
-function Brick:resolveCollision(context)
-    if context.ball ~= nil then
-        local ball = context.ball
-        if
-            ball ~= nil
-            and self.hits > 0
-            and ball.x + ball.radius > self.x
-            and ball.x - ball.radius < self.x + self.width
-            and ball.y + ball.radius > self.y
-            and ball.y - ball.radius < self.y + self.height
-        then
-            -- It's not necessary to extract a function
+        local brick_left = self:getGeometry().left
+        local brick_right = self:getGeometry().right
+        local brick_top = self:getGeometry().top
+        local brick_bottom = self:getGeometry().bottom
+
+        -- AABB collision check
+        if ball_right > brick_left and ball_left < brick_right and ball_bottom > brick_top and ball_top < brick_bottom then
+            -- Determine collision side (optional, for more realistic bounce)
+            local overlap_left = ball_right - brick_left
+            local overlap_right = brick_right - ball_left
+            local overlap_top = ball_bottom - brick_top
+            local overlap_bottom = brick_bottom - ball_top
+
+            local min_overlap = math.min(overlap_left, overlap_right, overlap_top, overlap_bottom)
+
+            if min_overlap == overlap_left or min_overlap == overlap_right then
+                ball:invert("dx")
+            else
+                ball:invert("dy")
+            end
+
             self.hits = self.hits - 1
-            ball:invert("dy")
-        end
-    elseif context.laser ~= nil then
-        local laser = context.laser
-        if
-            laser ~= nil
-            and self.hits > 0
-            and laser.x + laser.radius > self.x
-            and laser.x - laser.radius < self.x + self.width
-            and laser.y + laser.radius > self.y
-            and laser.y - laser.radius < self.y + self.height
-        then
-            -- It's not necessary to extract a function
-            self.hits = self.hits - 1
-            laser:markAsDestroyable()
+            return true
         end
     end
+    return false
+end
+
+---@param laser Laser
+function Brick:resolveLaserCollision(laser)
+    assert(type(laser) ~= "nil", "laser must not be nil")
+    if
+        laser.x + laser.radius > self.x
+        and laser.x - laser.radius < self.x + self.width
+        and laser.y + laser.radius > self.y
+        and laser.y - laser.radius < self.y + self.height
+    then
+        -- It's not necessary to extract a function
+        self.hits = self.hits - 1
+        laser:markAsDestroyable()
+        return true
+    end
+    return false
 end
 
 function Brick:draw()

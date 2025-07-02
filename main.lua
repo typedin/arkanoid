@@ -18,7 +18,7 @@ function love.load()
     love.window.setMode(640, 480)
 
     local game_params = {
-        players = { { name = "me" }, { name = "you" } },
+        players = { { name = "me" } },
         resolution = resolutions["amiga"],
         screen = { width = 640, height = 480 },
     }

@@ -7,6 +7,7 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 # BUGS
 - [ ] collision with 2 bricks at the same time
+- [ ] with 3 balls, the paddle moves faster
 - [ ] bricks layout is buggy: weird margin to the right most brick
 - [ ] bug if I use the live height it freezes the game
 

@@ -21,17 +21,58 @@ local game_states = {
 			    -- Remove destroyable power-ups (iterate backwards to avoid index issues)
 				 WARNING /!\/!\
 			]]
-            --
+            if
+                #game.balls == 0
+                and #game.players == 2
+                and #game.players[game.current_player].lives
+                and not game.players[game.current_player].level:cleared()
+            then
+                game:nextPlayer()
+            end
+            if game.players[game.current_player].level:cleared() then
+                -- remove all balls
+                for i = #game.balls, 1, -1 do
+                    local ball = game.balls[i]
+                    ball:markAsDestroyable()
+                end
+                -- move the paddle out of the live area
+                game.paddle:move_out({ dt = dt, layout = game.layout })
+                if game.paddle:is_out(game.walls.right) then
+                    game:nextLevel()
+                end
+            end
+
             for i = #game.power_ups, 1, -1 do
                 local power_up = game.power_ups[i]
                 power_up:update(dt)
-                power_up:resolveCollision({ live_area = game.layout.areas.live, paddle = game.paddle, player = game.players[game.current_player], game = game })
-
-                if power_up:resolveOutOfBound({ live_area = game.layout.areas.live }) then
-                    power_up:markAsDestroyable()
-                end
-
-                if power_up.destroyable then
+                -- a power up is
+                -- expired
+                -- applied
+                -- out of bound
+                -- otherwise falling <- default state
+                -- the power_up may be falling down
+                -- it may have been applied
+                if
+                    power_up:resolveCollision({
+                        game = game,
+                        live_area = game.layout.areas.live,
+                        paddle = game.paddle,
+                        player = game.players[game.current_player],
+                    })
+                then
+                    power_up:apply({
+                        game = game,
+                        paddle = game.paddle,
+                        player = game.players[game.current_player],
+                    })
+                elseif power_up:expired(dt) then
+                    power_up:remove({
+                        game = game,
+                        paddle = game.paddle,
+                        player = game.players[game.current_player],
+                    })
+                    table.remove(game.power_ups, i)
+                elseif power_up:resolveOutOfBound({ live_area = game.layout.areas.live }) then
                     table.remove(game.power_ups, i)
                 end
             end

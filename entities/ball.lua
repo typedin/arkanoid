@@ -25,6 +25,8 @@ function Ball:new(params)
     local instance = {
         dy = params.dy,
         dx = params.dx,
+        _dy = params.dy, -- private as a backup value
+        _dx = params.dx, -- private as a backup value
         diameter = params.ball.diameter,
         radius = params.ball.diameter / 2,
         x = (params.live_area.width / 2) + params.live_area.x, -- center the paddle at the center of the live area
@@ -144,6 +146,9 @@ end
 
 ---@param context SetGluedContext
 function Ball:setGlued(context)
+    if not context.glued then
+        error("Not implemented")
+    end
     -- set the ball to the middle of the paddle
     self.x = context.paddle.x + context.paddle.width / 2
     -- set the ball to top of the paddle
@@ -163,6 +168,11 @@ function Ball:speedUp()
     -- better physics
     self.dx = self.dx + 50
     self.dy = self.dy + 50
+end
+
+function Ball:resetSpeed()
+    self.dx = self._dx
+    self.dy = self._dy
 end
 
 function Ball:update(dt)

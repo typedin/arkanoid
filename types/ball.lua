@@ -13,6 +13,7 @@
 ---@field setGlued fun(self: Ball, contexxt: SetGluedContext)
 ---@field slowDown fun(self: Ball)
 ---@field speedUp fun(self: Ball)
+---@field resetSpeed fun(self: Ball)
 ---@field update fun(self: Ball, dt: number)
 ---@field destroyable boolean
 ---@field diameter number

@@ -5,26 +5,32 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 
 # READINGS
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
+# DOING
+- [ ] add timer to power-ups
+
 # BUGS
+- [ ] collision bug: golden bricks
 - [ ] collision with 2 bricks at the same time
 - [ ] with 3 balls, the paddle moves faster
+- [ ] with 3 balls, the additional balls should have different dx 
 - [ ] bricks layout is buggy: weird margin to the right most brick
 - [ ] bug if I use the live height it freezes the game
+- [ ] hide the paddle's portion that is outside the live area
 
 # TODO
-- [ ] better physics for speed_up and slow_down (this +50 or -50 is weirs)
 - [ ] when the level is complete open a door and move the paddle out of the live area
+- [ ] better physics for speed_up and slow_down (this +50 or -50 is weirs)
 - [ ] power-ups add: superball
-- [ ] add timer to power-ups
+- [ ] if a player has a catch ball power up the ball should stick to the paddle until it timeups
 - [ ] bonuses (extra lives, extra points, weapons)
 - [ ] title area 
 - [ ] credits area
 - [ ] game over screen one per player
 - [ ] a level may have a fixed amount of bonuses and they are assigned randomly
 - [ ] (physics)[https://www.love2d.org/wiki/love.physics]
-- [ ] State machine
 - [ ] levels (see)[https://www.mobygames.com/game/1087/arkanoid/screenshots/]
 - [ ] save scores
+- [ ] State machine
 - [ ] Add a game over screen
 - [ ] Add a pause screen
 - [ ] Add sound effects

@@ -3,10 +3,14 @@
 ---@field equipLaser fun(self: Paddle)
 ---@field extend fun(self: Paddle)
 ---@field getGeometry fun(self: Paddle): RectangleGeometry
+---@field is_out fun(self: Paddle, context: Wall): boolean
 ---@field move_left fun(self: Paddle, context: PaddleContext)
 ---@field move_right fun(self: Paddle, context: PaddleContext)
+---@field move_out fun(self: Paddle, context: PaddleContext)
 ---@field resolveCollision fun(self: Paddle, context: PaddleCollisionContext)
 ---@field shrink fun(self: Paddle)
+---@field resetSize fun(self: Paddle)
+---@field unequipLaser fun(self: Paddle)
 ---@field update fun(self: Paddle, dt: number, context: PaddleUpdateContext)
 ---@field hasLaser boolean
 ---@field height number

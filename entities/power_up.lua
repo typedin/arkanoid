@@ -10,6 +10,7 @@ setmetatable(PowerUp, { __index = RectangleBase })
 ---@field height number
 ---@field name  PowerUpName
 ---@field speed number
+---@field timer? number
 ---@field width number
 ---@field x number
 ---@field y number
@@ -28,6 +29,11 @@ function PowerUp:new(params)
         y = params.y,
     }
     instance.destroyable = false
+    instance._applied = false
+
+    if type(PowerUps[params.name].timer) == "number" then
+        instance.timer = PowerUps[params.name].timer
+    end
 
     setmetatable(instance, PowerUp)
 
@@ -36,6 +42,97 @@ end
 
 function PowerUp:markAsDestroyable()
     self.destroyable = true
+end
+
+---@class PowerUpApplyContext
+---@field game Game
+---@field paddle Paddle
+---@field player Player
+function PowerUp:apply(context)
+    -- player
+    if self.action == "extra_life" then
+        context.player:extraLife()
+        self._applied = true
+    end
+    -- game
+    if self.action == "break" then
+        context.game:nextLevel()
+        self._applied = true
+    end
+    -- game
+    -- ball
+    if self.action == "multiple_balls" then
+        context.game:spawnBalls(2)
+        self._applied = true
+    end
+    -- game
+    -- ball
+    if self.action == "catch" then
+        for _, ball in ipairs(context.game.balls) do
+            ball:setGlued({ glued = true, paddle = context.paddle })
+            self._applied = true
+        end
+    end
+    -- game
+    -- ball
+    if self.action == "speed_up" then
+        for _, ball in ipairs(context.game.balls) do
+            ball:speedUp()
+            self._applied = true
+        end
+    end
+    if self.action == "slow_down" then
+        for _, ball in ipairs(context.game.balls) do
+            ball:slowDown()
+            self._applied = true
+        end
+    end
+    -- paddle
+    if self.action == "extend" then
+        context.paddle:extend()
+        self._applied = true
+    end
+    -- paddle
+    if self.action == "shrink" then
+        context.paddle:shrink()
+        self._applied = true
+    end
+    -- paddle
+    if self.action == "laser" then
+        context.paddle:equipLaser()
+        self._applied = true
+    end
+end
+
+---@class PowerUpRemoveContext
+---@field game Game
+---@field paddle Paddle
+---@field player Player
+
+---@param context PowerUpRemoveContext
+function PowerUp:remove(context)
+    if self.action == "catch" then
+        for _, ball in ipairs(context.game.balls) do
+            ball:setGlued({ glued = false, paddle = context.paddle })
+        end
+    end
+    if self.action == "speed_up" or self.action == "slow_down" then
+        for _, ball in ipairs(context.game.balls) do
+            ball:resetSpeed()
+        end
+    end
+    if self.action == "slow_down" then
+        for _, ball in ipairs(context.game.balls) do
+            ball:resetSpeed()
+        end
+    end
+    -- paddle
+    if self.action == "extend" or self.action == "shrink" then
+        context.paddle:resetSize()
+    end
+    if self.action == "laser" then
+        context.paddle:unequipLaser()
+    end
 end
 
 --WARNING this class is defined in entities/power_up.lua
@@ -48,53 +145,41 @@ function PowerUp:resolveOutOfBound(context)
 end
 
 ---@class PowerUpCheckCollisionContext
----@field ball Ball
 ---@field game Game
 ---@field live_area LiveArea
 ---@field paddle Paddle
 ---@field player Player
 
 ---@param context PowerUpCheckCollisionContext
+---@return boolean
 function PowerUp:resolveCollision(context)
-    if collision.check_rectangle_collision(self, context.paddle) then
-        -- player
-        if self.action == "extra_life" then
-            context.player:extraLife()
-        -- game
-        elseif self.action == "break" then
-            context.game:nextLevel()
-        elseif self.action == "multiple_balls" then
-            context.game:spawnBalls(2)
-        -- ball
-        elseif self.action == "catch" then
-            for _, ball in ipairs(context.game.balls) do
-                ball:setGlued({ glued = true, paddle = context.paddle })
-            end
-        elseif self.action == "speed_up" then
-            for _, ball in ipairs(context.game.balls) do
-                ball:speedUp()
-            end
-        elseif self.action == "slow_down" then
-            for _, ball in ipairs(context.game.balls) do
-                ball:slowDown()
-            end
-        -- paddle
-        elseif self.action == "extend" then
-            context.paddle:extend()
-        elseif self.action == "shrink" then
-            context.paddle:shrink()
-        elseif self.action == "laser" then
-            context.paddle:equipLaser()
-        end
-        self:markAsDestroyable()
+    if self._applied then
+        return false
     end
+    return collision.check_rectangle_collision(self, context.paddle)
 end
 
 function PowerUp:update(dt)
     self.y = self.y + self.dy * dt
 end
 
+---@return boolean
+function PowerUp:expired(dt)
+    if self.timer then
+        self.timer = self.timer - dt
+    end
+    if self.timer == nil then
+        return false
+    end
+    return self.timer <= 0
+end
+
 function PowerUp:draw()
+    -- it the power_up has already been applied
+    -- just don't draw it
+    if self._applied then
+        return
+    end
     love.graphics.setColor(self.rgb[1], self.rgb[2], self.rgb[3])
 
     -- Draw the rectangle

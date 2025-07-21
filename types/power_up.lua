@@ -1,17 +1,27 @@
 ---@class PowerUp
 ---@field new fun(PowerUpParams): PowerUp
+---@field apply fun(self: PowerUp, PowerUpApplyContext)
+---@field remove fun(self: PowerUp, PowerUpApplyContext)
 ---@field draw fun(PowerUp)
+---@field expired fun(self: PowerUp, dt: number): boolean
 ---@field getGeometry fun(PowerUp): RectangleGeometry
 ---@field markAsDestroyable fun(self: PowerUp)
----@field resolveCollision fun(PowerUp, PowerUpCheckCollisionParams)
+---@field resolveCollision fun(PowerUp, PowerUpCheckCollisionParams): boolean
 ---@field resolveOutOfBound fun(self: PowerUp, context: { live_area: LiveArea }): boolean
 ---@field update fun(PowerUp, dt: number)
 ---@field action PowerUpAction
 ---@field destroyable boolean
+---@field concern? PowerUpConcern
 ---@field dy number
 ---@field height number
 ---@field name PowerUpName
 ---@field rgb integer[] -- RGB color array: { r, g, b }
+---@field timer? number
 ---@field width number
 ---@field x number
 ---@field y number
+
+---@alias PowerUpConcern
+---| "game"
+---| "paddle"
+---| "player"

@@ -68,7 +68,7 @@ end
 -- This function removes a live from the current player
 -- if the player is a solo player, they're next
 -- if there are 2 players, next player plays
-function Game:nextRound()
+function Game:nextPlayer()
     table.remove(self.players[self.current_player].lives)
     if #self.players == 2 then
         if self.current_player == 1 then

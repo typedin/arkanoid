@@ -57,14 +57,6 @@ function love.update(dt)
     -- TODO fix error
     game.stateMachine:update(game, dt)
 
-    if #game.balls == 0 then
-        game:nextRound()
-    end
-
-    if game.players[game.current_player].level:cleared() then
-        game:nextLevel()
-    end
-
     if love.keyboard.isDown("space") then
         for _, ball in ipairs(game.balls) do
             ball.glued = false
@@ -106,6 +98,14 @@ function love.update(dt)
         game.stateMachine:change("pause")
     elseif love.keyboard.isDown("r") then
         game.stateMachine:change("resume")
+    end
+
+    -- Must check if each player has
+    -- no more lives
+    -- no cleared the current level
+    -- no balls ?????
+    if #game.balls == 0 and #game.players == 2 and #game.players[game.current_player].lives and not game.players[game.current_player].level:cleared() then
+        game.stateMachine:change("over")
     end
 end
 

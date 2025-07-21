@@ -1,7 +1,7 @@
 ---@class Game
 ---@field new fun(params: GameParams): Game
 ---@field nextLevel fun(self: Game)
----@field nextRound fun(self: Game)
+---@field nextPlayer fun(self: Game)
 ---@field spawnBalls fun(self: Game, number_of_balls: number)
 ---@field balls Ball[]
 ---@field current_player number

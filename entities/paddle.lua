@@ -16,6 +16,7 @@ function Paddle:new(params)
         height = params.paddle.height,
         speed = params.physics.speed,
         width = params.paddle.width,
+        _width = params.paddle.width, -- private as a backup value
         x = ((params.live_area.width / 2) + params.live_area.x) - (params.paddle.width / 2), -- center the paddle at the center of the live area
         y = params.live_area.paddle_line,
     }
@@ -57,6 +58,21 @@ function Paddle:update(dt, context)
         end
         self:moveRight(dt)
     end
+end
+
+function Paddle:resetSize()
+    self.width = self._width
+end
+
+---@param wall Wall
+function Paddle:is_out(wall)
+    return self:getGeometry().left > wall:getGeometry().right
+end
+
+---@param context PaddleContext
+function Paddle:move_out(context)
+    self.speed = 100
+    self:moveRight(context.dt)
 end
 
 ---@class PaddleCollisionContext
@@ -111,6 +127,10 @@ end
 
 function Paddle:equipLaser()
     self.hasLaser = true
+end
+
+function Paddle:unequipLaser()
+    self.hasLaser = false
 end
 
 function Paddle:draw()

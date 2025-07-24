@@ -6,20 +6,20 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 # READINGS
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 # DOING
-- [ ] add timer to power-ups
+- [ ] when the level is complete open a door and move the paddle out of the live area
 
 # BUGS
 - [ ] collision bug: golden bricks
+- [ ] when the B power_up is hit, move the paddle out (the mechanics is already implemented in game_states)
 - [ ] collision with 2 bricks at the same time
 - [ ] with 3 balls, the paddle moves faster
 - [ ] with 3 balls, the additional balls should have different dx 
 - [ ] bricks layout is buggy: weird margin to the right most brick
-- [ ] bug if I use the live height it freezes the game
 - [ ] hide the paddle's portion that is outside the live area
+- [ ] bug if I use the live height it freezes the game <-- ????????????????????????????????
 
 # TODO
-- [ ] when the level is complete open a door and move the paddle out of the live area
-- [ ] better physics for speed_up and slow_down (this +50 or -50 is weirs)
+- [ ] better physics for speed_up and slow_down (this +50 or -50 is weird)
 - [ ] power-ups add: superball
 - [ ] if a player has a catch ball power up the ball should stick to the paddle until it timeups
 - [ ] bonuses (extra lives, extra points, weapons)
@@ -43,3 +43,4 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 # DONE
 - [x] multi player (2)
 - [x] on game load / new life / new level, put the paddle at the center
+- [x] add timer to power-ups

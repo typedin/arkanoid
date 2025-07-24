@@ -89,6 +89,22 @@ function Game:nextPlayer()
     self:spawnBalls(1)
 end
 
+--- This funtion clears all movable objects
+function Game:destroyMovables()
+    -- destroy all balls
+    for i = #self.balls, 1, -1 do
+        table.remove(self.balls, i)
+    end
+    -- destroy all power_ups
+    for i = #self.power_ups, 1, -1 do
+        table.remove(self.power_ups, i)
+    end
+    -- destroy all lasers
+    for i = #self.lasers, 1, -1 do
+        table.remove(self.lasers, i)
+    end
+end
+
 function Game:nextLevel()
     self.paddle = Paddle:new({
         paddle = self.layout.paddle,

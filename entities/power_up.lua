@@ -32,6 +32,7 @@ function PowerUp:new(params)
     instance._applied = false
 
     if type(PowerUps[params.name].timer) == "number" then
+        print("timer: " .. PowerUps[params.name].timer)
         instance.timer = PowerUps[params.name].timer
     end
 
@@ -48,29 +49,27 @@ end
 ---@field game Game
 ---@field paddle Paddle
 ---@field player Player
+---@field dt number
 function PowerUp:apply(context)
     -- player
     if self.action == "extra_life" then
         context.player:extraLife()
-        self._applied = true
     end
     -- game
     if self.action == "break" then
-        context.game:nextLevel()
-        self._applied = true
+        local game = context.game
+        game.players[game.current_player].level.next = true
     end
     -- game
     -- ball
     if self.action == "multiple_balls" then
         context.game:spawnBalls(2)
-        self._applied = true
     end
     -- game
     -- ball
     if self.action == "catch" then
         for _, ball in ipairs(context.game.balls) do
             ball:setGlued({ glued = true, paddle = context.paddle })
-            self._applied = true
         end
     end
     -- game
@@ -78,29 +77,29 @@ function PowerUp:apply(context)
     if self.action == "speed_up" then
         for _, ball in ipairs(context.game.balls) do
             ball:speedUp()
-            self._applied = true
         end
     end
     if self.action == "slow_down" then
         for _, ball in ipairs(context.game.balls) do
             ball:slowDown()
-            self._applied = true
         end
     end
     -- paddle
     if self.action == "extend" then
         context.paddle:extend()
-        self._applied = true
     end
     -- paddle
     if self.action == "shrink" then
         context.paddle:shrink()
-        self._applied = true
     end
     -- paddle
     if self.action == "laser" then
         context.paddle:equipLaser()
-        self._applied = true
+    end
+    self._applied = true
+    print("applying power up: " .. self.name)
+    if self.timer then
+        print("timer: " .. self.timer)
     end
 end
 
@@ -108,6 +107,7 @@ end
 ---@field game Game
 ---@field paddle Paddle
 ---@field player Player
+---@field dt number
 
 ---@param context PowerUpRemoveContext
 function PowerUp:remove(context)
@@ -160,17 +160,29 @@ function PowerUp:resolveCollision(context)
 end
 
 function PowerUp:update(dt)
+    -- a power_up with no timer doesn't need to be updated but needs to be destroyed right away
+    -- a power_up with a timer of 0 or less must be destroyed right away
+    if self._applied and (self.timer == nil or self.timer <= 0) then
+        print("marking power up as destroyable: " .. self.name)
+        self:markAsDestroyable()
+        return
+    end
+    if self._applied then
+        return
+    end
     self.y = self.y + self.dy * dt
 end
 
 ---@return boolean
 function PowerUp:expired(dt)
+    if self.timer == nil then
+        print(self.name .. " has no timer")
+        return false
+    end
     if self.timer then
         self.timer = self.timer - dt
     end
-    if self.timer == nil then
-        return false
-    end
+    print(self.name .. " has timer: " .. self.timer)
     return self.timer <= 0
 end
 

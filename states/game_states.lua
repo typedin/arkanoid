@@ -29,19 +29,15 @@ local game_states = {
             then
                 game:nextPlayer()
             end
-            if game.players[game.current_player].level:cleared() then
-                -- remove all balls
-                for i = #game.balls, 1, -1 do
-                    local ball = game.balls[i]
-                    ball:markAsDestroyable()
-                end
+            if game.players[game.current_player].level:cleared() or game.players[game.current_player].level.next then
+                print(game.players[game.current_player].level.next)
+                game:destroyMovables()
                 -- move the paddle out of the live area
                 game.paddle:move_out({ dt = dt, layout = game.layout })
                 if game.paddle:is_out(game.walls.right) then
                     game:nextLevel()
                 end
             end
-
             for i = #game.power_ups, 1, -1 do
                 local power_up = game.power_ups[i]
                 power_up:update(dt)
@@ -64,16 +60,25 @@ local game_states = {
                         game = game,
                         paddle = game.paddle,
                         player = game.players[game.current_player],
+                        dt = dt,
                     })
+                    print("apply power up")
                 elseif power_up:expired(dt) then
                     power_up:remove({
                         game = game,
                         paddle = game.paddle,
                         player = game.players[game.current_player],
+                        dt = dt,
                     })
-                    table.remove(game.power_ups, i)
+                    print("removing power up")
                 elseif power_up:resolveOutOfBound({ live_area = game.layout.areas.live }) then
+                    power_up:markAsDestroyable()
+                    print("out of bound")
+                end
+                -- garbage collect only here
+                if power_up.destroyable then
                     table.remove(game.power_ups, i)
+                    print("destroy power up")
                 end
             end
 

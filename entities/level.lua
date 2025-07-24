@@ -76,6 +76,7 @@ function Level:load(params)
         bricks = {},
         id = params.id,
         name = level.name,
+        next = false,
     }
 
     buildBricks(instance, level, params)

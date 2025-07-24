@@ -5,6 +5,7 @@
 ---@field id number
 ---@field name string
 ---@field bricks Brick[]
+---@field next boolean
 
 ---@class LevelFile
 ---@field name string

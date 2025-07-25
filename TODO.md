@@ -7,7 +7,7 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 
 # DOING
-- [ ] if a player has a catch ball power up the ball should stick to the paddle until it timeups
+- [ ] if a player has a catch ball power up the ball should stick to the paddle until it timeups <------ THE PADDLE SHOULD BE STICKY (so I can change the sprite if needed)
 
 # BUGS
 - [ ] collision bug: golden bricks (level 2)

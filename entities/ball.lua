@@ -137,11 +137,10 @@ function Ball:resolveCollision(context)
     end
     if self:checkCollision(context.paddle) then
         if context.paddle.isSticky then
-            self:setGlued({
+            self:stickToPaddle({
                 paddle = context.paddle,
                 x = self.x,
                 y = self.y,
-                glued = true,
             })
         else
             self.x = self.last.x
@@ -151,15 +150,13 @@ function Ball:resolveCollision(context)
     end
 end
 
----@class SetGluedContext
+---@class SetStickToPaddleContext
 ---@field x number
 ---@field y number
----@field glued boolean
 
----@param context SetGluedContext
-function Ball:setGlued(context)
-    print("are we sticky, yet?")
-    self.glued = context.glued
+---@param context SetStickToPaddleContext
+function Ball:stickToPaddle(context)
+    self.glued = true
     self.x = context.x
     self.y = context.y
     if self.dy > 0 then

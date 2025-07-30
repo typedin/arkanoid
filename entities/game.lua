@@ -133,7 +133,6 @@ function Game:spawnBalls(number_of_balls)
         local dy = require("config.physics.entities").ball.speed
 
         local glued = number_of_balls == 1
-        print(require("libraries.inspect")(self.layout.areas.live))
         table.insert(
             self.balls,
             index,

@@ -129,7 +129,7 @@ function Paddle:extend()
 end
 
 function Paddle:makeNonSticky()
-    self.isSticky = true
+    self.isSticky = false
 end
 
 function Paddle:makeSticky()

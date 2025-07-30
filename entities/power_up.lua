@@ -116,6 +116,9 @@ function PowerUp:remove(context)
     -- paddle
     if self.action == "catch" then
         context.game.paddle:makeNonSticky()
+        for _, ball in ipairs(context.game.balls) do
+            ball.glued = false
+        end
     end
     if self.action == "extend" or self.action == "shrink" then
         context.paddle:resetSize()

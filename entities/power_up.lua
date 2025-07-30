@@ -67,13 +67,6 @@ function PowerUp:apply(context)
     end
     -- game
     -- ball
-    if self.action == "catch" then
-        for _, ball in ipairs(context.game.balls) do
-            ball:setGlued({ glued = true, paddle = context.paddle })
-        end
-    end
-    -- game
-    -- ball
     if self.action == "speed_up" then
         for _, ball in ipairs(context.game.balls) do
             ball:speedUp()
@@ -87,6 +80,10 @@ function PowerUp:apply(context)
     -- paddle
     if self.action == "extend" then
         context.paddle:extend()
+    end
+    -- paddle
+    if self.action == "catch" then
+        context.game.paddle:makeSticky()
     end
     -- paddle
     if self.action == "shrink" then
@@ -111,22 +108,15 @@ end
 
 ---@param context PowerUpRemoveContext
 function PowerUp:remove(context)
-    if self.action == "catch" then
-        for _, ball in ipairs(context.game.balls) do
-            ball:setGlued({ glued = false, paddle = context.paddle })
-        end
-    end
     if self.action == "speed_up" or self.action == "slow_down" then
         for _, ball in ipairs(context.game.balls) do
             ball:resetSpeed()
         end
     end
-    if self.action == "slow_down" then
-        for _, ball in ipairs(context.game.balls) do
-            ball:resetSpeed()
-        end
-    end
     -- paddle
+    if self.action == "catch" then
+        context.game.paddle:makeNonSticky()
+    end
     if self.action == "extend" or self.action == "shrink" then
         context.paddle:resetSize()
     end

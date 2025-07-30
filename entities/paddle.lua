@@ -13,6 +13,7 @@ Paddle.__index = Paddle
 function Paddle:new(params)
     local instance = {
         hasLaser = false,
+        isSticky = false,
         height = params.paddle.height,
         speed = params.physics.speed,
         width = params.paddle.width,
@@ -83,6 +84,7 @@ end
 function Paddle:resolveCollision(context)
     -- reset the position
     if self:checkCollision(context.walls.right) then
+        -- Put this somewhere else
         if context.ball.glued then
             context.ball.x = context.ball.last.x
             context.ball.y = context.ball.last.y
@@ -91,6 +93,7 @@ function Paddle:resolveCollision(context)
         self.y = self.last.y
     end
     if self:checkCollision(context.walls.left) then
+        -- Put this somewhere else
         if context.ball.glued then
             context.ball.x = context.ball.last.x
             context.ball.y = context.ball.last.y
@@ -123,6 +126,14 @@ end
 function Paddle:extend()
     -- extend by the half of the paddle
     self.width = self.width + (self.width / 2)
+end
+
+function Paddle:makeNonSticky()
+    self.isSticky = true
+end
+
+function Paddle:makeSticky()
+    self.isSticky = true
 end
 
 function Paddle:equipLaser()

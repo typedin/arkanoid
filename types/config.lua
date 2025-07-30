@@ -1,4 +1,4 @@
----@class Layout
+---@class Config
 ---@field screen Screen
 ---@field resolution Resolution
 ---@field layout Layout

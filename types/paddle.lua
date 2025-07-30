@@ -4,6 +4,8 @@
 ---@field extend fun(self: Paddle)
 ---@field getGeometry fun(self: Paddle): RectangleGeometry
 ---@field is_out fun(self: Paddle, context: Wall): boolean
+---@field makeNonSticky fun(self: Paddle)
+---@field makeSticky fun(self: Paddle)
 ---@field move_left fun(self: Paddle, context: PaddleContext)
 ---@field move_right fun(self: Paddle, context: PaddleContext)
 ---@field move_out fun(self: Paddle, context: PaddleContext)
@@ -14,8 +16,8 @@
 ---@field update fun(self: Paddle, dt: number, context: PaddleUpdateContext)
 ---@field hasLaser boolean
 ---@field height number
+---@field isSticky boolean
 ---@field speed number
----@field stateMachine StateMachine
 ---@field width number
 ---@field x number
 ---@field y number

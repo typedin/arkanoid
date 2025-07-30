@@ -133,6 +133,7 @@ function Game:spawnBalls(number_of_balls)
         local dy = require("config.physics.entities").ball.speed
 
         local glued = number_of_balls == 1
+        print(require("libraries.inspect")(self.layout.areas.live))
         table.insert(
             self.balls,
             index,
@@ -141,9 +142,11 @@ function Game:spawnBalls(number_of_balls)
                 dy = dy * -1, -- So I can see it
                 glued = glued,
                 ball = self.layout.ball,
-                live_area = self.layout.areas.live,
+                x = (self.layout.areas.live.width / 2) + self.layout.areas.live.x,
+                y = self.layout.areas.live.paddle_line - self.layout.ball.diameter / 2,
             })
         )
     end
 end
+
 return Game

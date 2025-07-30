@@ -29,7 +29,7 @@ Layout.__index = Layout
 ---@field screen Screen
 ---@field resolution Resolution
 
----@return Layout
+---@return Config
 function Layout:new(params)
     assert(params.screen, "Layout Layout:new requires a params table with a screen property")
     assert(type(params.screen.width) == "number", "Layout:new requires screen width")

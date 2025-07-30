@@ -9,16 +9,18 @@ Ball.__index = Ball
 ---@field dy number
 ---@field glued? boolean
 ---@field ball table
----@field live_area LiveArea
+---@field x number
+---@field y number
 
 ---@param params BallConfig
 ---@return Ball
 function Ball:new(params)
     assert(type(params) == "table", "Ball:new requires a params table")
     assert(type(params.ball) == "table", "Ball:new requires params.ball to be a table")
-    assert(type(params.live_area) == "table", "Ball:new requires params.live_area to be a table")
     assert(type(params.dx) == "number", "Ball:new requires params.dx to be a number")
     assert(type(params.dy) == "number", "Ball:new requires params.dy to be a number")
+    assert(type(params.x) == "number", "Ball:new requires params.x to be a number")
+    assert(type(params.y) == "number", "Ball:new requires params.y to be a number")
 
     assert(params.dy < 0, "Ball:new requires params.dy to less than 0")
 
@@ -29,8 +31,8 @@ function Ball:new(params)
         _dx = params.dx, -- private as a backup value
         diameter = params.ball.diameter,
         radius = params.ball.diameter / 2,
-        x = (params.live_area.width / 2) + params.live_area.x, -- center the paddle at the center of the live area
-        y = params.live_area.paddle_line - params.ball.diameter / 2,
+        x = params.x,
+        y = params.y,
     }
 
     if type(params.glued) ~= "boolean" then
@@ -134,26 +136,35 @@ function Ball:resolveCollision(context)
         self:invert("dy")
     end
     if self:checkCollision(context.paddle) then
-        self.x = self.last.x
-        self.y = self.last.y
-        self:invert("dy")
+        if context.paddle.isSticky then
+            self:setGlued({
+                paddle = context.paddle,
+                x = self.x,
+                y = self.y,
+                glued = true,
+            })
+        else
+            self.x = self.last.x
+            self.y = self.last.y
+            self:invert("dy")
+        end
     end
 end
 
 ---@class SetGluedContext
----@field paddle Paddle
+---@field x number
+---@field y number
 ---@field glued boolean
 
 ---@param context SetGluedContext
 function Ball:setGlued(context)
-    if not context.glued then
-        error("Not implemented")
-    end
-    -- set the ball to the middle of the paddle
-    self.x = context.paddle.x + context.paddle.width / 2
-    -- set the ball to top of the paddle
-    self.y = context.paddle:getGeometry().top - self.radius
+    print("are we sticky, yet?")
     self.glued = context.glued
+    self.x = context.x
+    self.y = context.y
+    if self.dy > 0 then
+        self:invert("dy")
+    end
 end
 
 function Ball:slowDown()

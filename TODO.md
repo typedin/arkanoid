@@ -7,14 +7,13 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 
 # DOING
-- [ ] if a player has a catch ball power up the ball should stick to the paddle until it times up <------ THE PADDLE SHOULD BE STICKY (so I can change the sprite if needed)
+- [ ] with 3 balls, the paddle moves faster
+- [ ] with 3 balls, the additional balls should have different dx 
 
 # BUGS
 - [ ] the ball sometimes goes beyond the paddle and is stuck there
 - [ ] collision bug: golden bricks (level 2)
 - [ ] collision with 2 bricks at the same time
-- [ ] with 3 balls, the paddle moves faster
-- [ ] with 3 balls, the additional balls should have different dx 
 - [ ] hide the paddle's portion that is outside the live area
 - [ ] bug if I use the live height it freezes the game <-- ????????????????????????????????
 - [ ] bricks layout is buggy: weird margin to the right most brick
@@ -46,3 +45,4 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [x] add timer to power-ups
 - [x] when the B power_up is hit, move the paddle out (the mechanics is already implemented in game_states)
 - [x] when the level is complete open a door and move the paddle out of the live area
+- [x] if a player has a catch ball power up the ball should stick to the paddle until it times up <------ THE PADDLE SHOULD BE STICKY (so I can change the sprite if needed)

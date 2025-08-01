@@ -10,20 +10,22 @@ end
 local DiscBase = {}
 
 ---@class Disc
----@field left number
 ---@field top number
 ---@field right number
 ---@field bottom number
----@field center number
+---@field left number
+---@field center_x number
+---@field center_y number
 
 ---@return DiscGeometry
 function DiscBase:getGeometry()
     local geometry = {
-        left = self.x - self.radius, -- left
         top = self.y - self.radius, -- top
         right = self.x + self.radius, -- right
         bottom = self.y + self.radius, -- bottom
-        center = self.x, -- center
+        left = self.x - self.radius, -- left
+        center_x = self.x, -- center
+        center_y = self.y, -- center
     }
 
     return setmetatable(geometry, Geometry)

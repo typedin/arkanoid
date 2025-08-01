@@ -10,20 +10,24 @@ end
 local EntityBase = {}
 
 ---@class RectangleGeometry
----@field left number
 ---@field top number
 ---@field right number
 ---@field bottom number
+---@field left number
+---@field center_x number
+---@field center_y number
 
 ---@return RectangleGeometry
 function EntityBase:getGeometry()
     local geometry = {
-        left = self.x, -- left
         top = self.y, -- top
         right = self.x + self.width, -- right
         bottom = self.y + self.height, -- bottom
-        center = self.x + self.width / 2, -- center
+        left = self.x, -- left
+        center_x = self.x + self.width / 2, -- center x
+        center_y = self.y + self.height / 2, -- center y
     }
+
     return setmetatable(geometry, Geometry)
 end
 

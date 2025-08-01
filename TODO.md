@@ -7,16 +7,15 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 
 # DOING
-- [ ] with 3 balls, the paddle moves faster
-- [ ] with 3 balls, the additional balls should have different dx 
+- [ ] the ball sometimes goes beyond the paddle and is stuck there
 
 # BUGS
-- [ ] the ball sometimes goes beyond the paddle and is stuck there
 - [ ] collision bug: golden bricks (level 2)
 - [ ] collision with 2 bricks at the same time
 - [ ] hide the paddle's portion that is outside the live area
 - [ ] bug if I use the live height it freezes the game <-- ????????????????????????????????
 - [ ] bricks layout is buggy: weird margin to the right most brick
+- [ ] is ball dx acceptable?
 
 # TODO
 - [ ] better physics for speed_up and slow_down (this +50 or -50 is weird)
@@ -40,6 +39,8 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] todo difficulties? -> ball speed
 
 # DONE
+- [x] with 3 balls, the additional balls should have different dx 
+- [x] with 3 balls, the paddle moves faster <-- WARNING not sure about this
 - [x] multi player (2)
 - [x] on game load / new life / new level, put the paddle at the center
 - [x] add timer to power-ups

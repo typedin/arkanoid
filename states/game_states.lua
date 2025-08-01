@@ -41,13 +41,6 @@ local game_states = {
             for i = #game.power_ups, 1, -1 do
                 local power_up = game.power_ups[i]
                 power_up:update(dt)
-                -- a power up is
-                -- expired
-                -- applied
-                -- out of bound
-                -- otherwise falling <- default state
-                -- the power_up may be falling down
-                -- it may have been applied
                 if
                     power_up:resolveCollision({
                         game = game,
@@ -62,7 +55,6 @@ local game_states = {
                         player = game.players[game.current_player],
                         dt = dt,
                     })
-                    print("apply power up")
                 elseif power_up:expired(dt) then
                     power_up:remove({
                         game = game,
@@ -70,15 +62,12 @@ local game_states = {
                         player = game.players[game.current_player],
                         dt = dt,
                     })
-                    print("removing power up")
                 elseif power_up:resolveOutOfBound({ live_area = game.layout.areas.live }) then
                     power_up:markAsDestroyable()
-                    print("out of bound")
                 end
                 -- garbage collect only here
                 if power_up.destroyable then
                     table.remove(game.power_ups, i)
-                    print("destroy power up")
                 end
             end
 

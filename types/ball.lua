@@ -10,7 +10,7 @@
 ---@field moveRight fun(self: Ball, context: { dt: number,speed: number })
 ---@field resolveCollision fun(self: Ball, context: BallCollisionContext)
 ---@field resolveOutOfBound fun(self: Ball, context: { live_area: LiveArea }): boolean
----@field stickToPaddle fun(self: Ball, context: SetGluedContext)
+---@field stickToPaddle fun(self: Ball, context: SetStickToPaddleContext)
 ---@field slowDown fun(self: Ball)
 ---@field speedUp fun(self: Ball)
 ---@field resetSpeed fun(self: Ball)

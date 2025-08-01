@@ -129,7 +129,12 @@ function Game:spawnBalls(number_of_balls)
 
     for index = 1, number_of_balls do
         -- assign a random number between 100 and a resonable modification of require("config.physics.entities").ball.speed
-        local dx = math.random(100, require("config.physics.entities").ball.speed - 100)
+        local dx = math.random(100, require("config.physics.entities").ball.speed)
+        -- make sure that the 3 balls don't go the same direction
+        if index == 2 then
+            dx = dx * -1
+        end
+
         local dy = require("config.physics.entities").ball.speed
 
         local glued = number_of_balls == 1

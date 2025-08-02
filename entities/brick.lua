@@ -19,16 +19,16 @@ setmetatable(Brick, { __index = Rectangle })
 ---@return Brick
 function Brick:new(params)
     -- Rectangle assertions
-    assert(type(params.height) == "number", "params.height must be a number")
-    assert(type(params.width) == "number", "params.width must be a number")
-    assert(type(params.x) == "number", "params.x must be a number")
-    assert(type(params.y) == "number", "params.y must be a number")
+    assert(type(params.height) == "number", "Brick:new requires params.height to be a number")
+    assert(type(params.width) == "number", "Brick:new requires params.width to be a number")
+    assert(type(params.x) == "number", "Brick:new requires params.x to be a number")
+    assert(type(params.y) == "number", "Brick:new requires params.y to be a number")
 
     -- Brick assertions
-    assert(type(params.type) == "string", "params.type must be a string")
-    assert(type(params.hits) == "number", "params.hits must be a number")
-    assert(type(params.points) == "number", "params.points must be a number")
-    assert(#params.rgb == 3, "params.rgb must have 3 values")
+    assert(type(params.type) == "string", "Brick:new requires params.type to be a string")
+    assert(type(params.hits) == "number", "Brick:new requires params.hits to be a number")
+    assert(type(params.points) == "number", "Brick:new requires params.points to be a number")
+    assert(#params.rgb == 3, "Brick:new requires params.rgb to have 3 values")
 
     ---@class Brick
     local instance = Rectangle.new(self, {
@@ -44,7 +44,7 @@ function Brick:new(params)
     instance.rgb = params.rgb
 
     if params.power_up then
-        assert(type(params.power_up) == "string", "params.power_up must be a string")
+        assert(type(params.power_up) == "string", "params.power_up to be a string")
         instance.power_up = params.power_up
     end
 

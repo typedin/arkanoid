@@ -18,6 +18,15 @@ setmetatable(PowerUp, { __index = Rectangle })
 ---@param params PowerUpConfig
 ---@return PowerUp
 function PowerUp:new(params)
+    -- Rectangle assertions
+    assert(type(params.x) == "number", "PoweUp:new requires params.x to be a number")
+    assert(type(params.y) == "number", "PoweUp:new requires params.y to be a number")
+    assert(type(params.width) == "number", "PoweUp:new requires params.width to be a number")
+    assert(type(params.height) == "number", "PoweUp:new requires params.height to be a number")
+    -- PowerUp assertions
+    assert(type(params.name) == "string", "PoweUp:new requires params.name to be a string")
+    assert(type(params.speed) == "number", "PoweUp:new requires params.speed to be a number")
+
     ---@class PowerUp
     local instance = Rectangle.new(self, {
         width = params.width,

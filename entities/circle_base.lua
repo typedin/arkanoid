@@ -23,6 +23,7 @@ function Disc:new(params)
         diameter = params.diameter,
         radius = params.diameter / 2,
     }
+
     setmetatable(instance, Disc)
 
     return instance

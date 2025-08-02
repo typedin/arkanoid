@@ -57,7 +57,7 @@ Level.__index = Level
 ---@class LevelParams
 ---@field id number
 ---@field live_area table
----@field brick table
+---@field brick BrickLayout
 ---@field power_up table
 
 ---@param params LevelParams

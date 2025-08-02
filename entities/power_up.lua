@@ -1,33 +1,35 @@
+local Rectangle = require("entities.rectangle_base")
 local collision = require("collision.rectangle")
-local RectangleBase = require("entities.rectangle_base")
 local PowerUps = require("config.power_ups")
 
 local PowerUp = {}
 PowerUp.__index = PowerUp
-setmetatable(PowerUp, { __index = RectangleBase })
+setmetatable(PowerUp, { __index = Rectangle })
 
 ---@class PowerUpConfig
+---@field width number
 ---@field height number
+---@field x number
+---@field y number
 ---@field name  PowerUpName
 ---@field speed number
 ---@field timer? number
----@field width number
----@field x number
----@field y number
 
 ---@param params PowerUpConfig
 ---@return PowerUp
 function PowerUp:new(params)
-    local instance = {
-        action = PowerUps[params.name].action,
-        dy = params.speed,
-        height = params.height,
-        name = params.name,
-        rgb = PowerUps[params.name].rgb,
+    ---@class PowerUp
+    local instance = Rectangle.new(self, {
         width = params.width,
+        height = params.height,
         x = params.x,
         y = params.y,
-    }
+    })
+
+    instance.action = PowerUps[params.name].action
+    instance.dy = params.speed
+    instance.name = params.name
+    instance.rgb = PowerUps[params.name].rgb
     instance.destroyable = false
     instance._applied = false
 

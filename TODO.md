@@ -7,9 +7,11 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 
 # DOING
-- [ ] the ball sometimes goes beyond the paddle and is stuck there
+- [ ] Rectangle should have x y width and height
+- [ ] Disc should have x y width and height
 
 # BUGS
+- [ ] the ball sometimes goes beyond the paddle and is stuck there cf supra
 - [ ] collision between disc and rectangle
 - [ ] collision bug: golden bricks (level 2)
 - [ ] collision with 2 bricks at the same time
@@ -19,8 +21,6 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] is ball dx acceptable?
 
 # TODO
-- [ ] Rectangle should have  x y width and height
-- [ ] Disc should have  x y width and height
 - [ ] streamline "constructors": pass down less config and let the callers figure out what parts of the game layout
 - [ ] better physics for speed_up and slow_down (this +50 or -50 is weird)
 - [ ] power-ups add: superball

@@ -1,36 +1,42 @@
 local collision = require("collision.rectangle")
-local DiscBase = require("entities/circle_base")
+local Disc = require("entities/circle_base")
 
-local Laser = setmetatable({}, { __index = DiscBase })
+local Laser = {}
 Laser.__index = Laser
+setmetatable({}, { __index = Disc })
 
 ---@class LaserConfig
----@field diameter number
 ---@field dx number
 ---@field dy number
 ---@field x number -- where it was fired from
 ---@field y number -- where it was fired from
+---@field diameter number
 
 ---@param params LaserConfig
 ---@return Laser
 function Laser:new(params)
+    -- Disc assertions
+    assert(type(params.x) == "number", "params.x must be a number")
+    assert(type(params.y) == "number", "params.y must be a number")
     assert(type(params.diameter) == "number", "params.diameter must be a number")
     assert(params.diameter > 0, "params.diameter must be greater than 0")
+
+    -- Laser assertions
     assert(type(params.dx) == "number", "params.dx must be a number")
     assert(type(params.dy) == "number", "params.dy must be a number")
     assert(params.dy < 0, "params.dy must be negative")
-    assert(type(params.x) == "number", "params.x must be a number")
-    assert(type(params.y) == "number", "params.y must be a number")
 
-    local instance = {
+    ---@class Laser
+    local instance = Disc.new(self, {
         diameter = params.diameter,
-        dx = params.dx,
-        dy = params.dy,
         radius = params.diameter / 2,
         x = params.x,
         y = params.y,
-        destroyable = false,
-    }
+    })
+
+    instance.dx = params.dx
+    instance.dy = params.dy
+    instance.destroyable = false
 
     instance.last = {
         x = instance.x,

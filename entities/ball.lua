@@ -1,39 +1,48 @@
 local collision = require("collision.rectangle")
-local DiscBase = require("entities/circle_base")
+local Disc = require("entities/circle_base")
 
 local Ball = {}
 Ball.__index = Ball
-setmetatable(Ball, { __index = DiscBase })
+setmetatable(Ball, { __index = Disc })
 
 ---@class BallConfig
+---@field diameter number
 ---@field dx number
 ---@field dy number
----@field glued? boolean
----@field ball table
 ---@field x number
 ---@field y number
+---@field glued? boolean
 
 ---@param params BallConfig
 ---@return Ball
 function Ball:new(params)
-    assert(type(params) == "table", "Ball:new requires a params table")
-    assert(type(params.ball) == "table", "Ball:new requires params.ball to be a table")
-    assert(type(params.dx) == "number", "Ball:new requires params.dx to be a number")
-    assert(type(params.dy) == "number", "Ball:new requires params.dy to be a number")
+    -- Disc assertions
     assert(type(params.x) == "number", "Ball:new requires params.x to be a number")
     assert(type(params.y) == "number", "Ball:new requires params.y to be a number")
+    assert(type(params.diameter) == "number", "params.diameter must be a number")
+    assert(params.diameter > 0, "params.diameter must be greater than 0")
 
+    -- Ball assertions
+    assert(type(params.dx) == "number", "Ball:new requires params.dx to be a number")
+    assert(type(params.dy) == "number", "Ball:new requires params.dy to be a number")
     assert(params.dy < 0, "Ball:new requires params.dy to less than 0")
 
-    local instance = {
-        dy = params.dy,
-        dx = params.dx,
-        _dy = params.dy, -- private as a backup value
-        _dx = params.dx, -- private as a backup value
-        diameter = params.ball.diameter,
-        radius = params.ball.diameter / 2,
+    ---@class Ball
+    local instance = Disc.new(self, {
+        diameter = params.diameter,
+        radius = params.diameter / 2,
         x = params.x,
         y = params.y,
+    })
+
+    instance.dy = params.dy
+    instance.dx = params.dx
+    instance._dy = params.dy -- private as a backup value
+    instance._dx = params.dx -- private as a backup value
+
+    instance.last = {
+        x = instance.x,
+        y = instance.y,
     }
 
     if type(params.glued) ~= "boolean" then
@@ -41,11 +50,6 @@ function Ball:new(params)
     else
         instance.glued = params.glued
     end
-
-    instance.last = {
-        x = instance.x,
-        y = instance.y,
-    }
 
     setmetatable(instance, Ball)
 

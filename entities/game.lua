@@ -145,7 +145,7 @@ function Game:spawnBalls(number_of_balls)
                 dx = dx,
                 dy = dy * -1, -- So I can see it
                 glued = glued,
-                ball = self.layout.ball,
+                diameter = self.layout.ball.diameter,
                 x = (self.layout.areas.live.width / 2) + self.layout.areas.live.x,
                 y = self.layout.areas.live.paddle_line - self.layout.ball.diameter / 2,
             })

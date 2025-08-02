@@ -14,12 +14,9 @@
 ---@field unequipLaser fun(self: Paddle)
 ---@field update fun(self: Paddle, dt: number, context: PaddleUpdateContext)
 ---@field hasLaser boolean
----@field height number
 ---@field isSticky boolean
 ---@field speed number
----@field width number
----@field x number
----@field y number
+---@field last LastPosition
 
 ---@class PaddleContext
 ---@field dt number

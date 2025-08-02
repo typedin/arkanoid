@@ -1,6 +1,11 @@
 ---@class Disc
+---@field new fun(self: Disc, params: DiscConfig): Disc
+---@field getGeometry fun(self: Disc): DiscGeometry
 ---@field top number
 ---@field right number
 ---@field bottom number
 ---@field left number
----@field getGeometry fun(self: Disc): DiscGeometry
+---@field x number
+---@field y number
+---@field diameter number
+---@field radius number

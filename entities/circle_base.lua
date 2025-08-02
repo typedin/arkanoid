@@ -7,7 +7,26 @@ Geometry.__call = function(self)
     return self.left, self.top, self.right, self.bottom, self.center
 end
 
-local DiscBase = {}
+local Disc = {}
+
+---@class DiscConfig
+---@field x number
+---@field y number
+---@field diameter number
+
+---@param params DiscConfig
+---@return Disc
+function Disc:new(params)
+    local instance = {
+        x = params.x,
+        y = params.y,
+        diameter = params.diameter,
+        radius = params.diameter / 2,
+    }
+    setmetatable(instance, Disc)
+
+    return instance
+end
 
 ---@class DiscGeometry
 ---@field bottom number
@@ -21,7 +40,7 @@ local DiscBase = {}
 ---@field top number
 
 ---@return DiscGeometry
-function DiscBase:getGeometry()
+function Disc:getGeometry()
     local geometry = {
         top = self.y - self.radius, -- top
         right = self.x + self.radius, -- right
@@ -36,4 +55,4 @@ function DiscBase:getGeometry()
     return setmetatable(geometry, Geometry)
 end
 
-return DiscBase
+return Disc

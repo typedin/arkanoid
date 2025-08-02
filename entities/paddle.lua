@@ -1,8 +1,8 @@
-local RectangleBase = require("entities.rectangle_base")
+local Rectangle = require("entities.rectangle_base")
 
 local Paddle = {}
 Paddle.__index = Paddle
-setmetatable(Paddle, { __index = RectangleBase })
+setmetatable(Paddle, { __index = Rectangle })
 
 ---@class PaddleConfig
 ---@field paddle table
@@ -12,23 +12,29 @@ setmetatable(Paddle, { __index = RectangleBase })
 ---@param params PaddleConfig
 ---@return Paddle
 function Paddle:new(params)
-    local instance = {
-        hasLaser = false,
-        isSticky = false,
-        height = params.paddle.height,
-        speed = params.physics.speed,
-        width = params.paddle.width,
-        _width = params.paddle.width, -- private as a backup value
-        x = ((params.live_area.width / 2) + params.live_area.x) - (params.paddle.width / 2), -- center the paddle at the center of the live area
-        y = params.live_area.paddle_line,
-    }
+    local height = params.paddle.height
+    local width = params.paddle.width
+    local x = ((params.live_area.width / 2) + params.live_area.x) - (params.paddle.width / 2) -- center the paddle at the center of the live area
+    local y = params.live_area.paddle_line
+    ---@class Paddle
+    local instance = Rectangle.new(self, {
+        x = x,
+        y = y,
+        width = width,
+        height = height,
+    })
 
     instance.last = {
-        x = instance.x,
-        y = instance.y,
+        x = x,
+        y = y,
     }
+    instance._width = params.paddle.width -- private as a backup value
+    instance.hasLaser = false
+    instance.isSticky = false
+    instance.speed = params.physics.speed
 
     setmetatable(instance, Paddle)
+
     return instance
 end
 

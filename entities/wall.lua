@@ -1,35 +1,30 @@
-local RectangleBase = require("entities.rectangle_base")
+local Rectangle = require("entities.rectangle_base")
 
 local Wall = {}
 Wall.__index = Wall
-setmetatable(Wall, { __index = RectangleBase })
+setmetatable(Wall, { __index = Rectangle })
 
----@class WallParams
----@field x number
----@field y number
----@field thickness number
----@field width number
----@field height number
-
----@param params WallParams
+---@param params WallArea
 ---@return Wall
 function Wall:new(params)
-    if not params then
-        error("Wall:new requires params")
-    end
+    -- Rectangle assertions
     assert(type(params.x) == "number", "params.x must be a number")
     assert(type(params.y) == "number", "params.y must be a number")
-    assert(type(params.thickness) == "number", "params.thickness must be a number")
     assert(type(params.width) == "number", "params.width must be a number")
     assert(type(params.height) == "number", "params.height must be a number")
 
-    local instance = {
+    -- Wall assertions
+    assert(type(params.thickness) == "number", "params.thickness must be a number")
+
+    ---@class Wall
+    local instance = Rectangle.new(self, {
         x = params.x,
         y = params.y,
-        thickness = params.thickness,
         width = params.width,
         height = params.height,
-    }
+    })
+
+    instance.thickness = params.thickness
 
     setmetatable(instance, Wall)
 

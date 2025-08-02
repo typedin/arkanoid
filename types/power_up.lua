@@ -1,4 +1,4 @@
----@class PowerUp
+---@class PowerUp : Rectangle
 ---@field new fun(PowerUpParams): PowerUp
 ---@field apply fun(self: PowerUp, PowerUpApplyContext)
 ---@field remove fun(self: PowerUp, PowerUpApplyContext)

@@ -1,9 +1,8 @@
-local RectangleBase = require("entities.rectangle_base")
+local Rectangle = require("entities.rectangle_base")
+
 local Life = {}
-
 Life.__index = Life
-
-setmetatable(Life, { __index = RectangleBase })
+setmetatable(Life, { __index = Rectangle })
 
 local function calculateX(params)
     local margin_left = 5
@@ -20,6 +19,7 @@ end
 ---@field width number
 ---@field height number
 
+---@param params LifeParams
 ---@return Life
 function Life:new(params)
     assert(type(params.x) == "number", "Life:new requires params.x to be a number")
@@ -27,12 +27,13 @@ function Life:new(params)
     assert(type(params.width) == "number", "Life:new requires params.width to be a number")
     assert(type(params.height) == "number", "Life:new requires params.height to be a number")
 
-    local instance = {
+    ---@class Life
+    local instance = Rectangle.new(self, {
         x = calculateX(params),
         y = params.y, -- WARNING agic number
         width = params.width,
         height = params.height,
-    }
+    })
 
     setmetatable(instance, Life)
 

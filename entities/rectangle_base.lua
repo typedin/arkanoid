@@ -7,7 +7,28 @@ Geometry.__call = function(self)
     return self.left, self.top, self.right, self.bottom, self.center
 end
 
-local RectangleBase = {}
+local Rectangle = {}
+
+---@class RectangleConfig
+---@field x number
+---@field y number
+---@field width number
+---@field height number
+
+---@param params RectangleConfig
+---@return Rectangle
+function Rectangle:new(params)
+    local instance = {
+        x = params.x,
+        y = params.y,
+        width = params.width,
+        height = params.height,
+    }
+
+    setmetatable(instance, Rectangle)
+
+    return instance
+end
 
 ---@class RectangleGeometry
 ---@field top number
@@ -20,7 +41,7 @@ local RectangleBase = {}
 ---@field half_height number
 
 ---@return RectangleGeometry
-function RectangleBase:getGeometry()
+function Rectangle:getGeometry()
     local geometry = {
         top = self.y, -- top
         right = self.x + self.width, -- right
@@ -35,4 +56,4 @@ function RectangleBase:getGeometry()
     return setmetatable(geometry, Geometry)
 end
 
-return RectangleBase
+return Rectangle

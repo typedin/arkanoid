@@ -1,4 +1,4 @@
----@class Life
+---@class Life : Rectangle
 ---@field x number
 ---@field y number
 ---@field width number

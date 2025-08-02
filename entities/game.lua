@@ -43,6 +43,7 @@ function Game:new(params)
         layout = layout_config.layout,
         lasers = {},
         -- same code in entities/game.lua line 84
+        -- same code in entities/game.lua line 113
         paddle = Paddle:new({
             x = ((layout_config.layout.areas.live.width / 2) + layout_config.layout.areas.live.x) - (layout_config.layout.paddle.width / 2), -- center the paddle at the center of the live area
             y = layout_config.layout.areas.live.paddle_line,
@@ -76,7 +77,8 @@ function Game:nextPlayer()
     if #self.players == 2 then
         self.current_player = 3 - self.current_player -- it looks like it's a lua pattern
     end
-    -- same code in entities/game.lua line 46
+    -- same code in entities/game.lua line 47
+    -- same code in entities/game.lua line 117
     self.paddle = Paddle:new({
         x = ((self.layout.areas.live.width / 2) + self.layout.areas.live.x) - (self.layout.paddle.width / 2), -- center the paddle at the center of the live area
         y = self.layout.areas.live.paddle_line,
@@ -108,6 +110,8 @@ function Game:destroyMovables()
 end
 
 function Game:nextLevel()
+    -- same code in entities/game.lua line 47
+    -- same code in entities/game.lua line 84
     self.paddle = Paddle:new({
         x = ((self.layout.areas.live.width / 2) + self.layout.areas.live.x) - (self.layout.paddle.width / 2), -- center the paddle at the center of the live area
         y = self.layout.areas.live.paddle_line,

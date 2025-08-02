@@ -1,5 +1,4 @@
 local Score = {}
-
 Score.__index = Score
 
 ---@class ScoreParams

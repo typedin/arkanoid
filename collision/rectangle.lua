@@ -60,25 +60,24 @@ local function check_out_of_bond(object, area)
     return false
 end
 
----@class AABB
----@field center_x number
----@field center_y number
----@field half_width number
----@field half_height number
-
----@param a AABB
----@param b AABB
+---@param a Rectangle | Disc
+---@param b Rectangle | Disc
 ---@param vel_x number
 ---@param vel_y number
 ---@return 'left' | 'right' | 'top' | 'bottom' | nil
 local function get_collision_side(a, b, vel_x, vel_y)
+    assert(type(a) == "table", "Rectangle:get_collision_side requires a as a table")
+    assert(type(b) == "table", "Rectangle:get_collision_side requires b as a table")
+
+    assert(type(vel_x) == "number", "Rectangle:get_collision_side requires vel_x as a number")
+    assert(type(vel_y) == "number", "Rectangle:get_collision_side requires vel_y as a number")
     -- Calculate the distance between centers on both axes
-    local dx = a.center_x - b.center_x
-    local dy = a.center_y - b.center_y
+    local dx = a:getGeometry().center_x - b:getGeometry().center_x
+    local dy = a:getGeometry().center_y - b:getGeometry().center_y
 
     -- Calculate the maximum distance the boxes can be apart without overlapping
-    local combined_half_widths = (a.half_width + b.half_width) / 2
-    local combined_half_heights = (a.half_height + b.half_height) / 2
+    local combined_half_widths = (a:getGeometry().half_width + b:getGeometry().half_width) / 2
+    local combined_half_heights = (a:getGeometry().half_height + b:getGeometry().half_height) / 2
 
     -- Calculate how much the two boxes are overlapping on each axis
     local overlap_x = combined_half_widths - math.abs(dx)
@@ -123,7 +122,7 @@ local function get_collision_side(a, b, vel_x, vel_y)
 end
 
 return {
-    check_rectangle_collision = check_rectangle_collision,
     check_out_of_bond = check_out_of_bond,
-    get_collisionSide = get_collision_side,
+    check_rectangle_collision = check_rectangle_collision,
+    get_collision_side = get_collision_side,
 }

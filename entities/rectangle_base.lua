@@ -7,7 +7,7 @@ Geometry.__call = function(self)
     return self.left, self.top, self.right, self.bottom, self.center
 end
 
-local EntityBase = {}
+local RectangleBase = {}
 
 ---@class RectangleGeometry
 ---@field top number
@@ -16,14 +16,18 @@ local EntityBase = {}
 ---@field left number
 ---@field center_x number
 ---@field center_y number
+---@field half_width number
+---@field half_height number
 
 ---@return RectangleGeometry
-function EntityBase:getGeometry()
+function RectangleBase:getGeometry()
     local geometry = {
         top = self.y, -- top
         right = self.x + self.width, -- right
         bottom = self.y + self.height, -- bottom
         left = self.x, -- left
+        half_width = self.width / 2, -- half width
+        half_height = self.height / 2, -- half height
         center_x = self.x + self.width / 2, -- center x
         center_y = self.y + self.height / 2, -- center y
     }
@@ -31,4 +35,4 @@ function EntityBase:getGeometry()
     return setmetatable(geometry, Geometry)
 end
 
-return EntityBase
+return RectangleBase

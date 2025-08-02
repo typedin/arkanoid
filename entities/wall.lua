@@ -1,9 +1,18 @@
 local RectangleBase = require("entities.rectangle_base")
-local Wall = {}
 
+local Wall = {}
 Wall.__index = Wall
 setmetatable(Wall, { __index = RectangleBase })
 
+---@class WallParams
+---@field x number
+---@field y number
+---@field thickness number
+---@field width number
+---@field height number
+
+---@param params WallParams
+---@return Wall
 function Wall:new(params)
     if not params then
         error("Wall:new requires params")

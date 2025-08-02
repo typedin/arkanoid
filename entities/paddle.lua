@@ -1,7 +1,8 @@
 local RectangleBase = require("entities.rectangle_base")
 
-local Paddle = setmetatable({}, { __index = RectangleBase })
+local Paddle = {}
 Paddle.__index = Paddle
+setmetatable(Paddle, { __index = RectangleBase })
 
 ---@class PaddleConfig
 ---@field paddle table
@@ -28,7 +29,6 @@ function Paddle:new(params)
     }
 
     setmetatable(instance, Paddle)
-
     return instance
 end
 

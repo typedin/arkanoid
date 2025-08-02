@@ -1,4 +1,4 @@
----@class Brick
+---@class Brick : Rectangle
 ---@field new fun(self: Brick): Brick
 ---@field draw fun(self: Brick)
 ---@field markAsDestroyable fun(self: Brick)

@@ -1,0 +1,11 @@
+---@class Wall : Rectangle
+---@field x number
+---@field y number
+---@field width number
+---@field height number
+---@field thickness number
+
+---@class Walls
+---@field left Wall
+---@field right Wall
+---@field top Wall

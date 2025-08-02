@@ -1,8 +1,9 @@
 local collision = require("collision.rectangle")
 local DiscBase = require("entities/circle_base")
 
-local Ball = setmetatable({}, { __index = DiscBase })
+local Ball = {}
 Ball.__index = Ball
+setmetatable(Ball, { __index = DiscBase })
 
 ---@class BallConfig
 ---@field dx number
@@ -53,10 +54,7 @@ end
 
 -- TODO params
 function Ball:checkCollision(e)
-    return self:getGeometry().right > e:getGeometry().left
-        and self:getGeometry().left < e:getGeometry().right
-        and self:getGeometry().bottom > e:getGeometry().top
-        and self:getGeometry().top < e:getGeometry().bottom
+    return collision.check_rectangle_collision(self, e)
 end
 
 function Ball:draw()
@@ -70,13 +68,6 @@ function Ball:invert(axis)
 
     self[axis] = -self[axis]
 end
-
----@class DiscGeometry
----@field left number
----@field top number
----@field right number
----@field bottom number
----@field center number
 
 ---@param dt number
 function Ball:move(dt)
@@ -120,12 +111,7 @@ end
 
 ---@param context BallCollisionContext
 function Ball:resolveCollision(context)
-    if self:checkCollision(context.walls.right) then
-        self.x = self.last.x
-        self.y = self.last.y
-        self:invert("dx")
-    end
-    if self:checkCollision(context.walls.left) then
+    if self:checkCollision(context.walls.right) or self:checkCollision(context.walls.left) then
         self.x = self.last.x
         self.y = self.last.y
         self:invert("dx")
@@ -143,9 +129,21 @@ function Ball:resolveCollision(context)
                 y = self.y,
             })
         else
-            self.x = self.last.x
-            self.y = self.last.y
-            self:invert("dy")
+            if
+                collision.get_collision_side(self, context.paddle, self.dx, self.dy) == "left"
+                or collision.get_collision_side(self, context.paddle, self.dx, self.dy) == "right"
+            then
+                self.x = self.last.x
+                self.y = self.last.y
+                self:invert("dx")
+            elseif
+                collision.get_collision_side(self, context.paddle, self.dx, self.dy) == "top"
+                or collision.get_collision_side(self, context.paddle, self.dx, self.dy) == "bottom"
+            then
+                self.x = self.last.x
+                self.y = self.last.y
+                self:invert("dy")
+            end
         end
     end
 end

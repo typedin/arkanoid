@@ -1,0 +1,6 @@
+---@class Rectangle
+---@field top number
+---@field right number
+---@field bottom number
+---@field left number
+---@field getGeometry fun(self: Rectangle): RectangleGeometry

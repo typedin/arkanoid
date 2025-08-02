@@ -1,0 +1,6 @@
+---@class Disc
+---@field top number
+---@field right number
+---@field bottom number
+---@field left number
+---@field getGeometry fun(self: Disc): DiscGeometry

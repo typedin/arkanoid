@@ -9,13 +9,16 @@ end
 
 local DiscBase = {}
 
----@class Disc
----@field top number
----@field right number
+---@class DiscGeometry
 ---@field bottom number
----@field left number
 ---@field center_x number
 ---@field center_y number
+---@field center number
+---@field half_height number
+---@field half_width number
+---@field left number
+---@field right number
+---@field top number
 
 ---@return DiscGeometry
 function DiscBase:getGeometry()
@@ -24,6 +27,8 @@ function DiscBase:getGeometry()
         right = self.x + self.radius, -- right
         bottom = self.y + self.radius, -- bottom
         left = self.x - self.radius, -- left
+        half_width = self.radius, -- half width
+        half_height = self.radius, -- half height
         center_x = self.x, -- center
         center_y = self.y, -- center
     }

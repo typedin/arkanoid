@@ -1,8 +1,7 @@
----@class Paddle
+---@class Paddle : Rectangle
 ---@field draw fun(self: Paddle)
 ---@field equipLaser fun(self: Paddle)
 ---@field extend fun(self: Paddle)
----@field getGeometry fun(self: Paddle): RectangleGeometry
 ---@field is_out fun(self: Paddle, context: Wall): boolean
 ---@field makeNonSticky fun(self: Paddle)
 ---@field makeSticky fun(self: Paddle)

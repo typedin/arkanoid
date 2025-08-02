@@ -7,8 +7,7 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 
 # DOING
-- [ ] Rectangle should have x y width and height
-- [ ] Disc should have x y width and height
+- [ ] streamline "constructors": pass down less config and let the callers figure out what parts of the game layout
 
 # BUGS
 - [ ] the ball sometimes goes beyond the paddle and is stuck there cf supra
@@ -21,7 +20,6 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] is ball dx acceptable?
 
 # TODO
-- [ ] streamline "constructors": pass down less config and let the callers figure out what parts of the game layout
 - [ ] better physics for speed_up and slow_down (this +50 or -50 is weird)
 - [ ] power-ups add: superball
 - [ ] title area 
@@ -42,6 +40,8 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] todo difficulties? -> ball speed
 
 # DONE
+- [x] Rectangle should have x y width and height
+- [x] Disc should have x y width and height
 - [x] bonuses (extra lives, extra points, weapons)
 - [x] with 3 balls, the additional balls should have different dx 
 - [x] with 3 balls, the paddle moves faster <-- WARNING not sure about this

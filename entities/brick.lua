@@ -1,14 +1,13 @@
-local RectangleBase = require("entities.rectangle_base")
+local Rectangle = require("entities.rectangle_base")
 
 local Brick = {}
-
 Brick.__index = Brick
-setmetatable(Brick, { __index = RectangleBase })
+setmetatable(Brick, { __index = Rectangle })
 
 ---@class BrickParams
 ---@field height number
 ---@field hits integer
----@field kind BrickName
+---@field kind BrickKind
 ---@field points integer
 ---@field power_up? PowerUpName
 ---@field rgb integer[]
@@ -19,30 +18,34 @@ setmetatable(Brick, { __index = RectangleBase })
 ---@param params BrickParams
 ---@return Brick
 function Brick:new(params)
-    assert(#params.rgb == 3, "params.rgb must have 3 values")
+    -- Rectangle assertions
     assert(type(params.height) == "number", "params.height must be a number")
-    assert(type(params.hits) == "number", "params.hits must be a number")
-    assert(type(params.kind) == "string", "params.kind must be a string")
-    assert(type(params.points) == "number", "params.points must be a number")
     assert(type(params.width) == "number", "params.width must be a number")
     assert(type(params.x) == "number", "params.x must be a number")
     assert(type(params.y) == "number", "params.y must be a number")
 
+    -- Brick assertions
+    assert(type(params.hits) == "number", "params.hits must be a number")
+    assert(type(params.kind) == "string", "params.kind must be a string")
+    assert(type(params.points) == "number", "params.points must be a number")
+    assert(#params.rgb == 3, "params.rgb must have 3 values")
     for index, value in ipairs(params.rgb) do
         assert(type(value) == "number", "argument at " .. index .. " is not a number")
     end
 
-    local instance = {
-        destroyable = false,
-        height = params.height,
-        hits = params.hits,
-        kind = params.kind,
-        points = params.points,
-        rgb = params.rgb,
+    ---@class Brick
+    local instance = Rectangle.new(self, {
         width = params.width,
+        height = params.height,
         x = params.x,
         y = params.y,
-    }
+    })
+
+    instance.destroyable = false
+    instance.hits = params.hits
+    instance.kind = params.kind
+    instance.points = params.points
+    instance.rgb = params.rgb
 
     if params.power_up then
         assert(type(params.power_up) == "string", "params.power_up must be a string")

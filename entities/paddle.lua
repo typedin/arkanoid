@@ -21,10 +21,12 @@ function Paddle:new(params)
     assert(type(params.y) == "number", "Paddle:new requires params.y to be a number")
     -- Paddle assertions
     assert(type(params.speed) == "number", "Paddle:new requires params.speed to be a number")
+
     local height = params.height
     local width = params.width
     local x = params.x
     local y = params.y
+
     ---@class Paddle: Rectangle
     local instance = Rectangle.new(self, {
         x = x,

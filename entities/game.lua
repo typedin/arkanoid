@@ -74,11 +74,7 @@ end
 function Game:nextPlayer()
     table.remove(self.players[self.current_player].lives)
     if #self.players == 2 then
-        if self.current_player == 1 then
-            self.current_player = 2
-        elseif self.current_player == 2 then
-            self.current_player = 1
-        end
+        self.current_player = 3 - self.current_player -- it looks like it's a lua pattern
     end
     -- same code in entities/game.lua line 46
     self.paddle = Paddle:new({

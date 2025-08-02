@@ -42,10 +42,13 @@ function Game:new(params)
         balls = {},
         layout = layout_config.layout,
         lasers = {},
+        -- same code in entities/game.lua line 84
         paddle = Paddle:new({
-            paddle = layout_config.layout.paddle,
-            live_area = layout_config.layout.areas.live,
-            physics = require("config.physics.entities").paddle,
+            x = ((layout_config.layout.areas.live.width / 2) + layout_config.layout.areas.live.x) - (layout_config.layout.paddle.width / 2), -- center the paddle at the center of the live area
+            y = layout_config.layout.areas.live.paddle_line,
+            width = layout_config.layout.paddle.width,
+            height = layout_config.layout.paddle.height,
+            speed = require("config.physics.entities").paddle.speed,
         }),
         players = players,
         power_ups = {},
@@ -77,10 +80,13 @@ function Game:nextPlayer()
             self.current_player = 1
         end
     end
+    -- same code in entities/game.lua line 46
     self.paddle = Paddle:new({
-        paddle = self.layout.paddle,
-        live_area = self.layout.areas.live,
-        physics = require("config.physics.entities").paddle,
+        x = ((self.layout.areas.live.width / 2) + self.layout.areas.live.x) - (self.layout.paddle.width / 2), -- center the paddle at the center of the live area
+        y = self.layout.areas.live.paddle_line,
+        width = self.layout.paddle.width,
+        height = self.layout.paddle.height,
+        speed = require("config.physics.entities").paddle.speed,
     })
     for i = #self.power_ups, 1, -1 do
         table.remove(self.power_ups, i)
@@ -107,9 +113,11 @@ end
 
 function Game:nextLevel()
     self.paddle = Paddle:new({
-        paddle = self.layout.paddle,
-        live_area = self.layout.areas.live,
-        physics = require("config.physics.entities").paddle,
+        x = ((self.layout.areas.live.width / 2) + self.layout.areas.live.x) - (self.layout.paddle.width / 2), -- center the paddle at the center of the live area
+        y = self.layout.areas.live.paddle_line,
+        width = self.layout.paddle.width,
+        height = self.layout.paddle.height,
+        speed = require("config.physics.entities").paddle.speed,
     })
     self.balls = {}
     self:spawnBalls(1)

@@ -6,11 +6,11 @@ Laser.__index = Laser
 setmetatable({}, { __index = Disc })
 
 ---@class LaserConfig
+---@field diameter number
 ---@field dx number
 ---@field dy number
 ---@field x number -- where it was fired from
 ---@field y number -- where it was fired from
----@field diameter number
 
 ---@param params LaserConfig
 ---@return Laser

@@ -5,18 +5,27 @@ Paddle.__index = Paddle
 setmetatable(Paddle, { __index = Rectangle })
 
 ---@class PaddleConfig
----@field paddle table
----@field live_area table
----@field physics table
+---@field height number
+---@field width number
+---@field x number
+---@field y number
+---@field speed number
 
 ---@param params PaddleConfig
 ---@return Paddle
 function Paddle:new(params)
-    local height = params.paddle.height
-    local width = params.paddle.width
-    local x = ((params.live_area.width / 2) + params.live_area.x) - (params.paddle.width / 2) -- center the paddle at the center of the live area
-    local y = params.live_area.paddle_line
-    ---@class Paddle
+    -- Rectangle assertions
+    assert(type(params.height) == "number", "Paddle:new requires params.height to be a number")
+    assert(type(params.width) == "number", "Paddle:new requires params.width to be a number")
+    assert(type(params.x) == "number", "Paddle:new requires params.x to be a number")
+    assert(type(params.y) == "number", "Paddle:new requires params.y to be a number")
+    -- Paddle assertions
+    assert(type(params.speed) == "number", "Paddle:new requires params.speed to be a number")
+    local height = params.height
+    local width = params.width
+    local x = params.x
+    local y = params.y
+    ---@class Paddle: Rectangle
     local instance = Rectangle.new(self, {
         x = x,
         y = y,
@@ -28,10 +37,10 @@ function Paddle:new(params)
         x = x,
         y = y,
     }
-    instance._width = params.paddle.width -- private as a backup value
+    instance._width = params.width -- private as a backup value
     instance.hasLaser = false
     instance.isSticky = false
-    instance.speed = params.physics.speed
+    instance.speed = params.speed
 
     setmetatable(instance, Paddle)
 

@@ -5,8 +5,8 @@ local cli_args = parse_args()
 local merge_table = require("libraries.merge_table")
 local resolutions = require("config.resolutions")
 
----@type Game
 local game
+
 -- TODO this to the config
 local timer = 0
 local throttle_interval = 0.17
@@ -54,7 +54,6 @@ end
 
 function love.update(dt)
     -- first argument received by update is _self_
-    -- TODO fix error
     game.stateMachine:update(game, dt)
 
     if love.keyboard.isDown("space") then

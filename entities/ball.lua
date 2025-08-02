@@ -58,7 +58,7 @@ end
 
 -- TODO params
 function Ball:checkCollision(e)
-    return collision.check_rectangle_collision(self, e)
+    return collision.check_disc_rectangle_collision(self, e)
 end
 
 function Ball:draw()

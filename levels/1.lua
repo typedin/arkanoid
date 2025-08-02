@@ -13,27 +13,27 @@ M.rows = {
     -- empty
     {},
     {
-        { kind = "gray", power_up = "E" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray", power_up = "S" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" },
+        { type = "gray", power_up = "E" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray", power_up = "S" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" },
     },
     --[[ row 2 ]]
     {
-        { kind = "red" }, { kind = "red", power_up = "U" }, { kind = "red" }, { kind = "red" }, { kind = "red" }, { kind = "red" }, { kind = "red" }, { kind = "red" }, { kind = "red" }, { kind = "red" },  { kind = "red" },{ kind = "red" },{ kind = "red" },
+        { type = "red" }, { type = "red", power_up = "U" }, { type = "red" }, { type = "red" }, { type = "red" }, { type = "red" }, { type = "red" }, { type = "red" }, { type = "red" }, { type = "red" },  { type = "red" },{ type = "red" },{ type = "red" },
 	},
     --[[ row 3 ]]
     {
-        { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow", power_up = "D" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" }, { kind = "yellow" },
+        { type = "yellow" }, { type = "yellow" }, { type = "yellow" }, { type = "yellow", power_up = "D" }, { type = "yellow" }, { type = "yellow" }, { type = "yellow" }, { type = "yellow" }, { type = "yellow" }, { type = "yellow" }, { type = "yellow" }, { type = "yellow" }, { type = "yellow" },
 	},
     --[[ row 4 ]]
     {
-        { kind = "blue" }, { kind = "blue" }, { kind = "blue" }, { kind = "blue" }, { kind = "blue" }, { kind = "blue", power_up = "C" }, { kind = "blue" }, { kind = "blue" }, { kind = "blue" }, { kind = "blue" }, { kind = "blue" },{ kind = "blue" },{ kind = "blue" },
+        { type = "blue" }, { type = "blue" }, { type = "blue" }, { type = "blue" }, { type = "blue" }, { type = "blue", power_up = "C" }, { type = "blue" }, { type = "blue" }, { type = "blue" }, { type = "blue" }, { type = "blue" },{ type = "blue" },{ type = "blue" },
     },
     --[[ row 5 ]]
     {
-        { kind = "green" }, { kind = "green" }, { kind = "green" }, { kind = "green" }, { kind = "green" }, { kind = "green" }, { kind = "green" }, { kind = "green", power_up = "L" }, { kind = "green" }, { kind = "green" }, { kind = "green" },{ kind = "green" },{ kind = "green" },
+        { type = "green" }, { type = "green" }, { type = "green" }, { type = "green" }, { type = "green" }, { type = "green" }, { type = "green" }, { type = "green", power_up = "L" }, { type = "green" }, { type = "green" }, { type = "green" },{ type = "green" },{ type = "green" },
     },
     --[[ row 6 - additional row for remaining power-ups ]]
     {
-        { kind = "gray", power_up = "B" }, { kind = "gray", power_up = "M" }, { kind = "gray", power_up = "P" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" }, { kind = "gray" },
+        { type = "gray", power_up = "B" }, { type = "gray", power_up = "M" }, { type = "gray", power_up = "P" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" }, { type = "gray" },
     },
 }
 

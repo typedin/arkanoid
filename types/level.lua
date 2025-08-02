@@ -12,5 +12,5 @@
 ---@field rows LevelFileRow[][]
 
 ---@class LevelFileRow
----@field kind BrickName
+---@field type BrickType
 ---@field power_up? PowerUpName

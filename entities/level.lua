@@ -1,4 +1,4 @@
-local brick_kind = require("config.bricks").kinds
+local brick_specs = require("config.bricks")
 local Brick = require("entities.brick")
 
 --- Calculates the width of a single brick based on the live area, spacing, and brick count.
@@ -32,19 +32,18 @@ local function buildBricks(instance, level, params)
             -- Keep brickWidth out of Brick
             local x = (j - 1) * brickWidth + params.live_area.x
             local y = i * params.brick.height + params.live_area.y
-            local power_up = brick.power_up
             table.insert(
                 instance.bricks,
                 Brick:new({
-                    height = params.brick.height,
-                    hits = brick_kind[brick.kind].hits,
-                    kind = brick.kind,
-                    points = brick_kind[brick.kind].points,
-                    power_up = power_up,
-                    rgb = brick_kind[brick.kind].rgb,
-                    width = brickWidth,
                     x = x,
                     y = y,
+                    width = brickWidth,
+                    height = params.brick.height,
+                    type = brick.type,
+                    hits = brick_specs[brick.type].hits,
+                    points = brick_specs[brick.type].points,
+                    rgb = brick_specs[brick.type].rgb,
+                    power_up = brick.power_up,
                 })
             )
         end
@@ -69,7 +68,7 @@ function Level:load(params)
     ---@type LevelFile
     local level = require("levels/" .. tostring(params.id))
     assert(type(level) == "table", "count not load level")
-    assert(type(level.name) == "string", "params.name must be a string")
+    assert(type(level.name) == "string", "params.type must be a string")
     assert(type(level.rows) == "table", "params.rows must be a table")
 
     local instance = {
@@ -100,7 +99,7 @@ function Level:cleared()
         if brick.hits == 0 then
             total = total - 1
         end
-        if brick.kind == "gold" then
+        if brick.type == "gold" then
             total = total - 1
         end
     end

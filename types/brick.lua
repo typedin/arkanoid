@@ -7,7 +7,7 @@
 ---@field destroyable boolean
 ---@field height number
 ---@field hits number
----@field kind BrickKind
+---@field kind BrickSpec
 ---@field points number
 ---@field power_up? PowerUpName
 ---@field width number
@@ -15,9 +15,9 @@
 ---@field y number
 
 ---@class BricksKinds
----@field [string] BrickKind
+---@field [BrickType] BrickSpec
 
----@class BrickKind
+---@class BrickSpec
 ---@field hits number
 ---@field points number
 ---@field rgb integer[]  -- RGB color array: { r, g, b }

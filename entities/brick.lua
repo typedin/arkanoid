@@ -5,15 +5,15 @@ Brick.__index = Brick
 setmetatable(Brick, { __index = Rectangle })
 
 ---@class BrickParams
----@field height number
----@field hits integer
----@field kind BrickKind
----@field points integer
----@field power_up? PowerUpName
----@field rgb integer[]
 ---@field width number
 ---@field x number
 ---@field y number
+---@field height number
+---@field type BrickType
+---@field hits integer
+---@field points integer
+---@field power_up? PowerUpName
+---@field rgb integer[]
 
 ---@param params BrickParams
 ---@return Brick
@@ -25,13 +25,10 @@ function Brick:new(params)
     assert(type(params.y) == "number", "params.y must be a number")
 
     -- Brick assertions
+    assert(type(params.type) == "string", "params.type must be a string")
     assert(type(params.hits) == "number", "params.hits must be a number")
-    assert(type(params.kind) == "string", "params.kind must be a string")
     assert(type(params.points) == "number", "params.points must be a number")
     assert(#params.rgb == 3, "params.rgb must have 3 values")
-    for index, value in ipairs(params.rgb) do
-        assert(type(value) == "number", "argument at " .. index .. " is not a number")
-    end
 
     ---@class Brick
     local instance = Rectangle.new(self, {
@@ -41,9 +38,8 @@ function Brick:new(params)
         y = params.y,
     })
 
-    instance.destroyable = false
+    instance.type = params.type
     instance.hits = params.hits
-    instance.kind = params.kind
     instance.points = params.points
     instance.rgb = params.rgb
 
@@ -51,6 +47,8 @@ function Brick:new(params)
         assert(type(params.power_up) == "string", "params.power_up must be a string")
         instance.power_up = params.power_up
     end
+
+    instance.destroyable = false
 
     setmetatable(instance, Brick)
 

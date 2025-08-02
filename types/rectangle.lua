@@ -1,4 +1,8 @@
 ---@class Rectangle
+---@field x number
+---@field y number
+---@field width number
+---@field height number
 ---@field top number
 ---@field right number
 ---@field bottom number

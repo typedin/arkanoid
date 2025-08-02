@@ -29,6 +29,19 @@ local function check_rectangle_collision(obj1, obj2)
     return true
 end
 
+---@param disc Disc
+---@param rectangle Rectangle
+---@return boolean
+local function check_disc_aabb_collision(disc, rectangle)
+    local closest_x = math.max(rectangle.x, math.min(disc:getGeometry().center_x, rectangle.x + rectangle.width))
+    local closest_y = math.max(rectangle.y, math.min(disc:getGeometry().center_y, rectangle.y + rectangle.height))
+
+    local distance_x = disc:getGeometry().center_x - closest_x
+    local distance_y = disc:getGeometry().center_y - closest_y
+
+    return (distance_x * distance_x + distance_y * distance_y) <= disc.radius * disc.radius
+end
+
 ---@param object table Object with getGeometry() method
 ---@param area table Area with x, y, width, height properties
 ---@return boolean
@@ -123,6 +136,7 @@ end
 
 return {
     check_out_of_bond = check_out_of_bond,
+    check_disc_rectangle_collision = check_disc_aabb_collision,
     check_rectangle_collision = check_rectangle_collision,
     get_collision_side = get_collision_side,
 }

@@ -22,6 +22,7 @@ end
 ---@param params LifeParams
 ---@return Life
 function Life:new(params)
+    -- Rectangle assertions
     assert(type(params.x) == "number", "Life:new requires params.x to be a number")
     assert(type(params.y) == "number", "Life:new requires params.y to be a number")
     assert(type(params.width) == "number", "Life:new requires params.width to be a number")

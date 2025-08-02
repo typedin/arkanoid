@@ -7,20 +7,20 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] (see)[https://github.com/Sheepolution/lekker-spelen-origins]
 
 # DOING
-- [ ] streamline "constructors": pass down less config and let the callers figure out what parts of the game layout
-
-# BUGS
 - [ ] the ball sometimes goes beyond the paddle and is stuck there cf supra
 - [ ] collision between disc and rectangle
+
+# BUGS
 - [ ] collision bug: golden bricks (level 2)
 - [ ] collision with 2 bricks at the same time
 - [ ] hide the paddle's portion that is outside the live area
 - [ ] bug if I use the live height it freezes the game <-- ????????????????????????????????
 - [ ] bricks layout is buggy: weird margin to the right most brick
-- [ ] is ball dx acceptable?
+- [ ] is ball "speed" acceptable?
 
 # TODO
 - [ ] better physics for speed_up and slow_down (this +50 or -50 is weird)
+- [ ] power-ups change timer
 - [ ] power-ups add: superball
 - [ ] title area 
 - [ ] credits area
@@ -40,6 +40,7 @@ Fans haven't documented a full level‑by‑capsule breakdown, so your best bet 
 - [ ] todo difficulties? -> ball speed
 
 # DONE
+- [x] streamline "constructors": pass down less config and let the callers figure out what parts of the game layout
 - [x] Rectangle should have x y width and height
 - [x] Disc should have x y width and height
 - [x] bonuses (extra lives, extra points, weapons)
